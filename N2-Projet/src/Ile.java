@@ -1,5 +1,5 @@
 
-public class Ile { //pour l'instant je vide les Iles à chaque création pour afficher toutes les cases, c'est modifiable
+public class Ile { //pour l'instant je vide les Iles a chaque création pour afficher toutes les cases, c'est modifiable
 
 	public Parcelle[][] grille;
 	public int ligne = 10;
