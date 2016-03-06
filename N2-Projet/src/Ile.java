@@ -1,5 +1,5 @@
 
-public class Ile { //pour l'instant je vide les Iles a chaque création pour afficher toutes les cases, c'est modifiable
+public class Ile { //pour l'instant je vide les Iles à chaque création pour afficher toutes les cases, c'est modifiable
 
 	public Parcelle[][] grille;
 	public int ligne = 10;
@@ -15,6 +15,7 @@ public class Ile { //pour l'instant je vide les Iles a chaque création pour affi
 		this.colonne = col;	
 		this.grille = new Parcelle[ligne][colonne];
 		this.viderIle();
+		this.setNavire();
 	}
 	
 	public Ile(Parcelle[][] tablo) {
@@ -22,8 +23,34 @@ public class Ile { //pour l'instant je vide les Iles a chaque création pour affi
 		this.colonne = tablo[0].length;
 		this.grille = tablo;
 		this.viderIle();
+		this.setNavire();
 	}
 	
+	private void setNavire() {
+		grille[grille.length-1][0].setElement("navire1");
+		grille[0][grille[0].length-1].setElement("navire2");
+	}
+	
+	public int getLigne() {
+		return ligne;
+	}	
+
+	public int getColonne() {
+		return colonne;
+	}	
+
+	public Parcelle[][] getGrille() {
+		return grille;
+	}
+
+	public void setGrille(Parcelle[][] tablo) {
+		if (ligne==tablo.length && colonne==tablo[0].length) {
+			this.grille = tablo;
+		} else {
+			System.out.println("Erreur: taille invalide");
+		}
+	}
+
 	public void viderIle() { 
 		for (int i=0; i<ligne; i++) {
 			for (int j=0; j<colonne; j++) {
