@@ -1,9 +1,9 @@
 
 public class Ile { //pour l'instant je vide les Iles à chaque création pour afficher toutes les cases, c'est modifiable
 
-	public Parcelle[][] grille;
-	public int ligne = 10;
-	public int colonne = 10;
+	private Parcelle[][] grille;
+	private int ligne = 10;
+	private int colonne = 10;
 	
 	public Ile() {
 		this.grille = new Parcelle[ligne][colonne];

@@ -1,7 +1,7 @@
 
 public class Parcelle {
 
-	public String element;
+	private String element;
 	
 	public Parcelle() { //Crée une parcelle vide
 		this.element = "vide"; 
