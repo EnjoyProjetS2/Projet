@@ -1,21 +1,24 @@
+import java.util.Random;
 
 public class Ile { //pour l'instant je vide les Iles à chaque création pour afficher toutes les cases, c'est modifiable
 
 	private Parcelle[][] grille;
 	private int ligne = 10;
 	private int colonne = 10;
-	
-	public Ile() {
+	private int nbRocher;
+	public Ile() { // ile vide avec navire
 		this.grille = new Parcelle[ligne][colonne];
 		this.viderIle();
+		this.nbRocher = 0;
 	}
 			
-	public Ile(int lig, int col) {
+	public Ile(int lig, int col) { // ile vide avec navire
 		this.ligne = lig;
 		this.colonne = col;	
 		this.grille = new Parcelle[ligne][colonne];
 		this.viderIle();
 		this.setNavire();
+		this.setRocher();
 	}
 	
 	public Ile(Parcelle[][] tablo) {
@@ -24,13 +27,30 @@ public class Ile { //pour l'instant je vide les Iles à chaque création pour affi
 		this.grille = tablo;
 		this.viderIle();
 		this.setNavire();
+		this.setRocher();
 	}
 	
 	private void setNavire() {
 		grille[grille.length-1][0].setElement("navire1");
 		grille[0][grille[0].length-1].setElement("navire2");
 	}
-	
+	private void setRocher(){
+		int nbroc=0;
+		do{
+		for (int i = 0; i < grille.length; i++) {
+			for (int j = 0; j < grille[i].length; j++) {
+				if(genererRocher(this.ligne*this.colonne) && nbroc < getNbRocher() && grille[i][j].estVide()){
+					grille[i][j].setElement("rocher");
+					nbroc++;
+				}
+			}
+		}
+		}while(nbroc < getNbRocher());
+		
+	}
+	public int getNbRocher(){
+		return (int)(ligne*colonne*0.10);
+	}
 	public int getLigne() {
 		return ligne;
 	}	
@@ -50,7 +70,15 @@ public class Ile { //pour l'instant je vide les Iles à chaque création pour affi
 			System.out.println("Erreur: taille invalide");
 		}
 	}
-
+	private boolean genererRocher(int tailleDeIle){
+		Random ran = new Random();
+		int rand = ran.nextInt(tailleDeIle);
+		if(rand <= 10){
+			return true;
+		}else{
+		return false;
+		}
+	}
 	public void viderIle() { 
 		for (int i=0; i<ligne; i++) {
 			for (int j=0; j<colonne; j++) {

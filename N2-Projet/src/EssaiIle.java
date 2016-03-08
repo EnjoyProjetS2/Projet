@@ -3,17 +3,16 @@ public class EssaiIle {
 
 	public static void main(String[] args) {
 			
-			int tailleX = 3;
-			int tailleY = 5;
+			int tailleX = 10;
+			int tailleY = 10;
 		
-			Parcelle[][] oui = new Parcelle[tailleX][tailleY];
+			Parcelle[][] parcelle = new Parcelle[tailleX][tailleY];
 			
-			Ile lol = new Ile(oui);
+			Ile ile = new Ile(parcelle);
+			parcelle[1][0] = new Parcelle();
+			parcelle[2][2] = new Parcelle("coffre");
 			
-			oui[1][0] = new Parcelle();
-			oui[2][2] = new Parcelle("coffre");
-			
-			System.out.println(lol.toString());		
+			System.out.println(ile.toString());
 			
 			
 			

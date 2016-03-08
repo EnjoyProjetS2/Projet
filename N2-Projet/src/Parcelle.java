@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Parcelle {
 
@@ -26,7 +27,9 @@ public class Parcelle {
 			this.element = elem;
 		}
 	}
-
+	public boolean estVide(){
+		return this.element.equals("vide");
+	}
 	public String toString() { //Retourne la première lettre de l'élement en majuscule		
 		if (element.equals("vide")) {
 			return " ";
