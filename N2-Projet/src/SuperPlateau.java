@@ -13,15 +13,6 @@ public class SuperPlateau {
 	public SuperPlateau(Ile ile){
 		p = new Plateau(gifs, ile.getLigne());
 	}
-	private void remplissage(){
-		/*for (int i = 0; i < taille; i++) {
-			for (int j = 0; j < taille; j++) {
-				jeu[i][j] = ran.nextInt(gifs.length+1);
-			}
-		}*/
-		jeu[0][0] = 1;
-		jeu[0][1] = 2;
-	}
 	public int getTaille() {
 		return taille;
 	}
@@ -38,9 +29,21 @@ public class SuperPlateau {
 	public int[][] getJeu() {
 		return jeu;
 	}
-	void setJeu(){
-		remplissage();
-		p.setJeu(jeu);
+	public void setJeu(Parcelle[][] jeu){
+		for (int i = 0; i < jeu.length; i++) {
+			for (int j = 0; j < jeu.length; j++) {
+				if(jeu[i][j].getElement().equals("Rocher")){
+					this.jeu[i][j] = 1;
+				}else if(jeu[i][j].getElement().equals("Vide")){
+					this.jeu[i][j] = 0;
+				}else if(jeu[i][j].getElement().equals("Navire1") || jeu[i][j].getElement().equals("Navire2")){
+					this.jeu[i][j] = 2;
+				}else if(jeu[i][j].getElement().equals("Coffre")){
+					this.jeu[i][j] = 3;
+				}
+			}
+		}
+		p.setJeu(this.jeu);
 	}
 	void affichage(){
 		p.affichage();

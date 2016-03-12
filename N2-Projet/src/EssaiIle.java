@@ -9,13 +9,12 @@ public class EssaiIle {
 			Parcelle[][] parcelle = new Parcelle[tailleX][tailleY];
 			
 			Ile ile = new Ile(parcelle);
-			Ile prochnow;
 			parcelle[1][0] = new Parcelle();
 			parcelle[2][2] = new Parcelle("coffre");
-			
+			SuperPlateau p = new SuperPlateau(ile);
+			p.setJeu(ile.getGrille());
+			p.affichage();
 			System.out.println(ile.toString());
-			
-			
 			
 		}
 

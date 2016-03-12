@@ -3,7 +3,6 @@ import java.util.Random;
 public class Parcelle {
 
 	private String element;
-	
 	public Parcelle() { //Crée une parcelle vide
 		this.element = "vide"; 
 	}
