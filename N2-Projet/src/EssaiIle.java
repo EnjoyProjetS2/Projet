@@ -10,7 +10,7 @@ public class EssaiIle {
 			
 			Ile ile = new Ile(parcelle);
 			parcelle[1][0] = new Parcelle();
-			parcelle[2][2] = new Parcelle("coffre");
+			//parcelle[2][2] = new Parcelle("coffre");
 			SuperPlateau p = new SuperPlateau(ile);
 			p.setJeu(ile.getGrille());
 			p.affichage();

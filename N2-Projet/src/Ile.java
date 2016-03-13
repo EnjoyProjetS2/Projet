@@ -3,8 +3,6 @@ import java.util.Random;
 public class Ile { //pour l'instant je vide les Iles à chaque création pour afficher toutes les cases, c'est modifiable
 
 	private Parcelle[][] grille;
-	private int[][] jeu;
-	private SuperPlateau p;
 	private int ligne = 10;
 	private int colonne = 10;
 	private int nbRocher;
@@ -27,7 +25,6 @@ public class Ile { //pour l'instant je vide les Iles à chaque création pour affi
 		this.ligne = tablo.length;
 		this.colonne = tablo[0].length;
 		this.grille = tablo;
-		this.jeu = new int[grille.length][grille[0].length];
 		this.viderIle();
 		this.setNavire();
 		this.setRocher();
