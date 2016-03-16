@@ -1,84 +1,144 @@
 import java.util.Random;
-
-public class Ile { //pour l'instant je vide les Iles à chaque création pour afficher toutes les cases, c'est modifiable
+public class Ile {
 
 	private Parcelle[][] grille;
 	private int ligne = 10;
 	private int colonne = 10;
-	public Ile() { // ile vide avec navire
-		this.grille = new Parcelle[ligne][colonne];
+	private double tauxRocher = 0.1;
+	
+	
+	/* Constructeur par defaut : Cree une ile vide avec des parcelles 
+	 * @param Ile
+	 */
+	public Ile() { // ile vide sans navires
+		
+		this.grille = new Parcelle[ligne][colonne];		
+		this.tauxRocher = 0;
+		
 		this.viderIle();
 	}
-			
-	public Ile(int lig, int col) { // ile vide avec navire
+	
+	/*Constructeur : cree une ile avec X colonnes et X lignes
+	 * @param Ile
+	 */			
+	public Ile(int lig, int col) { 
+		
 		this.ligne = lig;
 		this.colonne = col;	
 		this.grille = new Parcelle[ligne][colonne];
+		
 		this.viderIle();
-		this.setNavire();
-		this.setRocher();
+		this.setNavires();
+		this.setRochers();
 	}
 	
+	/*Constructeur : cree une ile avec un tableau de parcelles en parametres
+	 * @param Ile
+	 */
 	public Ile(Parcelle[][] tablo) {
+		
 		this.ligne = tablo.length;
 		this.colonne = tablo[0].length;
 		this.grille = tablo;
+		//this.jeu = new int[grille.length][grille[0].length];
+		
 		this.viderIle();
-		this.setNavire();
-		this.setRocher();
+		this.setNavires();
+		this.setRochers();		
 	}
 	
-	private void setNavire() {
-		grille[grille.length-1][0].setElement("navire1");
-		grille[0][grille[0].length-1].setElement("navire2");
+	/*Constructeur : cree une ile avec un tableau de parcelles et un pourcentage de rochers en parametres
+	 * @param Ile
+	 */
+	public Ile(Parcelle[][] tablo, int pourcent) {
+		
+		this.ligne = tablo.length;
+		this.colonne = tablo[0].length;
+		this.grille = tablo;
+		//this.jeu = new int[grille.length][grille[0].length];
+		this.tauxRocher = pourcent * 0.01;
+		
+		this.viderIle();
+		this.setNavires();
+		this.setRochers();
 	}
-	private void setRocher(){
-		int nbroc=0;
-		do{
-		for (int i = 0; i < grille.length; i++) {
-			for (int j = 0; j < grille[i].length; j++) {
-				if(genererRocher(this.ligne*this.colonne) && nbroc < getNbRocher() && grille[i][j].estVide()){
+	
+	
+	private void setNavires() {
+		grille[(grille.length-1)/2][0].setElement("navire1");
+		grille[(grille.length-1)/2][grille.length-1].setElement("navire2");
+	}
+	
+	
+	private void setRochers(){	
+		
+		do {
+		
+			int nbroc=0;		
+			while (nbroc < getNbRocher()) {			
+				Random alea = new Random();
+				int i = alea.nextInt(ligne-1);
+				int j = alea.nextInt(colonne-1);
+				
+				if (nbroc < getNbRocher() && grille[i][j].estVide()){
 					grille[i][j].setElement("rocher");
 					nbroc++;
-					//pour le graphique
-					//jeu[i][j] = 1;
-				}
+					
+					if (Parcelle.poseClef == false) {
+						grille[i][j].clef = true;
+						Parcelle.poseClef = true;
+					}
+					
+					if (Parcelle.poseCoffre == false && grille[i][j].clef == false) {
+						grille[i][j].coffre = true;
+						Parcelle.poseCoffre = true;
+					}					
+				}			
 			}
-		}
-		}while(nbroc < getNbRocher());
 		
+		} while (!verifierIle());		
+		
+	}	
+	
+	private boolean verifierIle() {
+		return true;
 	}
+	
+	/*Retourne le pourcentage de rochers qui doit etre place sur l'ile
+	 * @param getNbRocher
+	 * @return pourcentage de rochers
+	 */
 	public int getNbRocher(){
-		return (int)(ligne*colonne*0.10);
+		return (int)(ligne*colonne*tauxRocher);
 	}
+	
+	/*Retourne le nombre de lignes de l'ile
+	 * @param getLigne
+	 * @return nombre de lignes
+	 */
 	public int getLigne() {
 		return ligne;
-	}	
-
+	}
+	
+	/*Retourne le nombre de colonnes de l'ile
+	 * @param getColonne
+	 * @return nombre de colonnes
+	 */
 	public int getColonne() {
 		return colonne;
 	}	
 
+	/*Retourne la grille
+	 * @param getGrille
+	 * @return grille
+	 */
 	public Parcelle[][] getGrille() {
 		return grille;
 	}
-
-	public void setGrille(Parcelle[][] tablo) {
-		if (ligne==tablo.length && colonne==tablo[0].length) {
-			this.grille = tablo;
-		} else {
-			System.out.println("Erreur: taille invalide");
-		}
-	}
-	private boolean genererRocher(int tailleDeIle){
-		Random ran = new Random();
-		int rand = ran.nextInt(tailleDeIle);
-		if(rand <= 10){
-			return true;
-		}else{
-		return false;
-		}
-	}
+	
+	/*Vide l'ile : toutes les cases deviennent vierges
+	 * @param viderIle
+	 */	
 	public void viderIle() { 
 		for (int i=0; i<ligne; i++) {
 			for (int j=0; j<colonne; j++) {
@@ -88,6 +148,10 @@ public class Ile { //pour l'instant je vide les Iles à chaque création pour affi
 		}
 	}
 	
+	/*Affiche la grille de l'ile
+	 * @param toString
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		
 		String retour = "";
@@ -102,8 +166,15 @@ public class Ile { //pour l'instant je vide les Iles à chaque création pour affi
 					}
 				} else if (col%4 == 1) {
 					retour+="|";
-				} else if (col%4 == 3) {					
-					retour+=grille[lig/2-1][col/4].toString();
+				} else if (col%4 == 3) {
+					//test d'affichage de la clef et du coffre
+					if (grille[lig/2-1][col/4].clef == true) {
+						retour += "K"; 
+					} else if (grille[lig/2-1][col/4].coffre == true){
+						retour += "C"; 
+					} else {
+						retour+=grille[lig/2-1][col/4].toString();
+					}
 				} else {					
 					retour+=" ";
 				}

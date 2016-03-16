@@ -1,14 +1,13 @@
 
-
 public class SuperPlateau {
+	
 	private Plateau p;
 	private int taille = 10;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] { "images/rocher.jpg", "images/navire.jpg", "images/coffre.png",
-			"images/quatre.gif", "images/sol.gif", };
+	private String[] gifs = new String[] { "images/un.gif", "images/deux.gif", "images/trois.gif",
+			"images/quatre.gif" };
 
 	public SuperPlateau() {
-		// TODO Auto-generated constructor stub
 		p = new Plateau(gifs, taille);
 	}
 
@@ -20,7 +19,7 @@ public class SuperPlateau {
 		return taille;
 	}
 
-	boolean deplacement(int x, int y, int a, int b) {
+	public boolean deplacement(int x, int y, int a, int b) {
 		int[][] tmp = p.getJeu();
 		if (tmp[a][b] == 0) {
 			tmp[a][b] = tmp[x][y];
@@ -35,31 +34,36 @@ public class SuperPlateau {
 		return jeu;
 	}
 
-	public void setJeu(Parcelle[][] jeu) {
-		for (int i = 0; i < jeu.length; i++) {
-			for (int j = 0; j < jeu.length; j++) {
-				if (jeu[i][j].getElement().equals("Rocher")) { // 1 pour un
-																// rocher
-					this.jeu[i][j] = 1;
-				} else if (jeu[i][j].getElement().equals("Vide")) { // 0 pour un
-																	// vide
+	public void setJeu(Parcelle[][] tablo) {
+		
+		for (int i = 0; i < tablo.length; i++) {
+			for (int j = 0; j < tablo.length; j++) {
+				
+				if (tablo[i][j].getElement().equals("vide") || tablo[i][j].getElement().equals(null)) {
 					this.jeu[i][j] = 0;
-				} else if (jeu[i][j].getElement().equals("Navire1") || jeu[i][j].getElement().equals("Navire2")) { // 2
-																													// pour
-																													// un
-																													// bateau
+				} else if (tablo[i][j].getElement().equals("rocher")) {
+					this.jeu[i][j] = 1;
+				} else if (tablo[i][j].getElement().equals("navire1") || tablo[i][j].getElement().equals("navire2")) {
 					this.jeu[i][j] = 2;
-				} else if (jeu[i][j].getElement().equals("Coffre")) { // 3 pour
-																		// un
-																		// coffre
+				} else if (tablo[i][j].getElement().equals("coffre")) {
 					this.jeu[i][j] = 3;
 				}
 			}
 		}
+		
+		//test: affichage du tableau d'entiers
+		for (int i = 0; i < tablo.length; i++) {
+			for (int j = 0; j < tablo.length; j++) {
+			System.out.print(jeu[i][j]);
+			}
+			System.out.println();
+		}
+			
+			
 		p.setJeu(this.jeu);
 	}
-
-	void affichage() {
+ 
+	public void affichage() {
 		p.affichage();
 	}
 }
