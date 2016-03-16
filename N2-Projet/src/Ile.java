@@ -5,11 +5,9 @@ public class Ile { //pour l'instant je vide les Iles à chaque création pour affi
 	private Parcelle[][] grille;
 	private int ligne = 10;
 	private int colonne = 10;
-	private int nbRocher;
 	public Ile() { // ile vide avec navire
 		this.grille = new Parcelle[ligne][colonne];
 		this.viderIle();
-		this.nbRocher = 0;
 	}
 			
 	public Ile(int lig, int col) { // ile vide avec navire

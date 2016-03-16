@@ -1,11 +1,10 @@
-import java.util.Random;
+
 
 public class SuperPlateau {
 	private Plateau p;
-	private Random ran = new Random();
 	private int taille = 10;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] {"images/rocher.jpg", "images/navire.jpg", "images/coffre.png",
+	private String[] gifs = new String[] { "images/rocher.jpg", "images/navire.jpg", "images/coffre.png",
 			"images/quatre.gif", "images/sol.gif", };
 
 	public SuperPlateau() {
@@ -39,13 +38,20 @@ public class SuperPlateau {
 	public void setJeu(Parcelle[][] jeu) {
 		for (int i = 0; i < jeu.length; i++) {
 			for (int j = 0; j < jeu.length; j++) {
-				if (jeu[i][j].getElement().equals("Rocher")) {          // 1 pour un rocher
+				if (jeu[i][j].getElement().equals("Rocher")) { // 1 pour un
+																// rocher
 					this.jeu[i][j] = 1;
-				} else if (jeu[i][j].getElement().equals("Vide")) {     // 0 pour un vide
+				} else if (jeu[i][j].getElement().equals("Vide")) { // 0 pour un
+																	// vide
 					this.jeu[i][j] = 0;
-				} else if (jeu[i][j].getElement().equals("Navire1") || jeu[i][j].getElement().equals("Navire2")) { // 2 pour un bateau
+				} else if (jeu[i][j].getElement().equals("Navire1") || jeu[i][j].getElement().equals("Navire2")) { // 2
+																													// pour
+																													// un
+																													// bateau
 					this.jeu[i][j] = 2;
-				} else if (jeu[i][j].getElement().equals("Coffre")) { // 3 pour un coffre
+				} else if (jeu[i][j].getElement().equals("Coffre")) { // 3 pour
+																		// un
+																		// coffre
 					this.jeu[i][j] = 3;
 				}
 			}
