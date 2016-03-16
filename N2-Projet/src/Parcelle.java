@@ -6,14 +6,14 @@ public class Parcelle {
 	public boolean coffre = false;
 	public boolean clef = false;
 
-	/* Constructeur: cree une parcelle vide
+	/**Constructeur: cree une parcelle vide
 	 * @param element
 	 */
 	public Parcelle() {
 		this.element = "vide"; 
 	}	
 	
-	/* Constructeur: Cree une parcelle vide, avec pour parametre une chaine de caracteres
+	/**Constructeur: Cree une parcelle vide, avec pour parametre une chaine de caracteres
 	 * @param Parcelle
 	 * */
 	public Parcelle(String elem) {		
@@ -24,7 +24,7 @@ public class Parcelle {
 		}
 	}
 			
-	/*Retourne l'element de la parcelle
+	/**Retourne l'element de la parcelle
 	 * @param getElement
 	 * @return l'element  
 	 */
@@ -32,7 +32,7 @@ public class Parcelle {
 		return this.element;
 	}
 
-	/*Redefinit l'element de la parcelle
+	/**Redefinit l'element de la parcelle
 	 * @param setElement
 	 */
 	public void setElement(String elem) {
@@ -43,15 +43,31 @@ public class Parcelle {
 		}
 	}
 	
-	/*Renvoie vrai si l'element est "vide"
+	/**Renvoie vrai si l'element est "vide"
 	 * @param estVide
 	 * @return vrai si est "vide"
 	 */
 	public boolean estVide(){
-		return this.element.equals("vide");
+		return this.element.equals("vide") || this.element.equals(null);
 	}
 	
-	/* Affiche la premiere lettre de l'element en majuscule
+	/**Renvoie vrai si l'element est un rocher
+	 * @param estRocher
+	 * @return
+	 */
+	public boolean estRocher(){
+		return this.element.equals("rocher");
+	}
+	
+	/**Renvoie vrai si l'element est un navire
+	 * @param estNavire
+	 * @return
+	 */
+	public boolean estNavire(){
+		return this.element.equals("navire1") || this.element.equals("navire2");
+	}
+	
+	/** Affiche la premiere lettre de l'element en majuscule
 	 * @param toString
 	 * @see java.lang.Object#toString()
 	 */

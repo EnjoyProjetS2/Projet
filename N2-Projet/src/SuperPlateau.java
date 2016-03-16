@@ -4,8 +4,8 @@ public class SuperPlateau {
 	private Plateau p;
 	private int taille = 10;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] { "images/un.gif", "images/deux.gif", "images/trois.gif",
-			"images/quatre.gif" };
+	private String[] gifs = new String[] {"images/rocher.jpg", "images/navire.jpg", "images/coffre.png",
+			"images/quatre.gif", "images/sol.gif", };
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);

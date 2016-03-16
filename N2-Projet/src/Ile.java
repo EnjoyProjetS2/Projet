@@ -7,7 +7,7 @@ public class Ile {
 	private double tauxRocher = 0.1;
 	
 	
-	/* Constructeur par defaut : Cree une ile vide avec des parcelles 
+	/** Constructeur par defaut : Cree une ile vide avec des parcelles 
 	 * @param Ile
 	 */
 	public Ile() { // ile vide sans navires
@@ -18,7 +18,7 @@ public class Ile {
 		this.viderIle();
 	}
 	
-	/*Constructeur : cree une ile avec X colonnes et X lignes
+	/**Constructeur : cree une ile avec X colonnes et X lignes
 	 * @param Ile
 	 */			
 	public Ile(int lig, int col) { 
@@ -32,7 +32,7 @@ public class Ile {
 		this.setRochers();
 	}
 	
-	/*Constructeur : cree une ile avec un tableau de parcelles en parametres
+	/**Constructeur : cree une ile avec un tableau de parcelles en parametres
 	 * @param Ile
 	 */
 	public Ile(Parcelle[][] tablo) {
@@ -47,7 +47,7 @@ public class Ile {
 		this.setRochers();		
 	}
 	
-	/*Constructeur : cree une ile avec un tableau de parcelles et un pourcentage de rochers en parametres
+	/**Constructeur : cree une ile avec un tableau de parcelles et un pourcentage de rochers en parametres
 	 * @param Ile
 	 */
 	public Ile(Parcelle[][] tablo, int pourcent) {
@@ -101,10 +101,29 @@ public class Ile {
 	}	
 	
 	private boolean verifierIle() {
+		
+		/*int[][] ile = new int[ligne][colonne];
+		
+		for (int i=0; i<ligne-1; i++) {
+			for (int j=0; j<colonne-1; j++) {
+				if (grille[i][j].estVide()) {
+					ile[i][j]=0;
+				} else {
+					ile[i][j]=1;
+				}
+			}
+		}
+		
+		for (int i=0; i<ligne-1; i++) {
+			for (int j=0; j<colonne-1; j++) {
+				
+			}
+		}*/
+		
 		return true;
 	}
 	
-	/*Retourne le pourcentage de rochers qui doit etre place sur l'ile
+	/**Retourne le pourcentage de rochers qui doit etre place sur l'ile
 	 * @param getNbRocher
 	 * @return pourcentage de rochers
 	 */
@@ -112,7 +131,7 @@ public class Ile {
 		return (int)(ligne*colonne*tauxRocher);
 	}
 	
-	/*Retourne le nombre de lignes de l'ile
+	/**Retourne le nombre de lignes de l'ile
 	 * @param getLigne
 	 * @return nombre de lignes
 	 */
@@ -120,7 +139,7 @@ public class Ile {
 		return ligne;
 	}
 	
-	/*Retourne le nombre de colonnes de l'ile
+	/**Retourne le nombre de colonnes de l'ile
 	 * @param getColonne
 	 * @return nombre de colonnes
 	 */
@@ -128,7 +147,7 @@ public class Ile {
 		return colonne;
 	}	
 
-	/*Retourne la grille
+	/**Retourne la grille
 	 * @param getGrille
 	 * @return grille
 	 */
@@ -136,7 +155,7 @@ public class Ile {
 		return grille;
 	}
 	
-	/*Vide l'ile : toutes les cases deviennent vierges
+	/**Vide l'ile : toutes les cases deviennent vierges
 	 * @param viderIle
 	 */	
 	public void viderIle() { 
@@ -148,7 +167,7 @@ public class Ile {
 		}
 	}
 	
-	/*Affiche la grille de l'ile
+	/**Affiche la grille de l'ile
 	 * @param toString
 	 * @see java.lang.Object#toString()
 	 */

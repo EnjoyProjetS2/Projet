@@ -9,7 +9,6 @@ public class EssaiIle {
 			Parcelle[][] parcelle = new Parcelle[tailleX][tailleY];
 			
 			Ile ile = new Ile(parcelle, 20);
-			System.out.println(ile.toString());
 			
 			//Test de modifications des parcelles
 			parcelle[1][0] = new Parcelle();
