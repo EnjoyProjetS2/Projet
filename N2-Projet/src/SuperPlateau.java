@@ -4,8 +4,8 @@ public class SuperPlateau {
 	private Plateau p;
 	private int taille = 10;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] {"images/rocher.jpg", "images/navire.jpg", "images/coffre.png",
-			"images/quatre.gif", "images/sol.gif", };
+	private String[] gifs = new String[] {"images/stone.png", "images/boat.png", "images/coffre.png",
+			"images/eau.png", "images/sable.png", };
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
@@ -37,7 +37,7 @@ public class SuperPlateau {
 	public void setJeu(Parcelle[][] tablo) {
 		
 		for (int i = 0; i < tablo.length; i++) {
-			for (int j = 0; j < tablo.length; j++) {
+			for (int j = 0; j < tablo[i].length; j++) {
 				
 				if (tablo[i][j].getElement().equals("vide") || tablo[i][j].getElement().equals(null)) {
 					this.jeu[i][j] = 0;
@@ -47,6 +47,8 @@ public class SuperPlateau {
 					this.jeu[i][j] = 2;
 				} else if (tablo[i][j].getElement().equals("coffre")) {
 					this.jeu[i][j] = 3;
+				} else if(tablo[i][j].getElement().equals("eau")){
+					this.jeu[i][j] = 4;
 				}
 			}
 		}

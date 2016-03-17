@@ -3,20 +3,17 @@ public class EssaiIle {
 
 	public static void main(String[] args) {
 			
-			int tailleX = 5;
-			int tailleY = 5;			
+			int tailleX = 10;
+			int tailleY = 10;			
 		
 			Parcelle[][] parcelle = new Parcelle[tailleX][tailleY];
 			
-			Ile ile = new Ile(parcelle, 20);
-			
-			//Test de modifications des parcelles
-			parcelle[1][0] = new Parcelle();
-			parcelle[3][4] = new Parcelle("rocher");	
+			Ile ile = new Ile(parcelle, 20);	
 						
 			System.out.println(ile.toString());			
 			
 			SuperPlateau p = new SuperPlateau(ile);
+			System.out.println();
 			p.setJeu(ile.getGrille());
 			p.affichage();
 			

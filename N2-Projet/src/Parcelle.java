@@ -31,7 +31,6 @@ public class Parcelle {
 	public String getElement() {
 		return this.element;
 	}
-
 	/**Redefinit l'element de la parcelle
 	 * @param setElement
 	 */
@@ -66,7 +65,9 @@ public class Parcelle {
 	public boolean estNavire(){
 		return this.element.equals("navire1") || this.element.equals("navire2");
 	}
-	
+	public boolean estEau(){
+		return this.element.equals("eau");
+	}
 	/** Affiche la premiere lettre de l'element en majuscule
 	 * @param toString
 	 * @see java.lang.Object#toString()
