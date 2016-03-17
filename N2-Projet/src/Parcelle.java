@@ -65,15 +65,30 @@ public class Parcelle {
 	public boolean estNavire(){
 		return this.element.equals("navire1") || this.element.equals("navire2");
 	}
+	
+	/**Renvoie vrai si l'element est de l'eau
+	 * @param estNavire
+	 * @return
+	 */
 	public boolean estEau(){
 		return this.element.equals("eau");
 	}
+	
+	/**Renvoie vrai si l'element est du sable
+	 * @param estNavire
+	 * @return
+	 */
+	public boolean estSable(){
+		return this.element.equals("sable");
+	}
+	
+	
 	/** Affiche la premiere lettre de l'element en majuscule
 	 * @param toString
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {		
-		if (element.equals("vide")) {
+		if (estVide() || estSable()) {
 			return " ";
 		} else {
 			return element.substring(0,1).toUpperCase();	

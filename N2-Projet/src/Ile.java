@@ -6,6 +6,9 @@ public class Ile {
 	private int ligne = 10;
 	private int colonne = 10;
 	private double tauxRocher = 0.1;
+	
+	private int posNav1;
+	private int posNav2;	
 
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
@@ -17,7 +20,7 @@ public class Ile {
 		this.grille = new Parcelle[ligne][colonne];
 		this.tauxRocher = 0;
 
-		this.viderIle();
+		ileVierge();
 	}
 
 	/**
@@ -31,9 +34,9 @@ public class Ile {
 		this.colonne = col;
 		this.grille = new Parcelle[ligne][colonne];
 
-		this.viderIle();
-		this.setNavires();
-		this.setRochers();
+		ileVierge();
+		setNavires();
+		setRochers();
 	}
 
 	/**
@@ -48,9 +51,9 @@ public class Ile {
 		this.grille = tablo;
 		// this.jeu = new int[grille.length][grille[0].length];
 
-		this.viderIle();
-		this.setNavires();
-		this.setRochers();
+		ileVierge();
+		setNavires();
+		setRochers();
 	}
 
 	/**
@@ -66,37 +69,33 @@ public class Ile {
 		this.grille = tablo;
 		this.tauxRocher = pourcent * 0.01;
 
-		this.viderIle();
-		this.setNavires();
-		this.setRochers();
-		this.setEau();
+		ileVierge();
+		setNavires();
+		setRochers();
+		
 	}
 
 	private void setNavires() {
-		grille[(grille.length - 1) / 2][0].setElement("navire1");
-		grille[(grille.length - 1) / 2][grille.length - 1].setElement("navire2");
+		
+		Random alea = new Random();
+		this.posNav1 = alea.nextInt(grille.length-3)+1;
+		this.posNav2 = alea.nextInt(grille[0].length-3)+1;
+		
+		grille[posNav1][1].setElement("navire1");
+		grille[posNav2][grille.length-2].setElement("navire2");
 	}
-	private void setEau(){
-		for (int i = 0; i < grille.length; i++) {
-			for (int j = 0; j < grille.length; j++) {
-				if (i==0 || i == grille.length-1 || j == 0 || j == grille[i].length-1 ) {
-					grille[i][j].setElement("eau");
-				}
-			}
-		}
-	}
-	private void setRochers() {
+	
+	
+	private void setRochers() {		
 
-		do {
-			viderIle();
-			setNavires();
+		do {			
 			int nbroc = 0;
 			while (nbroc < getNbRocher()) {
 				Random alea = new Random();
 				int i = alea.nextInt(ligne - 1);
 				int j = alea.nextInt(colonne - 1);
 
-				if (nbroc < getNbRocher() && grille[i][j].estVide()) {
+				if (nbroc < getNbRocher() && grille[i][j].estSable()) {
 					grille[i][j].setElement("rocher");
 					nbroc++;
 
@@ -112,7 +111,8 @@ public class Ile {
 				}
 			}
 
-		} while (!verifierIle());
+		} while (!verifierIle());		
+	
 
 	}
 
@@ -221,9 +221,23 @@ public class Ile {
 		for (int i = 0; i < ligne; i++) {
 			for (int j = 0; j < colonne; j++) {
 				this.grille[i][j] = new Parcelle();
-				// jeu[i][j] = 0; //graphique
 			}
 		}
+	}
+	
+	private void ileVierge(){
+		
+		viderIle();
+		
+		for (int i = 0; i < grille.length; i++) {
+			for (int j = 0; j < grille.length; j++) {
+				if (i==0 || i == grille.length-1 || j == 0 || j == grille[i].length-1 ) {
+					grille[i][j].setElement("eau");
+				} else {
+					grille[i][j].setElement("sable");
+				}
+			}
+		}		
 	}
 
 	/**
