@@ -53,13 +53,13 @@ public class SuperPlateau {
 			}
 		}
 		
-		//test: affichage du tableau d'entiers
+		/*//test: affichage du tableau d'entiers
 		for (int i = 0; i < tablo.length; i++) {
 			for (int j = 0; j < tablo.length; j++) {
 			System.out.print(jeu[i][j]);
 			}
 			System.out.println();
-		}
+		}*/
 			
 			
 		p.setJeu(this.jeu);

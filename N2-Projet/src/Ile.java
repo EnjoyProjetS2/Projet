@@ -6,9 +6,9 @@ public class Ile {
 	private int ligne = 10;
 	private int colonne = 10;
 	private double tauxRocher = 0.1;
-	
+
 	private int posNav1;
-	private int posNav2;	
+	private int posNav2;
 
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
@@ -49,7 +49,6 @@ public class Ile {
 		this.ligne = tablo.length;
 		this.colonne = tablo[0].length;
 		this.grille = tablo;
-		// this.jeu = new int[grille.length][grille[0].length];
 
 		ileVierge();
 		setNavires();
@@ -70,25 +69,26 @@ public class Ile {
 		this.tauxRocher = pourcent * 0.01;
 
 		ileVierge();
-		setNavires();
 		setRochers();
-		
+		setNavires();
+
 	}
 
 	private void setNavires() {
-		
-		Random alea = new Random();
-		this.posNav1 = alea.nextInt(grille.length-3)+1;
-		this.posNav2 = alea.nextInt(grille[0].length-3)+1;
-		
-		grille[posNav1][1].setElement("navire1");
-		grille[posNav2][grille.length-2].setElement("navire2");
-	}
-	
-	
-	private void setRochers() {		
 
-		do {			
+		Random alea = new Random();
+		this.posNav1 = alea.nextInt(grille.length - 3) + 1;
+		this.posNav2 = alea.nextInt(grille[0].length - 3) + 1;
+
+		grille[posNav1][1].setElement("navire1");
+		grille[posNav2][grille.length - 2].setElement("navire2");
+	}
+
+	private void setRochers() {
+		
+		do {
+			//C'est deguelasse !
+			ileVierge();
 			int nbroc = 0;
 			while (nbroc < getNbRocher()) {
 				Random alea = new Random();
@@ -111,37 +111,37 @@ public class Ile {
 				}
 			}
 
-		} while (!verifierIle());		
-	
-
+		} while (!verifierIle());
+		
 	}
 
 	private boolean verifierIle() {
-		return true;
-		/*int cpt = 0;
+		int cpt = 0;
 		int[][] ile = new int[ligne][colonne];
 		for (int l = 1; l < ile.length - 1; l++) {
 			for (int c = 1; c < ile[l].length - 1; c++) {
-				/*
-				 * if (grille[l - 1][c - 1].estVide()) { }else{ ile[l][c] = 0; }
-				 */
-				/*if (grille[l][c].estVide()) {
-					if (grille[l][c - 1].estVide()) {
+
+				/*if (grille[l - 1][c - 1].estVide()) {
+				} else {
+					ile[l][c] = 0;
+				}*/
+				if (grille[l][c].estSable()) {
+					if (grille[l][c - 1].estSable()) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
 					}
-					if (grille[l][c + 1].estVide()) {
+					if (grille[l][c + 1].estSable()) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
 					}
-					if (grille[l - 1][c].estVide()) {
+					if (grille[l - 1][c].estSable()) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
 					}
-					if (grille[l + 1][c].estVide()) {
+					if (grille[l + 1][c].estSable()) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
@@ -149,27 +149,31 @@ public class Ile {
 				}
 			}
 		}
-		for (int i = 0; i < ile.length; i++){
+		
+		for (int i = 0; i < ile.length; i++) {
 			for (int j = 0; j < ile[i].length; j++) {
 				if (ile[i][j] == 1) {
 					cpt++;
-					
+
 				}
-				System.out.print(ile[i][j]);
+				//System.out.print(ile[i][j]);
 			}
-			System.out.println();
+			//System.out.println();
 		}
+		/* pour les tests
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("1: "+cpt);
+		System.out.println("2: "+getNbRocher());
+		*/
 		if (cpt == getNbRocher()) {
 			return true;
 		}
-		return false;*/
+		return false;
 	}
 
 	/**
@@ -224,20 +228,20 @@ public class Ile {
 			}
 		}
 	}
-	
-	private void ileVierge(){
-		
+
+	private void ileVierge() {
+
 		viderIle();
-		
+
 		for (int i = 0; i < grille.length; i++) {
 			for (int j = 0; j < grille.length; j++) {
-				if (i==0 || i == grille.length-1 || j == 0 || j == grille[i].length-1 ) {
+				if (i == 0 || i == grille.length - 1 || j == 0 || j == grille[i].length - 1) {
 					grille[i][j].setElement("eau");
 				} else {
 					grille[i][j].setElement("sable");
 				}
 			}
-		}		
+		}
 	}
 
 	/**
