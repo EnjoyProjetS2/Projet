@@ -3,10 +3,9 @@ import java.util.Random;
 public class Ile {
 
 	private Parcelle[][] grille;
-	private int ligne = 10;
-	private int colonne = 10;
-	private double tauxRocher = 0.1;
-
+	private int ligne = Constantes.TAILLEX;
+	private int colonne = Constantes.TAILLEY;
+	private double tauxRocher = Constantes.TAUXDEROCHER;
 	private int posNav1;
 	private int posNav2;
 
@@ -74,6 +73,7 @@ public class Ile {
 
 	}
 
+	// ajoute des navires sur le bord de l'ile
 	private void setNavires() {
 
 		Random alea = new Random();
@@ -84,10 +84,11 @@ public class Ile {
 		grille[posNav2][grille.length - 2].setElement("navire2");
 	}
 
+	// ajoute des rochers sur l'ile
 	private void setRochers() {
-		
+
 		do {
-			//C'est deguelasse !
+			// C'est deguelasse !
 			ileVierge();
 			int nbroc = 0;
 			while (nbroc < getNbRocher()) {
@@ -112,19 +113,15 @@ public class Ile {
 			}
 
 		} while (!verifierIle());
-		
+
 	}
 
+	// retourne true si tous les rochers sont accessible false sinon
 	private boolean verifierIle() {
 		int cpt = 0;
 		int[][] ile = new int[ligne][colonne];
 		for (int l = 1; l < ile.length - 1; l++) {
 			for (int c = 1; c < ile[l].length - 1; c++) {
-
-				/*if (grille[l - 1][c - 1].estVide()) {
-				} else {
-					ile[l][c] = 0;
-				}*/
 				if (grille[l][c].estSable()) {
 					if (grille[l][c - 1].estSable()) {
 						ile[l][c] = 0;
@@ -149,27 +146,23 @@ public class Ile {
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < ile.length; i++) {
 			for (int j = 0; j < ile[i].length; j++) {
 				if (ile[i][j] == 1) {
 					cpt++;
 
 				}
-				//System.out.print(ile[i][j]);
+				// System.out.print(ile[i][j]);
 			}
-			//System.out.println();
+			// System.out.println();
 		}
-		/* pour les tests
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("1: "+cpt);
-		System.out.println("2: "+getNbRocher());
-		*/
+		/*
+		 * pour les tests try { Thread.sleep(1000); } catch
+		 * (InterruptedException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } System.out.println("1: "+cpt);
+		 * System.out.println("2: "+getNbRocher());
+		 */
 		if (cpt == getNbRocher()) {
 			return true;
 		}
@@ -229,12 +222,17 @@ public class Ile {
 		}
 	}
 
+	/**
+	 * Cree une ile faite de sable et entouree d'eau
+	 * 
+	 * @param ileVierge
+	 */
 	private void ileVierge() {
 
 		viderIle();
 
 		for (int i = 0; i < grille.length; i++) {
-			for (int j = 0; j < grille.length; j++) {
+			for (int j = 0; j < grille[i].length; j++) {
 				if (i == 0 || i == grille.length - 1 || j == 0 || j == grille[i].length - 1) {
 					grille[i][j].setElement("eau");
 				} else {

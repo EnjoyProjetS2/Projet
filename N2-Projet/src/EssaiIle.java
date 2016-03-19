@@ -1,24 +1,17 @@
 
 public class EssaiIle {
-
+	
 	public static void main(String[] args) {
 			
-			int tailleX = 10;
-			int tailleY = 10;			
-		
-			Parcelle[][] parcelle = new Parcelle[tailleX][tailleY];
 			
-			Ile ile = new Ile(parcelle, 20);	
-						
-			System.out.println(ile.toString());			
-			
+			Parcelle[][] parcelle = new Parcelle[Constantes.TAILLEX][Constantes.TAILLEY];
+			Ile ile = new Ile(parcelle, Constantes.NOMBREDEROCHER);	
+			// Affichage mode texte			
+			System.out.println(ile.toString());
+			// affichage mode graphique
 			SuperPlateau p = new SuperPlateau(ile);
-			System.out.println();
 			p.setJeu(ile.getGrille());
 			p.affichage();
-			
-			
-			
 		}
 
 }

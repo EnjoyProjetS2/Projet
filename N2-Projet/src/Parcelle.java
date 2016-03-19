@@ -10,15 +10,15 @@ public class Parcelle {
 	 * @param element
 	 */
 	public Parcelle() {
-		this.element = "vide"; 
+		this.element = Constantes.VIDE; 
 	}	
 	
 	/**Constructeur: Cree une parcelle vide, avec pour parametre une chaine de caracteres
 	 * @param Parcelle
 	 * */
 	public Parcelle(String elem) {		
-		if (elem.equals("vide") || elem.equals(null)) {
-			this.element = "vide";
+		if (elem.equals(Constantes.VIDE) || elem.equals(null)) {
+			this.element = Constantes.VIDE;
 		} else {
 			this.element = elem;
 		}
@@ -35,19 +35,19 @@ public class Parcelle {
 	 * @param setElement
 	 */
 	public void setElement(String elem) {
-		if (elem.equals("vide") || elem.equals(null)) {
-			this.element = "vide";
+		if (elem.equals(Constantes.VIDE) || elem.equals(null)) {
+			this.element = Constantes.VIDE;
 		} else {
 			this.element = elem;
 		}
 	}
 	
-	/**Renvoie vrai si l'element est "vide"
+	/**Renvoie vrai si l'element est Constantes.VIDE
 	 * @param estVide
-	 * @return vrai si est "vide"
+	 * @return vrai si est Constantes.VIDE
 	 */
 	public boolean estVide(){
-		return this.element.equals("vide") || this.element.equals(null);
+		return this.element.equals(Constantes.VIDE) || this.element.equals(null);
 	}
 	
 	/**Renvoie vrai si l'element est un rocher
@@ -55,7 +55,7 @@ public class Parcelle {
 	 * @return
 	 */
 	public boolean estRocher(){
-		return this.element.equals("rocher");
+		return this.element.equals(Constantes.ROCHER);
 	}
 	
 	/**Renvoie vrai si l'element est un navire
@@ -63,7 +63,7 @@ public class Parcelle {
 	 * @return
 	 */
 	public boolean estNavire(){
-		return this.element.equals("navire1") || this.element.equals("navire2");
+		return this.element.equals(Constantes.NAV1) || this.element.equals(Constantes.NAV2);
 	}
 	
 	/**Renvoie vrai si l'element est de l'eau
@@ -71,7 +71,7 @@ public class Parcelle {
 	 * @return
 	 */
 	public boolean estEau(){
-		return this.element.equals("eau");
+		return this.element.equals(Constantes.EAU);
 	}
 	
 	/**Renvoie vrai si l'element est du sable
@@ -79,7 +79,7 @@ public class Parcelle {
 	 * @return
 	 */
 	public boolean estSable(){
-		return this.element.equals("sable");
+		return this.element.equals(Constantes.SABLE);
 	}
 	
 	

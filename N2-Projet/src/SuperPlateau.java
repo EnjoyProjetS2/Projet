@@ -2,10 +2,10 @@
 public class SuperPlateau {
 	
 	private Plateau p;
-	private int taille = 10;
+	private int taille = Constantes.TAILLEX;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] {"images/stone.png", "images/boat.png", "images/coffre.png",
-			"images/eau.png", "images/sable.png", };
+	private String[] gifs = new String[] {"images/stone.png", "images/boat.png",  "images/sable.png", 
+			"images/eau.png"};
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
@@ -39,15 +39,13 @@ public class SuperPlateau {
 		for (int i = 0; i < tablo.length; i++) {
 			for (int j = 0; j < tablo[i].length; j++) {
 				
-				if (tablo[i][j].getElement().equals("vide") || tablo[i][j].getElement().equals(null)) {
-					this.jeu[i][j] = 0;
-				} else if (tablo[i][j].getElement().equals("rocher")) {
+				if (tablo[i][j].estRocher()) {
 					this.jeu[i][j] = 1;
-				} else if (tablo[i][j].getElement().equals("navire1") || tablo[i][j].getElement().equals("navire2")) {
+				} else if (tablo[i][j].estNavire()) {
 					this.jeu[i][j] = 2;
-				} else if (tablo[i][j].getElement().equals("coffre")) {
+				} else if (tablo[i][j].estSable()) {
 					this.jeu[i][j] = 3;
-				} else if(tablo[i][j].getElement().equals("eau")){
+				} else if(tablo[i][j].estEau()){
 					this.jeu[i][j] = 4;
 				}
 			}
