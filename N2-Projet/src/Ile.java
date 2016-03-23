@@ -80,15 +80,15 @@ public class Ile {
 		this.posNav1 = alea.nextInt(grille.length - 3) + 1;
 		this.posNav2 = alea.nextInt(grille[0].length - 3) + 1;
 
-		grille[posNav1][1].setElement("navire1");
-		grille[posNav2][grille.length - 2].setElement("navire2");
+		grille[posNav1][1] = new Navire(1);
+		grille[posNav2][grille.length - 2] = new Navire(2);
 	}
 
 	// ajoute des rochers sur l'ile
 	private void setRochers() {
 
 		do {
-			// C'est deguelasse !
+
 			ileVierge();
 			int nbroc = 0;
 			while (nbroc < getNbRocher()) {
@@ -96,19 +96,17 @@ public class Ile {
 				int i = alea.nextInt(ligne - 1);
 				int j = alea.nextInt(colonne - 1);
 
-				if (nbroc < getNbRocher() && grille[i][j].estSable()) {
-					grille[i][j].setElement("rocher");
+				if (nbroc < getNbRocher() && grille[i][j] instanceof Sable) {
+					grille[i][j] = new Rocher();
 					nbroc++;
-
-					if (Parcelle.poseClef == false) {
-						grille[i][j].clef = true;
-						Parcelle.poseClef = true;
-					}
-
-					if (Parcelle.poseCoffre == false && grille[i][j].clef == false) {
-						grille[i][j].coffre = true;
-						Parcelle.poseCoffre = true;
-					}
+					/*
+					 * if (Parcelle.poseClef == false) { grille[i][j].clef =
+					 * true; Parcelle.poseClef = true; }
+					 * 
+					 * if (Parcelle.poseCoffre == false && grille[i][j].clef ==
+					 * false) { grille[i][j].coffre = true; Parcelle.poseCoffre
+					 * = true; }
+					 */
 				}
 			}
 
@@ -122,23 +120,23 @@ public class Ile {
 		int[][] ile = new int[ligne][colonne];
 		for (int l = 1; l < ile.length - 1; l++) {
 			for (int c = 1; c < ile[l].length - 1; c++) {
-				if (grille[l][c].estSable()) {
-					if (grille[l][c - 1].estSable()) {
+				if (grille[l][c] instanceof Sable) {
+					if (grille[l][c - 1] instanceof Sable) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
 					}
-					if (grille[l][c + 1].estSable()) {
+					if (grille[l][c + 1] instanceof Sable) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
 					}
-					if (grille[l - 1][c].estSable()) {
+					if (grille[l - 1][c] instanceof Sable) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
 					}
-					if (grille[l + 1][c].estSable()) {
+					if (grille[l + 1][c] instanceof Sable) {
 						ile[l][c] = 0;
 					} else {
 						ile[l][c] = 1;
@@ -229,14 +227,15 @@ public class Ile {
 	 */
 	private void ileVierge() {
 
-		viderIle();
+		// viderIle();
 
 		for (int i = 0; i < grille.length; i++) {
 			for (int j = 0; j < grille[i].length; j++) {
-				if (i == 0 || i == grille.length - 1 || j == 0 || j == grille[i].length - 1) {
-					grille[i][j].setElement("eau");
+				if (i == 0 || i == grille.length - 1 || j == 0
+						|| j == grille[i].length - 1) {
+					grille[i][j] = new Eau();
 				} else {
-					grille[i][j].setElement("sable");
+					grille[i][j] = new Sable();
 				}
 			}
 		}
@@ -263,14 +262,7 @@ public class Ile {
 				} else if (col % 4 == 1) {
 					retour += "|";
 				} else if (col % 4 == 3) {
-					// test d'affichage de la clef et du coffre
-					if (grille[lig / 2 - 1][col / 4].clef == true) {
-						retour += "K";
-					} else if (grille[lig / 2 - 1][col / 4].coffre == true) {
-						retour += "C";
-					} else {
-						retour += grille[lig / 2 - 1][col / 4].toString();
-					}
+					retour += grille[lig / 2 - 1][col / 4].toString();
 				} else {
 					retour += " ";
 				}

@@ -39,13 +39,13 @@ public class SuperPlateau {
 		for (int i = 0; i < tablo.length; i++) {
 			for (int j = 0; j < tablo[i].length; j++) {
 				
-				if (tablo[i][j].estRocher()) {
+				if (tablo[i][j] instanceof Rocher) {
 					this.jeu[i][j] = 1;
-				} else if (tablo[i][j].estNavire()) {
+				} else if (tablo[i][j] instanceof Navire) {
 					this.jeu[i][j] = 2;
-				} else if (tablo[i][j].estSable()) {
+				} else if (tablo[i][j] instanceof Sable) {
 					this.jeu[i][j] = 3;
-				} else if(tablo[i][j].estEau()){
+				} else if(tablo[i][j] instanceof Eau) {
 					this.jeu[i][j] = 4;
 				}
 			}
