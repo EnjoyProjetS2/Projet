@@ -1,10 +1,10 @@
 
 public class Personnage {
 	
-	String nom;
-	int equipe;
-	int x;
-	int y;
+	private String nom;
+	private int equipe;
+	private int x;
+	private int y;
 	
 	/* Constructeur par défaut
 	 * @param Personnage
@@ -80,8 +80,7 @@ public class Personnage {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	
-	
+
+
 	
 }

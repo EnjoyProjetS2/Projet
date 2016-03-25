@@ -7,5 +7,12 @@ public class Explorateur extends Personnage{
 	
 	void souleverRocher(){}
 	
+	public String toString(){
+		if(this.equipe == 1){
+			return "E";
+		} else {
+			return "e";
+		}
+	}
 	
 }
