@@ -75,24 +75,28 @@ public class Ile {
 		setNavires();
 
 	}
-	public List<Personnage> getListPerso() {
-		return listPerso;
-	}
 
 	public boolean ajoutPersonnage(Personnage e){
-		if (!listPerso.contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
-			listPerso.add(e);
+		if (!Personnage.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
+			Personnage.getListePersos().add(e);
 			grille[e.getX()][e.getY()] = e;
 			return true;
 		}
 		return false;
 	}
 	// Le parametre deplacement est provisoire 
+	
+	/**Déplace un personnage vers une direction précise
+	 * 
+	 * @param e
+	 * @param deplacement
+	 * @return
+	 */
 	public boolean deplacement(Personnage e, String deplacement){
 		Parcelle tmp = new Sable();
 		switch (deplacement) {
 		case "gauche":
-			if(grille[e.getX()][e.getY()-1] instanceof Sable){
+			if(grille[e.getX()][e.getY()-1].estTraversable(e)){
 			grille[e.getX()][e.getY()-1] = grille[e.getX()][e.getY()];
 			grille[e.getX()][e.getY()] = tmp;
 			e.setX(e.getY()-1);
@@ -100,7 +104,7 @@ public class Ile {
 			}
 			break;
 		case "droite":
-			if (grille[e.getX()][e.getY()+1] instanceof Sable) {
+			if (grille[e.getX()][e.getY()+1].estTraversable(e)) {
 				grille[e.getX()][e.getY()+1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getY()+1);
@@ -108,7 +112,7 @@ public class Ile {
 			}
 			break;
 		case "haut":
-			if (grille[e.getX()-1][e.getY()] instanceof Sable) {
+			if (grille[e.getX()-1][e.getY()].estTraversable(e)) {
 				grille[e.getX()-1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX()-1);
@@ -116,7 +120,7 @@ public class Ile {
 			}
 			break;
 		case "bas":
-			if (grille[e.getX()+1][e.getY()] instanceof Sable) {
+			if (grille[e.getX()+1][e.getY()].estTraversable(e)) {
 				grille[e.getX()+1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX()+1);

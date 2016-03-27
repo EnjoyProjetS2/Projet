@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Personnage extends Parcelle{
 	
@@ -5,7 +7,8 @@ public class Personnage extends Parcelle{
 	protected int equipe;
 	private int x;
 	private int y;
-	
+	private static List<Personnage> listePersos = new ArrayList<>();	
+
 	/* Constructeur par d√©faut
 	 * @param Personnage
 	 */
@@ -20,6 +23,24 @@ public class Personnage extends Parcelle{
 		this.x = x;
 		this.y = y;
 	}
+	
+	/** Afficher la liste des personnages suivi de leur Èquipe
+	 * 
+	 */
+	public static void afficherPersonnages() {
+		for (int i=0; i<listePersos.size(); i++) {
+			System.out.println(listePersos.get(i).getNom()+" | Equipe: "+listePersos.get(i).getEquipe());
+		}
+	}
+
+	/** Retourne la liste des personnagges
+	 * 
+	 * @return
+	 */
+	public static List<Personnage> getListePersos() {
+		return listePersos;
+	}	
+		
 	
 	/* Retourne le nom
 	 * @param getNom

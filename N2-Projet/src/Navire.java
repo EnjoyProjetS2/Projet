@@ -19,15 +19,15 @@ public class Navire extends Parcelle {
 		} else {
 			return "n"; 
 		}
-	}
+	}	
 	
-	private boolean traverser(Personnage p) {
-		if (p.equipe == equipe) {
+	
+	public boolean estTraversable(Personnage p) {
+		if (p.getEquipe() == equipe) {
 			return true;
 		} else {
 			return false;
 		}
-	
 	}
 	
 }

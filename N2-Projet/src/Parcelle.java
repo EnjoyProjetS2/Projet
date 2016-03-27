@@ -6,6 +6,10 @@ public class Parcelle {
 	}
 	
 	
+	
+	public boolean estTraversable(Personnage p) {
+		return this.traversable;
+	}
 
 	
 	
