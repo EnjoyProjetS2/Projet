@@ -8,16 +8,6 @@ public class Eau extends Parcelle {
 	public String toString() {
 		return "~";
 	}
-
-	public boolean traverser(Personnage p) {
-		return estTraversable();
-	}
-
-	public boolean actionner(Personnage p) {
-		return false;
-	}
-	
-	
 	
 	
 }
