@@ -1,9 +1,11 @@
 
 public class Explorateur extends Personnage{
 	
-	String nom = "Explorateur";
-	
-	Explorateur(){}
+	private int numero;
+	Explorateur(String nom, int equipe, int x, int y,int numero){
+		super( nom, equipe,x , y);
+		this.numero = numero;
+	}
 	
 	void souleverRocher(){}
 	
@@ -13,6 +15,10 @@ public class Explorateur extends Personnage{
 		} else {
 			return "e";
 		}
+	}
+
+	public int getNumero() {
+		return numero;
 	}
 	
 }

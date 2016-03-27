@@ -1,8 +1,8 @@
 
-public class Personnage {
+public class Personnage extends Parcelle{
 	
-	private String nom;
-	private int equipe;
+	protected String nom;
+	protected int equipe;
 	private int x;
 	private int y;
 	

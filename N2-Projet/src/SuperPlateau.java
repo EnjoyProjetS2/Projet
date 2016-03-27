@@ -5,7 +5,7 @@ public class SuperPlateau {
 	private int taille = Constantes.TAILLEX;
 	private int[][] jeu = new int[taille][taille];
 	private String[] gifs = new String[] {"images/stone.png", "images/boat.png",  "images/sable.png", 
-			"images/eau.png"};
+			"images/eau.png", "un.gif"};
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
@@ -17,17 +17,6 @@ public class SuperPlateau {
 
 	public int getTaille() {
 		return taille;
-	}
-
-	public boolean deplacement(int x, int y, int a, int b) {
-		int[][] tmp = p.getJeu();
-		if (tmp[a][b] == 0) {
-			tmp[a][b] = tmp[x][y];
-			tmp[x][y] = 0;
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public int[][] getJeu() {
@@ -47,7 +36,9 @@ public class SuperPlateau {
 					this.jeu[i][j] = 3;
 				} else if(tablo[i][j] instanceof Eau) {
 					this.jeu[i][j] = 4;
-				}
+				} else if(tablo[i][j] instanceof Explorateur) {
+					this.jeu[i][j] = 5;
+				} 
 			}
 		}
 		

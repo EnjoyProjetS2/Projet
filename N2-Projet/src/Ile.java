@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Ile {
@@ -8,6 +10,7 @@ public class Ile {
 	private double tauxRocher = Constantes.TAUXDEROCHER;
 	private int posNav1;
 	private int posNav2;
+	private List<Personnage> listPerso = new ArrayList<>();
 
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
@@ -72,7 +75,59 @@ public class Ile {
 		setNavires();
 
 	}
+	public List<Personnage> getListPerso() {
+		return listPerso;
+	}
 
+	public boolean ajoutPersonnage(Personnage e){
+		if (!listPerso.contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
+			listPerso.add(e);
+			grille[e.getX()][e.getY()] = e;
+			return true;
+		}
+		return false;
+	}
+	// Le parametre deplacement est provisoire 
+	public boolean deplacement(Personnage e, String deplacement){
+		Parcelle tmp = new Sable();
+		switch (deplacement) {
+		case "gauche":
+			if(grille[e.getX()][e.getY()-1] instanceof Sable){
+			grille[e.getX()][e.getY()-1] = grille[e.getX()][e.getY()];
+			grille[e.getX()][e.getY()] = tmp;
+			e.setX(e.getY()-1);
+			return true;
+			}
+			break;
+		case "droite":
+			if (grille[e.getX()][e.getY()+1] instanceof Sable) {
+				grille[e.getX()][e.getY()+1] = grille[e.getX()][e.getY()];
+				grille[e.getX()][e.getY()] = tmp;
+				e.setX(e.getY()+1);
+				return true;
+			}
+			break;
+		case "haut":
+			if (grille[e.getX()-1][e.getY()] instanceof Sable) {
+				grille[e.getX()-1][e.getY()] = grille[e.getX()][e.getY()];
+				grille[e.getX()][e.getY()] = tmp;
+				e.setX(e.getX()-1);
+				return true;
+			}
+			break;
+		case "bas":
+			if (grille[e.getX()+1][e.getY()] instanceof Sable) {
+				grille[e.getX()+1][e.getY()] = grille[e.getX()][e.getY()];
+				grille[e.getX()][e.getY()] = tmp;
+				e.setX(e.getX()+1);
+				return true;
+			}
+			break;
+		default:
+			break;
+		}
+		return false;
+	}
 	// ajoute des navires sur le bord de l'ile
 	private void setNavires() {
 
