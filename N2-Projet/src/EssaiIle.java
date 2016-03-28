@@ -5,16 +5,23 @@ public class EssaiIle {
 			
 			
 			Parcelle[][] parcelle = new Parcelle[Constantes.TAILLEX][Constantes.TAILLEY];
-			Ile ile = new Ile(parcelle, Constantes.NOMBREDEROCHER);	
+			Ile ile = new Ile(parcelle, Constantes.POURCENTAGEROCHER);	
 			// Affichage mode texte			
 			System.out.println(ile.toString());
 			// affichage mode graphique
 			SuperPlateau p = new SuperPlateau(ile);
-			ile.ajoutPersonnage(new Explorateur("Arthur", 1, 3, 3, 1));
+			
+			
+			
+			//temporaire en attendant le menu
+			Equipe un = new Equipe("swag", 1);
+			Equipe deux = new Equipe("yolo", 2);			
+			
+			ile.ajoutPersonnage(new Explorateur("Arthur", 1, 3, 3, 1), un);
 			p.setJeu(ile.getGrille());
 			p.affichage();
 			
-			Personnage.afficherPersonnages();
+			//Personnage.afficherPersonnages();
 
 			try {
 				Thread.sleep(3000);
@@ -22,7 +29,7 @@ public class EssaiIle {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			ile.deplacement(Personnage.getListePersos().get(0), "gauche");
+			ile.deplacement(un.getListePersos().get(0), "gauche");
 			p.setJeu(ile.getGrille());
 			p.affichage();
 			

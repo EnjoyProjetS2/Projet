@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Ile {
@@ -9,8 +7,9 @@ public class Ile {
 	private int colonne = Constantes.TAILLEY;
 	private double tauxRocher = Constantes.TAUXDEROCHER;
 	private int posNav1;
-	private int posNav2;
-	private List<Personnage> listPerso = new ArrayList<>();
+	private int posNav2;	
+
+	
 
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
@@ -37,7 +36,6 @@ public class Ile {
 		this.grille = new Parcelle[ligne][colonne];
 
 		ileVierge();
-		setNavires();
 		setRochers();
 	}
 
@@ -53,7 +51,6 @@ public class Ile {
 		this.grille = tablo;
 
 		ileVierge();
-		setNavires();
 		setRochers();
 	}
 
@@ -72,13 +69,14 @@ public class Ile {
 
 		ileVierge();
 		setRochers();
-		setNavires();
 
 	}
+	
 
-	public boolean ajoutPersonnage(Personnage e){
-		if (!Personnage.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
-			Personnage.getListePersos().add(e);
+	public boolean ajoutPersonnage(Personnage e, Equipe t){		
+		
+		if (!t.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
+			t.getListePersos().add(e);
 			grille[e.getX()][e.getY()] = e;
 			return true;
 		}
@@ -136,11 +134,24 @@ public class Ile {
 	private void setNavires() {
 
 		Random alea = new Random();
-		this.posNav1 = alea.nextInt(grille.length - 3) + 1;
-		this.posNav2 = alea.nextInt(grille[0].length - 3) + 1;
+		this.posNav1 = alea.nextInt(grille.length - 4) + 2;
+		this.posNav2 = alea.nextInt(grille[0].length - 4) + 2;
 
 		grille[posNav1][1] = new Navire(1);
 		grille[posNav2][grille.length - 2] = new Navire(2);
+		
+	}
+	
+	private boolean verifierNavires() {
+		
+		if (!(grille[posNav1+1][1] instanceof Sable)) { return false; }
+		if (!(grille[posNav1][2] instanceof Sable)) { return false; }
+		if (!(grille[posNav1-1][1] instanceof Sable)) { return false; }		
+		if (!(grille[posNav2+1][grille.length - 2] instanceof Sable)) { return false; }
+		if (!(grille[posNav2-1][grille.length - 2] instanceof Sable)) { return false; }
+		if (!(grille[posNav2][grille.length - 3] instanceof Sable)) { return false; }
+		
+		return true;
 	}
 
 	// ajoute des rochers sur l'ile
@@ -149,6 +160,7 @@ public class Ile {
 		do {
 
 			ileVierge();
+			setNavires();
 			int nbroc = 0;
 			while (nbroc < getNbRocher()) {
 				Random alea = new Random();
@@ -158,18 +170,10 @@ public class Ile {
 				if (nbroc < getNbRocher() && grille[i][j] instanceof Sable) {
 					grille[i][j] = new Rocher();
 					nbroc++;
-					/*
-					 * if (Parcelle.poseClef == false) { grille[i][j].clef =
-					 * true; Parcelle.poseClef = true; }
-					 * 
-					 * if (Parcelle.poseCoffre == false && grille[i][j].clef ==
-					 * false) { grille[i][j].coffre = true; Parcelle.poseCoffre
-					 * = true; }
-					 */
+					
 				}
 			}
-
-		} while (!verifierIle());
+		} while (!verifierIle() && !verifierNavires());
 
 	}
 
