@@ -94,7 +94,7 @@ public class Ile {
 		Parcelle tmp = new Sable();
 		switch (deplacement) {
 		case "gauche":
-			if(grille[e.getX()][e.getY()-1].estTraversable(e)){
+			if(grille[e.getX()][e.getY()-1].estTraversablePar(e)){
 			grille[e.getX()][e.getY()-1] = grille[e.getX()][e.getY()];
 			grille[e.getX()][e.getY()] = tmp;
 			e.setX(e.getY()-1);
@@ -102,7 +102,7 @@ public class Ile {
 			}
 			break;
 		case "droite":
-			if (grille[e.getX()][e.getY()+1].estTraversable(e)) {
+			if (grille[e.getX()][e.getY()+1].estTraversablePar(e)) {
 				grille[e.getX()][e.getY()+1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getY()+1);
@@ -110,7 +110,7 @@ public class Ile {
 			}
 			break;
 		case "haut":
-			if (grille[e.getX()-1][e.getY()].estTraversable(e)) {
+			if (grille[e.getX()-1][e.getY()].estTraversablePar(e)) {
 				grille[e.getX()-1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX()-1);
@@ -118,7 +118,7 @@ public class Ile {
 			}
 			break;
 		case "bas":
-			if (grille[e.getX()+1][e.getY()].estTraversable(e)) {
+			if (grille[e.getX()+1][e.getY()].estTraversablePar(e)) {
 				grille[e.getX()+1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX()+1);
@@ -160,7 +160,6 @@ public class Ile {
 		do {
 
 			ileVierge();
-			setNavires();
 			int nbroc = 0;
 			while (nbroc < getNbRocher()) {
 				Random alea = new Random();
@@ -173,61 +172,80 @@ public class Ile {
 					
 				}
 			}
+			setNavires();
 		} while (!verifierIle() && !verifierNavires());
 
 	}
 
 	// retourne true si tous les rochers sont accessible false sinon
 	private boolean verifierIle() {
-		int cpt = 0;
-		int[][] ile = new int[ligne][colonne];
-		for (int l = 1; l < ile.length - 1; l++) {
-			for (int c = 1; c < ile[l].length - 1; c++) {
-				if (grille[l][c] instanceof Sable) {
-					if (grille[l][c - 1] instanceof Sable) {
-						ile[l][c] = 0;
-					} else {
-						ile[l][c] = 1;
-					}
-					if (grille[l][c + 1] instanceof Sable) {
-						ile[l][c] = 0;
-					} else {
-						ile[l][c] = 1;
-					}
-					if (grille[l - 1][c] instanceof Sable) {
-						ile[l][c] = 0;
-					} else {
-						ile[l][c] = 1;
-					}
-					if (grille[l + 1][c] instanceof Sable) {
-						ile[l][c] = 0;
-					} else {
-						ile[l][c] = 1;
-					}
+		int[][] tablo = new int[ligne][colonne];
+
+		for (int i = 0; i < tablo.length; i++) {
+			for (int j = 0; j < tablo[i].length; j++) {
+
+				if (grille[i][j] instanceof Eau) {
+					tablo[i][j] = 3;
+				} else {
+					tablo[i][j] = 0;
 				}
 			}
 		}
 
-		for (int i = 0; i < ile.length; i++) {
-			for (int j = 0; j < ile[i].length; j++) {
-				if (ile[i][j] == 1) {
-					cpt++;
+		// Bato
+		tablo[1][1] = 1;
+		grille[1][1].setTraversable(true);
 
+		for (int i = 1; i < tablo.length - 1; i++) {
+
+			for (int j = 1; j < tablo[i].length - 1; j++) {
+
+				if (tablo[i][j] == 1) {
+
+
+					if (grille[i + 1][j].estTraversable()) {
+						tablo[i + 1][j] = 1;
+					} else {
+						tablo[i + 1][j] = 2;
+					}
+
+					if (grille[i - 1][j].estTraversable()) {
+						tablo[i - 1][j] = 1;
+					} else {
+						tablo[i - 1][j] = 2;
+					}
+
+					if (grille[i][j + 1].estTraversable()) {
+						tablo[i][j + 1] = 1;
+					} else {
+						tablo[i][j + 1] = 2;
+					}
+
+					if (grille[i][j - 1].estTraversable()) {
+						tablo[i][j - 1] = 1;
+					} else {
+						tablo[i][j - 1] = 2;
+					}
 				}
-				// System.out.print(ile[i][j]);
 			}
-			// System.out.println();
 		}
-		/*
-		 * pour les tests try { Thread.sleep(1000); } catch
-		 * (InterruptedException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } System.out.println("1: "+cpt);
-		 * System.out.println("2: "+getNbRocher());
-		 */
-		if (cpt == getNbRocher()) {
+					
+		int nbZero = 0;
+		
+		for (int i = 0; i < tablo.length; i++) {
+			for (int j = 0; j < tablo[i].length; j++) {
+				if (tablo[i][j] == 0) {
+					nbZero++;
+				}
+			}
+		}	
+					
+		if (nbZero == 0) {		
+			grille[1][1].setTraversable(false);
 			return true;
 		}
 		return false;
+
 	}
 
 	/**
@@ -269,28 +287,13 @@ public class Ile {
 	public Parcelle[][] getGrille() {
 		return grille;
 	}
-
-	/**
-	 * Vide l'ile : toutes les cases deviennent vierges
-	 * 
-	 * @param viderIle
-	 */
-	public void viderIle() {
-		for (int i = 0; i < ligne; i++) {
-			for (int j = 0; j < colonne; j++) {
-				this.grille[i][j] = new Parcelle();
-			}
-		}
-	}
-
+	
 	/**
 	 * Cree une ile faite de sable et entouree d'eau
 	 * 
 	 * @param ileVierge
 	 */
 	private void ileVierge() {
-
-		// viderIle();
 
 		for (int i = 0; i < grille.length; i++) {
 			for (int j = 0; j < grille[i].length; j++) {

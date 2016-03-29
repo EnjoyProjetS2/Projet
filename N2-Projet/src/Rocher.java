@@ -1,18 +1,29 @@
 
 public class Rocher extends Parcelle{
-	
-	public static boolean poseCoffre = false;
-	public static boolean poseClef = false;
-	public boolean coffre = false;
-	public boolean clef = false;
-	
-	public Rocher() {
-		super.traversable = false;
-	}	
-	
-	public String toString() {
-		return "R";
-	}
-	
+		
+		boolean clef = false;
+		boolean coffre = false;
+		
+		public Rocher() {
+			super.traversable = false;		
+			
+			if (Rocher.poseClef == false) {
+				this.clef = true;
+				Rocher.poseClef = true;
+			}
 
+			if (Rocher.poseCoffre == false && this.clef == false) {
+				this.coffre = true;
+				Rocher.poseCoffre = true;
+			}		
+		}	
+		
+		public String toString() {
+			
+			//test de la position de la clef et du coffre
+			if (this.clef) { return "K"; }
+			if (this.coffre) { return "C"; }		
+			
+			return "R";
+		}
 }

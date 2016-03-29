@@ -17,7 +17,8 @@ public class EssaiIle {
 			Equipe un = new Equipe("swag", 1);
 			Equipe deux = new Equipe("yolo", 2);			
 			
-			ile.ajoutPersonnage(new Explorateur("Arthur", 1, 3, 3, 1), un);
+			ile.ajoutPersonnage(new Explorateur("Arthur", un, 3, 3), un);
+			ile.ajoutPersonnage(new Explorateur("Vanessa", deux, 5, 5), deux);
 			p.setJeu(ile.getGrille());
 			p.affichage();
 			
@@ -30,6 +31,7 @@ public class EssaiIle {
 				e.printStackTrace();
 			}
 			ile.deplacement(un.getListePersos().get(0), "gauche");
+			ile.deplacement(deux.getListePersos().get(0), "droite");
 			p.setJeu(ile.getGrille());
 			p.affichage();
 			

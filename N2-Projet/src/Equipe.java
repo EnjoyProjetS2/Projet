@@ -31,7 +31,7 @@ public class Equipe{
 	}
 	
 	public boolean ajouterPersonnage(Personnage p) {
-		if (p.getEquipe() == this.ID) {
+		if (p.getEquipe().getID() == this.ID) {
 			listePersos.add(p);
 			return true;
 		} else {
@@ -59,6 +59,10 @@ public class Equipe{
 		boolean[][] newVision = vision;
 		//a terminer
 		
+	}
+
+	public int getID() {
+		return ID;
 	}
 	
 	

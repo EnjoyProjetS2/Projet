@@ -2,32 +2,36 @@
 public class Navire extends Parcelle {
 	
 	private int equipe;
+	private int posX;
+	private int posY;
 	
-	public Navire() {
-	}
 	
-	public Navire(int team) {		
+	public Navire(int team) {
 		if (team == 1 || team == 2) {
-			this.equipe = team;
+			this.equipe = team;	
 		}
 	}
 
+
 	public String toString() {
-		
+
 		if (equipe == 1) {
 			return "N";
 		} else {
-			return "n"; 
+			return "n";
 		}
-	}	
-	
-	
-	public boolean estTraversable(Personnage p) {
-		if (p.getEquipe() == equipe) {
+	}
+
+	public boolean traverser(Personnage p) {
+		if (p.getEquipe().getID() == equipe) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public boolean actionner(Personnage p) {
+		return false;
 	}
 	
 }
