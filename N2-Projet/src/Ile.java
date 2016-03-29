@@ -7,9 +7,7 @@ public class Ile {
 	private int colonne = Constantes.TAILLEY;
 	private double tauxRocher = Constantes.TAUXDEROCHER;
 	private int posNav1;
-	private int posNav2;	
-
-	
+	private int posNav2;
 
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
@@ -71,10 +69,9 @@ public class Ile {
 		setRochers();
 
 	}
-	
 
-	public boolean ajoutPersonnage(Personnage e, Equipe t){		
-		
+	public boolean ajoutPersonnage(Personnage e, Equipe t) {
+
 		if (!t.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
 			t.getListePersos().add(e);
 			grille[e.getX()][e.getY()] = e;
@@ -82,46 +79,47 @@ public class Ile {
 		}
 		return false;
 	}
-	// Le parametre deplacement est provisoire 
-	
-	/**Déplace un personnage vers une direction précise
+	// Le parametre deplacement est provisoire
+
+	/**
+	 * Déplace un personnage vers une direction précise
 	 * 
 	 * @param e
 	 * @param deplacement
 	 * @return
 	 */
-	public boolean deplacement(Personnage e, String deplacement){
+	public boolean deplacement(Personnage e, String deplacement) {
 		Parcelle tmp = new Sable();
 		switch (deplacement) {
 		case "gauche":
-			if(grille[e.getX()][e.getY()-1].estTraversablePar(e)){
-			grille[e.getX()][e.getY()-1] = grille[e.getX()][e.getY()];
-			grille[e.getX()][e.getY()] = tmp;
-			e.setX(e.getY()-1);
-			return true;
+			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
+				grille[e.getX()][e.getY() - 1] = grille[e.getX()][e.getY()];
+				grille[e.getX()][e.getY()] = tmp;
+				e.setX(e.getY()-1);
+				return true;
 			}
 			break;
 		case "droite":
-			if (grille[e.getX()][e.getY()+1].estTraversablePar(e)) {
-				grille[e.getX()][e.getY()+1] = grille[e.getX()][e.getY()];
+			if (grille[e.getX()][e.getY() + 1].estTraversablePar(e)) {
+				grille[e.getX()][e.getY() + 1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getY()+1);
+				e.setX(e.getY() + 1);
 				return true;
 			}
 			break;
 		case "haut":
-			if (grille[e.getX()-1][e.getY()].estTraversablePar(e)) {
-				grille[e.getX()-1][e.getY()] = grille[e.getX()][e.getY()];
+			if (grille[e.getX() - 1][e.getY()].estTraversablePar(e)) {
+				grille[e.getX() - 1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getX()-1);
+				e.setX(e.getX() - 1);
 				return true;
 			}
 			break;
 		case "bas":
-			if (grille[e.getX()+1][e.getY()].estTraversablePar(e)) {
-				grille[e.getX()+1][e.getY()] = grille[e.getX()][e.getY()];
+			if (grille[e.getX() + 1][e.getY()].estTraversablePar(e)) {
+				grille[e.getX() + 1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getX()+1);
+				e.setX(e.getX() + 1);
 				return true;
 			}
 			break;
@@ -130,6 +128,7 @@ public class Ile {
 		}
 		return false;
 	}
+
 	// ajoute des navires sur le bord de l'ile
 	private void setNavires() {
 
@@ -139,18 +138,30 @@ public class Ile {
 
 		grille[posNav1][1] = new Navire(1);
 		grille[posNav2][grille.length - 2] = new Navire(2);
-		
+
 	}
-	
+
 	private boolean verifierNavires() {
-		
-		if (!(grille[posNav1+1][1] instanceof Sable)) { return false; }
-		if (!(grille[posNav1][2] instanceof Sable)) { return false; }
-		if (!(grille[posNav1-1][1] instanceof Sable)) { return false; }		
-		if (!(grille[posNav2+1][grille.length - 2] instanceof Sable)) { return false; }
-		if (!(grille[posNav2-1][grille.length - 2] instanceof Sable)) { return false; }
-		if (!(grille[posNav2][grille.length - 3] instanceof Sable)) { return false; }
-		
+
+		if (!(grille[posNav1 + 1][1] instanceof Sable)) {
+			return false;
+		}
+		if (!(grille[posNav1][2] instanceof Sable)) {
+			return false;
+		}
+		if (!(grille[posNav1 - 1][1] instanceof Sable)) {
+			return false;
+		}
+		if (!(grille[posNav2 + 1][grille.length - 2] instanceof Sable)) {
+			return false;
+		}
+		if (!(grille[posNav2 - 1][grille.length - 2] instanceof Sable)) {
+			return false;
+		}
+		if (!(grille[posNav2][grille.length - 3] instanceof Sable)) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -169,7 +180,7 @@ public class Ile {
 				if (nbroc < getNbRocher() && grille[i][j] instanceof Sable) {
 					grille[i][j] = new Rocher();
 					nbroc++;
-					
+
 				}
 			}
 			setNavires();
@@ -202,7 +213,6 @@ public class Ile {
 
 				if (tablo[i][j] == 1) {
 
-
 					if (grille[i + 1][j].estTraversable()) {
 						tablo[i + 1][j] = 1;
 					} else {
@@ -229,18 +239,18 @@ public class Ile {
 				}
 			}
 		}
-					
+
 		int nbZero = 0;
-		
+
 		for (int i = 0; i < tablo.length; i++) {
 			for (int j = 0; j < tablo[i].length; j++) {
 				if (tablo[i][j] == 0) {
 					nbZero++;
 				}
 			}
-		}	
-					
-		if (nbZero == 0) {		
+		}
+
+		if (nbZero == 0) {
 			grille[1][1].setTraversable(false);
 			return true;
 		}
@@ -287,7 +297,7 @@ public class Ile {
 	public Parcelle[][] getGrille() {
 		return grille;
 	}
-	
+
 	/**
 	 * Cree une ile faite de sable et entouree d'eau
 	 * 
@@ -297,8 +307,7 @@ public class Ile {
 
 		for (int i = 0; i < grille.length; i++) {
 			for (int j = 0; j < grille[i].length; j++) {
-				if (i == 0 || i == grille.length - 1 || j == 0
-						|| j == grille[i].length - 1) {
+				if (i == 0 || i == grille.length - 1 || j == 0 || j == grille[i].length - 1) {
 					grille[i][j] = new Eau();
 				} else {
 					grille[i][j] = new Sable();

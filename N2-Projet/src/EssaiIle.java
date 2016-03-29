@@ -5,9 +5,8 @@ public class EssaiIle {
 			
 			
 			Parcelle[][] parcelle = new Parcelle[Constantes.TAILLEX][Constantes.TAILLEY];
-			Ile ile = new Ile(parcelle, Constantes.POURCENTAGEROCHER);	
-			// Affichage mode texte			
-			System.out.println(ile.toString());
+			Ile ile = new Ile(parcelle, Constantes.POURCENTAGEROCHER);
+			
 			// affichage mode graphique
 			SuperPlateau p = new SuperPlateau(ile);
 			
@@ -21,9 +20,10 @@ public class EssaiIle {
 			ile.ajoutPersonnage(new Explorateur("Vanessa", deux, 5, 5), deux);
 			p.setJeu(ile.getGrille());
 			p.affichage();
-			
+			System.out.println(ile.toString());
 			//Personnage.afficherPersonnages();
-
+			System.out.println(un.getListePersos().get(0).getX());
+			System.out.println(un.getListePersos().get(0).getY());
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
@@ -32,9 +32,25 @@ public class EssaiIle {
 			}
 			ile.deplacement(un.getListePersos().get(0), "gauche");
 			ile.deplacement(deux.getListePersos().get(0), "droite");
+
 			p.setJeu(ile.getGrille());
 			p.affichage();
+			System.out.println(ile.toString());
+			System.out.println(un.getListePersos().get(0).getX());
+			System.out.println(un.getListePersos().get(0).getY());
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
+			ile.deplacement(deux.getListePersos().get(0), "droite");
+			p.setJeu(ile.getGrille());
+			p.affichage();
+			System.out.println(ile.toString());
+			System.out.println(un.getListePersos().get(0).getX());
+			System.out.println(un.getListePersos().get(0).getY());
 			
 		}
 

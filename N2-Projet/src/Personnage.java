@@ -109,4 +109,7 @@ public class Personnage extends Parcelle {
 		this.y = y;
 	}
 
+//
+
+	
 }

@@ -6,7 +6,7 @@ public class Constantes {
 	public static final int TAILLEY = 10;
 	
 	//nombre de rocher sur le plateau
-	public static final int POURCENTAGEROCHER = 10;
+	public static final int POURCENTAGEROCHER = 0;
 	//taux de rocher sur le plateau
 	public static final double TAUXDEROCHER = 0.1;
 	

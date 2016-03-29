@@ -18,6 +18,7 @@ public abstract class Parcelle {
 	}
 	
 	
+	
 	/*public abstract boolean traverser(Personnage p); 
 	//Traverser: si la parcelle est traversable: alors p peut aller dessus (return true)
 	
