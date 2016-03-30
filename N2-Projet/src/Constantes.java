@@ -1,14 +1,13 @@
-// C'est ici que l'on range toutes les constantes
-//Ajouter les constantes a la suite
 public class Constantes {
-	//format carre obligatoire
+	
+	//Classe regroupant les constantes pour + de simpliciter à parametrer
+	
+	//Taille de l'ile
 	public static final int TAILLEX = 10;
 	public static final int TAILLEY = 10;
 	
-	//nombre de rocher sur le plateau
+	//Pourcentage de rochers sur le plateau
 	public static final int POURCENTAGEROCHER = 0;
-	//taux de rocher sur le plateau
-	public static final double TAUXDEROCHER = 0.1;
 	
 	//Les differents elements present sur le plateau
 	public static final String VIDE = "vide";
@@ -17,6 +16,11 @@ public class Constantes {
 	public static final String NAV2= "navire2";
 	public static final String ROCHER = "rocher";
 	public static final String SABLE = "sable";
+	
+	//Deux equipes
+	public static final Equipe EQUIPE1 = new Equipe("un", 1);
+	public static final Equipe EQUIPE2 = new Equipe("deux", 2);
+
 	
 	
 }

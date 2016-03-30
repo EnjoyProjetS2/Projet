@@ -5,7 +5,7 @@ public class Ile {
 	private Parcelle[][] grille;
 	private int ligne = Constantes.TAILLEX;
 	private int colonne = Constantes.TAILLEY;
-	private double tauxRocher = Constantes.TAUXDEROCHER;
+	private double tauxRocher;
 	private int posNav1;
 	private int posNav2;
 
@@ -69,7 +69,13 @@ public class Ile {
 		setRochers();
 
 	}
-
+	
+	/**
+	 * Ajoute un personnage sur l'ile
+	 * @param e
+	 * @param t
+	 * @return
+	 */
 	public boolean ajoutPersonnage(Personnage e, Equipe t) {
 
 		if (!t.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
@@ -129,18 +135,19 @@ public class Ile {
 		return false;
 	}
 
-	// ajoute des navires sur le bord de l'ile
+	// Place deux navires aleatoirement sur des bords opposes de l'ile
 	private void setNavires() {
 
 		Random alea = new Random();
 		this.posNav1 = alea.nextInt(grille.length - 4) + 2;
 		this.posNav2 = alea.nextInt(grille[0].length - 4) + 2;
 
-		grille[posNav1][1] = new Navire(1);
-		grille[posNav2][grille.length - 2] = new Navire(2);
+		grille[posNav1][1] = new Navire(Constantes.EQUIPE1);
+		grille[posNav2][grille.length - 2] = new Navire(Constantes.EQUIPE2);
 
 	}
 
+	//Verifie que les parcelles autour des navires sont vides
 	private boolean verifierNavires() {
 
 		if (!(grille[posNav1 + 1][1] instanceof Sable)) {
@@ -165,7 +172,7 @@ public class Ile {
 		return true;
 	}
 
-	// ajoute des rochers sur l'ile
+	//Ajoute des rochers en fonction du pourcentage en parametre a la construction
 	private void setRochers() {
 
 		do {
@@ -188,7 +195,7 @@ public class Ile {
 
 	}
 
-	// retourne true si tous les rochers sont accessible false sinon
+	//Retourne true si tous les rochers sont accessibles, false sinon
 	private boolean verifierIle() {
 		int[][] tablo = new int[ligne][colonne];
 
@@ -298,11 +305,7 @@ public class Ile {
 		return grille;
 	}
 
-	/**
-	 * Cree une ile faite de sable et entouree d'eau
-	 * 
-	 * @param ileVierge
-	 */
+	//Cree une ile de sable et entouree d'eau
 	private void ileVierge() {
 
 		for (int i = 0; i < grille.length; i++) {
@@ -317,7 +320,9 @@ public class Ile {
 	}
 
 	/**
-	 * Affiche la grille de l'ile
+	 * Affiche l'ile
+	 * Chaque parcelle a son charactere particulier
+	 * Les majuscules/minuscules correspondent aux equipes 1 et 2
 	 * 
 	 * @param toString
 	 * @see java.lang.Object#toString()

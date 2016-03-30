@@ -1,12 +1,12 @@
 public class Personnage extends Parcelle {
 
 	protected String nom;
-	protected Equipe e;
+	protected Equipe equipe;
 	private int x;
 	private int y;
 
 	/*
-	 * Constructeur defaut
+	 * Constructeur par defaut
 	 * 
 	 * @param Personnage
 	 */
@@ -22,7 +22,7 @@ public class Personnage extends Parcelle {
 		this.nom = nom;
 
 		if (e.getID() == 1 || e.getID() == 2) {
-			this.e = e;
+			this.equipe = e;
 		}
 
 		this.x = x;
@@ -57,7 +57,7 @@ public class Personnage extends Parcelle {
 	 * @return equipe
 	 */
 	public Equipe getEquipe() {
-		return this.e;
+		return this.equipe;
 	}
 
 	/*
@@ -66,7 +66,7 @@ public class Personnage extends Parcelle {
 	 * @param setEquipe
 	 */
 	public void setEquipe(Equipe equipe) { // verif 1 ou 2
-		this.e = equipe;
+		this.equipe = equipe;
 	}
 
 	/*
