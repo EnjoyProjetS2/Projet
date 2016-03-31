@@ -3,8 +3,8 @@ import java.util.Random;
 public class Ile {
 
 	private Parcelle[][] grille;
-	private int ligne = Constantes.TAILLEX;
-	private int colonne = Constantes.TAILLEY;
+	private int ligne;
+	private int colonne;
 	private double tauxRocher;
 	private int posNav1;
 	private int posNav2;
@@ -28,22 +28,7 @@ public class Ile {
 		this.tauxRocher = 0;
 
 		ileVierge();
-	}
-
-	/**
-	 * Constructeur : cree une ile avec X colonnes et X lignes
-	 * 
-	 * @param Ile
-	 */
-	public Ile(int lig, int col) {
-
-		this.ligne = lig;
-		this.colonne = col;
-		this.grille = new Parcelle[ligne][colonne];
-
-		ileVierge();
-		setRochers();
-	}
+	}	
 
 	/**
 	 * Constructeur : cree une ile avec un tableau de parcelles en parametres
@@ -57,7 +42,7 @@ public class Ile {
 		this.grille = tablo;
 
 		ileVierge();
-		setRochers();
+		setElements();
 	}
 
 	/**
@@ -74,25 +59,11 @@ public class Ile {
 		this.tauxRocher = pourcent * 0.01;
 
 		ileVierge();
-		setRochers();
+		setElements();
 
 	}
 	
-	/**
-	 * Ajoute un personnage sur l'ile
-	 * @param e
-	 * @param t
-	 * @return
-	 */
-	/*public boolean ajoutPersonnage(Personnage e, Equipe t) {
-
-		if (!t.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
-			t.getListePersos().add(e);
-			grille[e.getX()][e.getY()] = e;
-			return true;
-		}
-		return false;
-	}*/
+	
 	// Le parametre deplacement est provisoire
 
 	/**
@@ -150,8 +121,11 @@ public class Ile {
 		this.posNav1 = alea.nextInt(grille.length - 4) + 2;
 		this.posNav2 = alea.nextInt(grille[0].length - 4) + 2;
 
-		grille[posNav1][1] = new Navire(Constantes.EQUIPE1);
-		grille[posNav2][grille.length - 2] = new Navire(Constantes.EQUIPE2);
+		Jeu.un.setNavire(new Navire(posNav1, 1));
+		Jeu.deux.setNavire(new Navire(posNav2, grille.length - 2));		
+		
+		grille[posNav1][1] = Jeu.un.getNavire();
+		grille[posNav2][grille.length - 2] = Jeu.deux.getNavire();
 
 	}
 
@@ -181,7 +155,7 @@ public class Ile {
 	}
 
 	//Ajoute des rochers en fonction du pourcentage en parametre a la construction
-	private void setRochers() {
+	private void setElements() {
 
 		do {
 

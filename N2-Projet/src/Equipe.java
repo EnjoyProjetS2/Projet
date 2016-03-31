@@ -4,6 +4,9 @@ import java.util.List;
 public class Equipe{	
 	
 	private String nom;
+	private Navire navire;
+	
+
 	private final int ID; //1 ou 2
 
 	private List<Personnage> listePersos = new ArrayList<>();
@@ -19,12 +22,24 @@ public class Equipe{
 	public Equipe(String nom, int ID) {		
 		if (ID == 1 || ID == 2) {
 			this.nom = nom;
-			this.ID = ID;				
+			this.ID = ID;
+			this.navire = new Navire();
+			this.navire.setEquipe(this);
 			
 		} else {
 			this.nom = null;
 			this.ID = 0;
 		}
+	}
+	
+	public Navire getNavire() {
+		return navire;
+	}
+
+	public void setNavire(Navire navire) {
+		this.navire = navire;
+		this.navire.setEquipe(this);
+
 	}
 	
 	/**Retourne la liste des personnages de l'equipe
@@ -34,21 +49,23 @@ public class Equipe{
 	public List<Personnage> getListePersos() {
 		return this.listePersos;
 	}
+	
 	public void afficherEquipe(){
+		System.out.println(this.nom +":");
 		for (int i = 0; i < listePersos.size(); i++) {
 			System.out.println(listePersos.get(i));
 		}
 	}
+	
 	public boolean ajoutPersonnage(Personnage p){
 		if(!listePersos.contains(p)){
 			listePersos.add(p);
+			
 			return true;
 		}
 		return false;
 	}
-	/*public void setVision() {
-		//a terminer		
-	}*/
+		
 
 	/**Retourne l'identifiant de l'equipe
 	 * 
@@ -57,6 +74,11 @@ public class Equipe{
 	public int getID() {
 		return ID;
 	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
 	
 	
 }

@@ -2,7 +2,7 @@
 public class SuperPlateau {
 	
 	private Plateau p;
-	private int taille = Constantes.TAILLEX;
+	private int taille = Jeu.tailleX; 
 	private int[][] jeu = new int[taille][taille];
 	private String[] gifs = new String[] {"images/stone.png", "images/boat.png",  "images/sable.png", 
 			"images/eau.png", "un.gif"};
@@ -40,16 +40,7 @@ public class SuperPlateau {
 					this.jeu[i][j] = 5;
 				} 
 			}
-		}
-		
-		/*//test: affichage du tableau d'entiers
-		for (int i = 0; i < tablo.length; i++) {
-			for (int j = 0; j < tablo.length; j++) {
-			System.out.print(jeu[i][j]);
-			}
-			System.out.println();
-		}*/
-			
+		}		
 			
 		p.setJeu(this.jeu);
 	}
