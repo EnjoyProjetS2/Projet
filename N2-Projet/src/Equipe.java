@@ -34,7 +34,18 @@ public class Equipe{
 	public List<Personnage> getListePersos() {
 		return this.listePersos;
 	}
-	
+	public void afficherEquipe(){
+		for (int i = 0; i < listePersos.size(); i++) {
+			System.out.println(listePersos.get(i));
+		}
+	}
+	public boolean ajoutPersonnage(Personnage p){
+		if(!listePersos.contains(p)){
+			listePersos.add(p);
+			return true;
+		}
+		return false;
+	}
 	/*public void setVision() {
 		//a terminer		
 	}*/

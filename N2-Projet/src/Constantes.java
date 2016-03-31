@@ -7,7 +7,7 @@ public class Constantes {
 	public static final int TAILLEY = 10;
 	
 	//Pourcentage de rochers sur le plateau
-	public static final int POURCENTAGEROCHER = 0;
+	public static final int POURCENTAGEROCHER = 12;
 	
 	//Les differents elements present sur le plateau
 	public static final String VIDE = "vide";

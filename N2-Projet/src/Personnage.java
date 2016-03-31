@@ -4,7 +4,7 @@ public class Personnage extends Parcelle {
 	protected Equipe equipe;
 	private int x;
 	private int y;
-
+	protected boolean possessionClef;
 	/*
 	 * Constructeur par defaut
 	 * 

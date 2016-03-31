@@ -9,6 +9,14 @@ public class Ile {
 	private int posNav1;
 	private int posNav2;
 
+	public int getNav1() {
+		return posNav1;
+	}
+
+	public int getNav2() {
+		return posNav2;
+	}
+
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
 	 * 
@@ -76,7 +84,7 @@ public class Ile {
 	 * @param t
 	 * @return
 	 */
-	public boolean ajoutPersonnage(Personnage e, Equipe t) {
+	/*public boolean ajoutPersonnage(Personnage e, Equipe t) {
 
 		if (!t.getListePersos().contains(e) && grille[e.getX()][e.getY()] instanceof Sable) {
 			t.getListePersos().add(e);
@@ -84,7 +92,7 @@ public class Ile {
 			return true;
 		}
 		return false;
-	}
+	}*/
 	// Le parametre deplacement est provisoire
 
 	/**
