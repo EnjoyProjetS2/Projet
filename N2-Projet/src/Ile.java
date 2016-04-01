@@ -28,7 +28,7 @@ public class Ile {
 		this.tauxRocher = 0;
 
 		ileVierge();
-	}	
+	}
 
 	/**
 	 * Constructeur : cree une ile avec un tableau de parcelles en parametres
@@ -62,8 +62,7 @@ public class Ile {
 		setElements();
 
 	}
-	
-	
+
 	// Le parametre deplacement est provisoire
 
 	/**
@@ -80,7 +79,7 @@ public class Ile {
 			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
 				grille[e.getX()][e.getY() - 1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getY()-1);
+				e.setX(e.getY() - 1);
 				return true;
 			}
 			break;
@@ -113,6 +112,16 @@ public class Ile {
 		}
 		return false;
 	}
+	// Deplacement au clique
+	/*
+	 * public boolean deplacement(Personnage perso, SuperPlateau p) { Parcelle
+	 * tmp = new Sable(); if
+	 * (grille[p.getPlateau().getPosX()][p.getPlateau().getPosY()].
+	 * estTraversablePar(perso)) { grille[p.getPlateau().getPosX() -
+	 * 1][p.getPlateau().getPosY()] = tmp; grille[perso.getX()][perso.getY()] =
+	 * tmp; perso.setX(p.getPlateau().getPosX());
+	 * perso.setY(p.getPlateau().getPosY()); return true; } return false; }
+	 */
 
 	// Place deux navires aleatoirement sur des bords opposes de l'ile
 	private void setNavires() {
@@ -122,14 +131,14 @@ public class Ile {
 		this.posNav2 = alea.nextInt(grille[0].length - 4) + 2;
 
 		Jeu.un.setNavire(new Navire(posNav1, 1));
-		Jeu.deux.setNavire(new Navire(posNav2, grille.length - 2));		
-		
+		Jeu.deux.setNavire(new Navire(posNav2, grille.length - 2));
+
 		grille[posNav1][1] = Jeu.un.getNavire();
 		grille[posNav2][grille.length - 2] = Jeu.deux.getNavire();
 
 	}
 
-	//Verifie que les parcelles autour des navires sont vides
+	// Verifie que les parcelles autour des navires sont vides
 	private boolean verifierNavires() {
 
 		if (!(grille[posNav1 + 1][1] instanceof Sable)) {
@@ -154,7 +163,8 @@ public class Ile {
 		return true;
 	}
 
-	//Ajoute des rochers en fonction du pourcentage en parametre a la construction
+	// Ajoute des rochers en fonction du pourcentage en parametre a la
+	// construction
 	private void setElements() {
 
 		do {
@@ -177,7 +187,7 @@ public class Ile {
 
 	}
 
-	//Retourne true si tous les rochers sont accessibles, false sinon
+	// Retourne true si tous les rochers sont accessibles, false sinon
 	private boolean verifierIle() {
 		int[][] tablo = new int[ligne][colonne];
 
@@ -287,7 +297,7 @@ public class Ile {
 		return grille;
 	}
 
-	//Cree une ile de sable et entouree d'eau
+	// Cree une ile de sable et entouree d'eau
 	private void ileVierge() {
 
 		for (int i = 0; i < grille.length; i++) {
@@ -302,9 +312,8 @@ public class Ile {
 	}
 
 	/**
-	 * Affiche l'ile
-	 * Chaque parcelle a son charactere particulier
-	 * Les majuscules/minuscules correspondent aux equipes 1 et 2
+	 * Affiche l'ile Chaque parcelle a son charactere particulier Les
+	 * majuscules/minuscules correspondent aux equipes 1 et 2
 	 * 
 	 * @param toString
 	 * @see java.lang.Object#toString()

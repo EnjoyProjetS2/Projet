@@ -7,7 +7,6 @@ public class Navire extends Parcelle {
 	private int x;
 	private int y;
 	private List<Personnage> persoDansNavire = new ArrayList<>();
-
 	
 	
 
@@ -27,7 +26,14 @@ public class Navire extends Parcelle {
 			return false;
 		}
 	}	
-	
+	public boolean presenceDuCoffre(){
+		for (Personnage personnage : persoDansNavire) {
+			if(personnage.possessionCoffre){
+				return true;
+			}
+		}
+		return false;
+	}
 	public void embarquement() {
 		for (int i=0; i<equipe.getListePersos().size(); i++) {
 			getPersoDansNavire().add(equipe.getListePersos().get(i));

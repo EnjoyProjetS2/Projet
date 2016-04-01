@@ -21,6 +21,8 @@ public class Plateau {
 	private JFrame window ;
 	private GraphicPane graphic ;
 	private ConsolePane console ;
+	private int posX;
+	private int posY;
 	/**
 	 *  Attribut ou est enregistré un événement observé. Cet attribut est
 	 * initialisé à null au début de la scrutation et rempli par l'événement observé 
@@ -229,7 +231,14 @@ public class Plateau {
 	 * @return le numéro de la colonne ciblée (0 à taille-1)
 	 */
 	public int getX(MouseEvent event) {
-		return graphic.getX(event) ;
+		posX = graphic.getX(event) ;
+		return posX ;
+	}
+	
+	/** returne la position de X au dernier click
+	 * JAVADOC a faire*/
+	public int getPosX(){
+		return posX;
 	}
 	/**
 	 * Calcule la colonne de la case ciblée par un mouseEvent.
@@ -240,8 +249,14 @@ public class Plateau {
 	 * @param event L'évenement souris capturé.
 	 * @return le numéro de la colonne ciblée (0 à taille-1)
 	 */
-	public int getY(MouseEvent event) { 	
-		return graphic.getY(event) ;
+	public int getY(MouseEvent event) {
+		posY = graphic.getY(event);
+		return posY;
+	}
+	/** returne la position de Y au dernier click
+	 * JAVADOC a faire*/
+	public int getPosY(){
+		return posY;
 	}
 	// Note la taille initiale est calculée d'après la taille du graphique.
 	private void resizeFromGraphic() {

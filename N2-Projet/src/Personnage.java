@@ -5,6 +5,7 @@ public class Personnage extends Parcelle {
 	private int x;
 	private int y;
 	protected boolean possessionClef;
+	protected boolean possessionCoffre;
 	/*
 	 * Constructeur par defaut
 	 * 
@@ -28,7 +29,6 @@ public class Personnage extends Parcelle {
 		this.x = x;
 		this.y = y;
 	}
-
 	/*
 	 * Retourne le nom
 	 * 
@@ -68,7 +68,6 @@ public class Personnage extends Parcelle {
 	public void setEquipe(Equipe equipe) { // verif 1 ou 2
 		this.equipe = equipe;
 	}
-
 	/*
 	 * Retourne la coordonnee x
 	 * 
