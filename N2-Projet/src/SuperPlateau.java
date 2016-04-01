@@ -12,7 +12,7 @@ public class SuperPlateau {
 	}
 
 	public SuperPlateau(Ile ile) {
-		p = new Plateau(gifs, ile.getLigne());
+		p = new Plateau(gifs, ile.getLigne(), true);
 	}
 
 	public int getTaille() {
