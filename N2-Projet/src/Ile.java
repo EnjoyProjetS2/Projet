@@ -113,15 +113,18 @@ public class Ile {
 		return false;
 	}
 	// Deplacement au clique
-	/*
-	 * public boolean deplacement(Personnage perso, SuperPlateau p) { Parcelle
-	 * tmp = new Sable(); if
-	 * (grille[p.getPlateau().getPosX()][p.getPlateau().getPosY()].
-	 * estTraversablePar(perso)) { grille[p.getPlateau().getPosX() -
-	 * 1][p.getPlateau().getPosY()] = tmp; grille[perso.getX()][perso.getY()] =
-	 * tmp; perso.setX(p.getPlateau().getPosX());
-	 * perso.setY(p.getPlateau().getPosY()); return true; } return false; }
-	 */
+
+	public boolean deplacement(Personnage perso, SuperPlateau p) {
+		Parcelle tmp = new Sable();
+		if (grille[p.getPlateau().getPosX()][p.getPlateau().getPosY()].estTraversablePar(perso)) {
+			grille[p.getPlateau().getPosX() - 1][p.getPlateau().getPosY()] = tmp;
+			grille[perso.getX()][perso.getY()] = tmp;
+			perso.setX(p.getPlateau().getPosX());
+			perso.setY(p.getPlateau().getPosY());
+			return true;
+		}
+		return false;
+	}
 
 	// Place deux navires aleatoirement sur des bords opposes de l'ile
 	private void setNavires() {

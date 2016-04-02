@@ -60,7 +60,7 @@ public class Jeu {
 				System.out.println(deux.getNavire().getPersoDansNavire().get(i).toString());
 			}
 			// TEST CYCLE DE JEU
-			/*while (!un.getNavire().presenceDuCoffre() && !deux.getNavire().presenceDuCoffre()) {
+			while (!un.getNavire().presenceDuCoffre() && !deux.getNavire().presenceDuCoffre()) {
 				System.out.println("k");
 				Personnage po = null;
 				boolean personnageSelectionner = false;
@@ -68,6 +68,7 @@ public class Jeu {
 					System.out.println(p.getPlateau().getPosX()+"   "+p.getPlateau().getPosY());
 					//Marche pas je sais pas pourquoi !
 					if (ile.getGrille()[p.getPlateau().getPosX()][p.getPlateau().getPosY()] instanceof Personnage) {
+					//
 						System.out.println("ni");
 						for (Personnage perso : un.getListePersos()) {
 							if (perso.getX() == p.getPlateau().getPosX() && perso.getY() == p.getPlateau().getPosY()) {
@@ -79,7 +80,7 @@ public class Jeu {
 				} while (!personnageSelectionner);
 				ile.deplacement(po, p);
 			}
-			//*/
+			//
 		}
 	}
 
@@ -115,19 +116,25 @@ public class Jeu {
 		// ajouter taille de la carte
 		// ajouter nombre de joueur par equipe
 		// ajouter pourcentage de rochers
-		/*JFrame fen = new JFrame("Parametres de partie");
+		JFrame fen = new JFrame("Parametres de partie");
 		fen.setPreferredSize(new Dimension(500, 500));
 		fen.getContentPane().setLayout(new BorderLayout());
 		JPanel panGauche = new JPanel();
 		JPanel panCentre = new JPanel();
 		JPanel panDroite = new JPanel();
+		JPanel panHaut = new JPanel();
 		JButton validation = new JButton("Valider");
+		//PanHaut
+		JLabel labHaut = new JLabel("Les parametres");
+		//ajout panhaut
+		panHaut.add(labHaut);
 		//panGauche
-		
-		JLabel labGauche = new JLabel("Taille ");
-		JSlider sliderGauche= new JSlider();
-		sliderGauche.setMaximum(20);
-		sliderGauche.setMinimum(5);
+		JLabel labGauche = new JLabel("Taille");
+		JSlider sliderGauche= new JSlider(JSlider.VERTICAL, 5, 15, 10);
+		sliderGauche.setMajorTickSpacing(10);
+		sliderGauche.setMinorTickSpacing(1);
+		sliderGauche.setPaintTicks(true);
+		sliderGauche.setPaintLabels(true);
 		
 		// ajout a panGauche
 		panGauche.setLayout(new BorderLayout());
@@ -136,12 +143,26 @@ public class Jeu {
 		
 		// panCentre
 		JLabel labCentre = new JLabel("Nombre de Joueur");
-		JSlider sliderCentre = new JSlider();
-		sliderCentre.
+		JSlider sliderCentre = new JSlider(JSlider.VERTICAL, 1, 5, 1);
+		sliderCentre.setMajorTickSpacing(4);
+		sliderCentre.setMinorTickSpacing(1);
+		sliderCentre.setPaintTicks(true);
+		sliderCentre.setPaintLabels(true);
+		labCentre.setHorizontalAlignment(JLabel.CENTER);
 		// ajout a panCentre
 		panCentre.setLayout(new BorderLayout());
-		
-		
+		panCentre.add(labCentre, BorderLayout.NORTH);
+		panCentre.add(sliderCentre, BorderLayout.CENTER);
+		//panDroit
+		JLabel labDroit = new JLabel("Pourcentage de rocher");
+		JSlider sliderDroite = new JSlider(JSlider.VERTICAL, 0, 40, 10);
+		sliderDroite.setMajorTickSpacing(40);
+		sliderDroite.setMinorTickSpacing(0);
+		sliderDroite.setPaintTicks(true);
+		sliderDroite.setPaintLabels(true);
+		panDroite.setLayout(new BorderLayout());
+		panDroite.add(labDroit, BorderLayout.NORTH);
+		panDroite.add(sliderDroite, BorderLayout.CENTER);
 		// ajout Validation
 		validation.addMouseListener(new MouseListener() {
 			
@@ -174,20 +195,27 @@ public class Jeu {
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				validerParametre = true;
+				fen.setVisible(false);
 			}
 		});
 		fen.getContentPane().add(validation, BorderLayout.SOUTH);
 		fen.getContentPane().add(panGauche, BorderLayout.WEST);
 		fen.getContentPane().add(panCentre, BorderLayout.CENTER);
 		fen.getContentPane().add(panDroite, BorderLayout.EAST);
+		fen.getContentPane().add(panHaut, BorderLayout.NORTH);
 		fen.pack();
 		fen.setLocationRelativeTo(null);
 		fen.setVisible(true);
-		//la tempo pour attendre que le bouton soit appuyé
+		//la tempo pour attendre que le bouton soit appuyé sans bouffer tout le proco
 		do {
 			System.out.println();
-		} while (!validerParametre);*/
-		
+		} while (!validerParametre);
+		//modification desparametres
+		nbPerso = sliderCentre.getValue();
+		pourcentageRocher = sliderDroite.getValue();
+		tailleX = sliderGauche.getValue();
+		tailleY = tailleX;
+		System.out.println(nbPerso + "  "+ pourcentageRocher+"  "+ tailleX);
 	}
 
 	public void saisieEquipe(Equipe e) {
