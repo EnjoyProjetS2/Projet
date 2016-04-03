@@ -42,8 +42,28 @@ public class Navire extends Parcelle {
 		}
 	}
 	
+	public int dernierPassager() {
+		
+		if (persoDansNavire.isEmpty()) {
+			return -1;
+		}
+		
+		int idx;
+		for (int i=0; i<persoDansNavire.size(); i++) {
+			if (persoDansNavire.get(i) instanceof Personnage) {
+				return i;
+			}
+		}
+		return -1;
+		
+	}
+	
 	public List<Personnage> getPersoDansNavire() {
 		return persoDansNavire;
+	}
+	
+	public boolean estVide() {
+		return persoDansNavire.isEmpty();
 	}
 
 	public void setX(int x) {

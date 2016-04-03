@@ -115,15 +115,57 @@ public class Ile {
 	// Deplacement au clique
 
 	public boolean deplacement(Personnage perso, SuperPlateau p) {
-		Parcelle tmp = new Sable();
-		if (grille[p.getPlateau().getPosX()][p.getPlateau().getPosY()].estTraversablePar(perso)) {
-			grille[p.getPlateau().getPosX() - 1][p.getPlateau().getPosY()] = tmp;
-			grille[perso.getX()][perso.getY()] = tmp;
-			perso.setX(p.getPlateau().getPosX());
-			perso.setY(p.getPlateau().getPosY());
+
+		System.out.println("Destination?");
+
+		
+
+		p.getPlateau().waitEvent();
+		int clicX = p.getPlateau().getPosX();
+		int clicY = p.getPlateau().getPosY();
+		
+		if (grille[clicY][clicX] instanceof Navire) {
+			System.out.println("erreur");
+			return deplacement(perso, p);
+		}
+
+		if (grille[clicY][clicX].estTraversable() && (clicY == perso.getX() + 1 || clicY == perso.getX() - 1
+				|| clicX == perso.getY() + 1 || clicX == perso.getY() - 1)) {
+
+			grille[perso.getX()][perso.getY()] = new Sable();
+			grille[clicY][clicX] = perso;			
+			perso.setX(clicY);
+			perso.setY(clicX);
 			return true;
 		}
-		return false;
+
+		System.out.println("erreur");
+		return deplacement(perso, p);
+
+	}
+
+	public boolean deplacement(Equipe e, SuperPlateau p) {
+
+		System.out.println("Destination?");
+
+		p.getPlateau().waitEvent();
+		int clicX = p.getPlateau().getPosX();
+		int clicY = p.getPlateau().getPosY();
+
+		if (grille[clicY][clicX].estTraversable() && !(grille[clicY][clicX] instanceof Navire)
+				&& (clicY == e.getNavire().getX() + 1 || clicY == e.getNavire().getX() - 1
+						|| clicX == e.getNavire().getY() + 1 || clicX == e.getNavire().getY() - 1)) {
+
+			grille[clicY][clicX] = e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager());
+			e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setX(clicY);
+			e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setY(clicX);
+			e.getNavire().getPersoDansNavire().remove(e.getNavire().dernierPassager());
+			System.out.println("Le perso a été deplacé");
+			return true;
+		}
+		System.out.println("erreur");
+		return deplacement(e, p);
+
 	}
 
 	// Place deux navires aleatoirement sur des bords opposes de l'ile

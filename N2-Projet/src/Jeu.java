@@ -41,46 +41,57 @@ public class Jeu {
 
 			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
-			System.out.println(ile.toString()); // Affichage texte
-
-			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
-			p.setJeu(ile.getGrille());
-			p.affichage();
-
 			// Les membres des équipes se dirigent dans leurs bateaux respectifs
 			un.getNavire().embarquement();
 			deux.getNavire().embarquement();
 
-			// Test si les perso sont bien dans leurs bateaux
-			for (int i = 0; i < un.getNavire().getPersoDansNavire().size(); i++) {
-				System.out.println(un.getNavire().getPersoDansNavire().get(i).toString());
-			}
-			System.out.println("------");
-			for (int i = 0; i < deux.getNavire().getPersoDansNavire().size(); i++) {
-				System.out.println(deux.getNavire().getPersoDansNavire().get(i).toString());
-			}
-			// TEST CYCLE DE JEU
-			while (!un.getNavire().presenceDuCoffre() && !deux.getNavire().presenceDuCoffre()) {
-				System.out.println("k");
-				Personnage po = null;
-				boolean personnageSelectionner = false;
-				do {
-					System.out.println(p.getPlateau().getPosX()+"   "+p.getPlateau().getPosY());
-					//Marche pas je sais pas pourquoi !
-					if (ile.getGrille()[p.getPlateau().getPosX()][p.getPlateau().getPosY()] instanceof Personnage) {
-					//
-						System.out.println("ni");
-						for (Personnage perso : un.getListePersos()) {
-							if (perso.getX() == p.getPlateau().getPosX() && perso.getY() == p.getPlateau().getPosY()) {
-								po = perso;
-								personnageSelectionner = true;
-							}
-						}
+			/*
+			 * // Test si les perso sont bien dans leurs bateaux for (int i = 0;
+			 * i < un.getNavire().getPersoDansNavire().size(); i++) {
+			 * System.out.println(un.getNavire().getPersoDansNavire().get(i).
+			 * toString()); } System.out.println("------"); for (int i = 0; i <
+			 * deux.getNavire().getPersoDansNavire().size(); i++) {
+			 * System.out.println(deux.getNavire().getPersoDansNavire().get(i).
+			 * toString()); }
+			 */
+
+			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
+
+			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
+
+				System.out.println(ile.toString()); // Affichage texte
+				p.setJeu(ile.getGrille());
+				p.affichage();
+
+				System.out.println("Cliquez sur un navire ou un personnage");
+
+				/*int clicX = -1;
+				int clicY = -1;*/
+
+				p.getPlateau().waitEvent();
+				int clicX = p.getPlateau().getPosX();
+				int clicY = p.getPlateau().getPosY();
+
+				if (ile.getGrille()[clicY][clicX] instanceof Navire) {
+
+					if (un.getNavire().dernierPassager() == -1) {
+						System.out.println("Le navire est vide");
+					} else {
+						ile.deplacement(un, p);
+
 					}
-				} while (!personnageSelectionner);
-				ile.deplacement(po, p);
+				}
+				
+				if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
+					
+					Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
+					
+					ile.deplacement(perso, p);
+					
+				}
+
 			}
-			//
+
 		}
 	}
 
@@ -124,23 +135,23 @@ public class Jeu {
 		JPanel panDroite = new JPanel();
 		JPanel panHaut = new JPanel();
 		JButton validation = new JButton("Valider");
-		//PanHaut
+		// PanHaut
 		JLabel labHaut = new JLabel("Les parametres");
-		//ajout panhaut
+		// ajout panhaut
 		panHaut.add(labHaut);
-		//panGauche
+		// panGauche
 		JLabel labGauche = new JLabel("Taille");
-		JSlider sliderGauche= new JSlider(JSlider.VERTICAL, 5, 15, 10);
+		JSlider sliderGauche = new JSlider(JSlider.VERTICAL, 5, 15, 10);
 		sliderGauche.setMajorTickSpacing(10);
 		sliderGauche.setMinorTickSpacing(1);
 		sliderGauche.setPaintTicks(true);
 		sliderGauche.setPaintLabels(true);
-		
+
 		// ajout a panGauche
 		panGauche.setLayout(new BorderLayout());
 		panGauche.add(sliderGauche, BorderLayout.CENTER);
 		panGauche.add(labGauche, BorderLayout.NORTH);
-		
+
 		// panCentre
 		JLabel labCentre = new JLabel("Nombre de Joueur");
 		JSlider sliderCentre = new JSlider(JSlider.VERTICAL, 1, 5, 1);
@@ -153,7 +164,7 @@ public class Jeu {
 		panCentre.setLayout(new BorderLayout());
 		panCentre.add(labCentre, BorderLayout.NORTH);
 		panCentre.add(sliderCentre, BorderLayout.CENTER);
-		//panDroit
+		// panDroit
 		JLabel labDroit = new JLabel("Pourcentage de rocher");
 		JSlider sliderDroite = new JSlider(JSlider.VERTICAL, 0, 40, 10);
 		sliderDroite.setMajorTickSpacing(40);
@@ -165,32 +176,32 @@ public class Jeu {
 		panDroite.add(sliderDroite, BorderLayout.CENTER);
 		// ajout Validation
 		validation.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-	
+
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
@@ -206,16 +217,17 @@ public class Jeu {
 		fen.pack();
 		fen.setLocationRelativeTo(null);
 		fen.setVisible(true);
-		//la tempo pour attendre que le bouton soit appuyé sans bouffer tout le proco
+		// la tempo pour attendre que le bouton soit appuyé sans bouffer tout le
+		// proco
 		do {
 			System.out.println();
 		} while (!validerParametre);
-		//modification desparametres
+		// modification desparametres
 		nbPerso = sliderCentre.getValue();
 		pourcentageRocher = sliderDroite.getValue();
 		tailleX = sliderGauche.getValue();
 		tailleY = tailleX;
-		System.out.println(nbPerso + "  "+ pourcentageRocher+"  "+ tailleX);
+		System.out.println(nbPerso + "  " + pourcentageRocher + "  " + tailleX);
 	}
 
 	public void saisieEquipe(Equipe e) {
@@ -225,8 +237,9 @@ public class Jeu {
 		e.setNom(JOptionPane.showInputDialog("Equipe " + e.getID() + " - Entrez un nom d'equipe:"));
 
 		e.ajoutPersonnage(
-		
-				new Explorateur(JOptionPane.showInputDialog("Quel est le nom de votre explorateur?"), e, 0, 0));
+
+				new Explorateur(JOptionPane.showInputDialog("Quel est le nom de votre explorateur?"), e,
+						e.getNavire().getX(), e.getNavire().getY()));
 
 		int cpt = 1;
 		while (cpt < nbPerso) {
@@ -236,10 +249,11 @@ public class Jeu {
 					personnages, personnages[0]);
 
 			if (classe.equals("Explorateur")) {
-				e.ajoutPersonnage(
-						new Explorateur(JOptionPane.showInputDialog("Quel est le nom de cet explorateur?"), e, 0, 0));
+				e.ajoutPersonnage(new Explorateur(JOptionPane.showInputDialog("Quel est le nom de cet explorateur?"), e,
+						e.getNavire().getX(), e.getNavire().getY()));
 			} else if (classe.equals("Voleur")) {
-				e.ajoutPersonnage(new Voleur(JOptionPane.showInputDialog("Quel est le nom de ce voleur?"), e, 0, 0));
+				e.ajoutPersonnage(new Voleur(JOptionPane.showInputDialog("Quel est le nom de ce voleur?"), e,
+						e.getNavire().getX(), e.getNavire().getY()));
 			}
 
 			cpt++;
