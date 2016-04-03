@@ -23,6 +23,9 @@ public class Jeu {
 	static Equipe un;
 	static Equipe deux;
 
+	/**Constructeur: cree la partie, la parametre, cree les equipes, leurs joueurs et s'occupe du deroulement du jeu
+	 * 
+	 */
 	public Jeu() {
 
 		if (accueil()) {
@@ -45,57 +48,55 @@ public class Jeu {
 			un.getNavire().embarquement();
 			deux.getNavire().embarquement();
 
-			/*
-			 * // Test si les perso sont bien dans leurs bateaux for (int i = 0;
-			 * i < un.getNavire().getPersoDansNavire().size(); i++) {
-			 * System.out.println(un.getNavire().getPersoDansNavire().get(i).
-			 * toString()); } System.out.println("------"); for (int i = 0; i <
-			 * deux.getNavire().getPersoDansNavire().size(); i++) {
-			 * System.out.println(deux.getNavire().getPersoDansNavire().get(i).
-			 * toString()); }
-			 */
-
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
+			p.setJeu(ile.getGrille());
+			p.affichage();	
+
+			int clicX = -1;
+			int clicY = -1;
 
 			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
-
+			
+				
+				p.getPlateau().waitEvent();
+				clicX = p.getPlateau().getPosX();
+				clicY = p.getPlateau().getPosY();
+				
 				System.out.println(ile.toString()); // Affichage texte
-				p.setJeu(ile.getGrille());
-				p.affichage();
-
 				System.out.println("Cliquez sur un navire ou un personnage");
 
-				/*int clicX = -1;
-				int clicY = -1;*/
+				boolean clicValide = false;
+				while (!clicValide) {
+					
+					p.setJeu(ile.getGrille());
+					p.affichage();					
+					
+					clicX = p.getPlateau().getPosX();
+					clicY = p.getPlateau().getPosY();
 
-				p.getPlateau().waitEvent();
-				int clicX = p.getPlateau().getPosX();
-				int clicY = p.getPlateau().getPosY();
+					if (ile.getGrille()[clicY][clicX] instanceof Navire) {
 
-				if (ile.getGrille()[clicY][clicX] instanceof Navire) {
+						if (un.getNavire().dernierPassager() == -1) {
+							System.out.println("Le navire est vide");
+							p.getPlateau().waitEvent();
+						} else {
+							clicValide = true;
+							ile.deplacement(un, p);							
+						}
+						
+					} else if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
 
-					if (un.getNavire().dernierPassager() == -1) {
-						System.out.println("Le navire est vide");
-					} else {
-						ile.deplacement(un, p);
-
+						clicValide = true;
+						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
+						ile.deplacement(perso, p);
 					}
 				}
-				
-				if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
-					
-					Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-					
-					ile.deplacement(perso, p);
-					
-				}
-
 			}
 
 		}
 	}
 
-	public boolean accueil() {
+	private boolean accueil() {
 
 		String[] accueil = { "Jouer", "Regles", "Quitter" };
 
@@ -115,7 +116,7 @@ public class Jeu {
 
 	}
 
-	public void parametres() {
+	private void parametres() {
 
 		String[] mode = { "1 contre 1" };
 
@@ -230,7 +231,7 @@ public class Jeu {
 		System.out.println(nbPerso + "  " + pourcentageRocher + "  " + tailleX);
 	}
 
-	public void saisieEquipe(Equipe e) {
+	private void saisieEquipe(Equipe e) {
 
 		String[] personnages = { "Explorateur", "Voleur" };
 

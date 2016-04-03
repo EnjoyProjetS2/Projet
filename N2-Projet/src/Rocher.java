@@ -4,6 +4,9 @@ public class Rocher extends Parcelle{
 		boolean clef = false;
 		boolean coffre = false;
 		
+		/**Constructeur: cree un rocher et definit une clef et un coffre sur les deux premiers
+		 * 
+		 */
 		public Rocher() {
 			super.traversable = false;		
 			
@@ -18,9 +21,12 @@ public class Rocher extends Parcelle{
 			}		
 		}	
 		
+		/**Retourne R
+		 * 
+		 */
 		public String toString() {
 			
-			//test de la position de la clef et du coffre
+			//test de la position de la clef et du coffre sur le mode texte
 			if (this.clef) { return "K"; }
 			if (this.coffre) { return "C"; }		
 			

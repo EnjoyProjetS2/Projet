@@ -9,14 +9,6 @@ public class Ile {
 	private int posNav1;
 	private int posNav2;
 
-	public int getNav1() {
-		return posNav1;
-	}
-
-	public int getNav2() {
-		return posNav2;
-	}
-
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
 	 * 
@@ -118,30 +110,38 @@ public class Ile {
 
 		System.out.println("Destination?");
 
-		
-
 		p.getPlateau().waitEvent();
 		int clicX = p.getPlateau().getPosX();
 		int clicY = p.getPlateau().getPosY();
-		
+
 		if (grille[clicY][clicX] instanceof Navire) {
-			System.out.println("erreur");
+			System.out.println("Erreur: navire");
 			return deplacement(perso, p);
 		}
 
-		if (grille[clicY][clicX].estTraversable() && (clicY == perso.getX() + 1 || clicY == perso.getX() - 1
-				|| clicX == perso.getY() + 1 || clicX == perso.getY() - 1)) {
+		if (grille[clicY][clicX].estTraversable()) {
 
-			grille[perso.getX()][perso.getY()] = new Sable();
-			grille[clicY][clicX] = perso;			
-			perso.setX(clicY);
-			perso.setY(clicX);
-			return true;
+			int persoX = perso.getY();
+			int persoY = perso.getX();
+
+			if (Math.sqrt(persoX - clicX) <= 1 && Math.sqrt(persoY - clicY) <= 1) {
+
+				grille[perso.getX()][perso.getY()] = new Sable();
+				grille[clicY][clicX] = perso;
+				perso.setX(clicY);
+				perso.setY(clicX);
+
+				p.setJeu(grille);
+				p.affichage();
+				return true;
+				
+			} else {
+				System.out.println("Erreur: trop loin");
+				return deplacement(perso, p);
+			}		
 		}
-
-		System.out.println("erreur");
+		System.out.println("Erreur: parcelle non traversable");
 		return deplacement(perso, p);
-
 	}
 
 	public boolean deplacement(Equipe e, SuperPlateau p) {
@@ -152,18 +152,39 @@ public class Ile {
 		int clicX = p.getPlateau().getPosX();
 		int clicY = p.getPlateau().getPosY();
 
-		if (grille[clicY][clicX].estTraversable() && !(grille[clicY][clicX] instanceof Navire)
-				&& (clicY == e.getNavire().getX() + 1 || clicY == e.getNavire().getX() - 1
-						|| clicX == e.getNavire().getY() + 1 || clicX == e.getNavire().getY() - 1)) {
+		if (grille[clicY][clicX].estTraversable() && !(grille[clicY][clicX] instanceof Navire)) {
 
-			grille[clicY][clicX] = e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager());
-			e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setX(clicY);
-			e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setY(clicX);
-			e.getNavire().getPersoDansNavire().remove(e.getNavire().dernierPassager());
-			System.out.println("Le perso a été deplacé");
-			return true;
+			// int persoX =
+			// e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).getX();
+			// int persoY =
+			// e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).getY();
+
+			int navX = e.getNavire().getY();
+			int navY = e.getNavire().getX();
+
+			if (Math.sqrt(navX - clicX) <= 1 && Math.sqrt(navY - clicY) <= 1) {
+
+				e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setX(clicY);
+				e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setY(clicX);
+
+				grille[e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).getX()][e.getNavire()
+						.getPersoDansNavire().get(e.getNavire().dernierPassager()).getY()] = e.getNavire()
+								.getPersoDansNavire().get(e.getNavire().dernierPassager());
+				e.getNavire().getPersoDansNavire().remove(e.getNavire().dernierPassager());
+				System.out.println("Le perso a été deplacé");
+
+				p.setJeu(grille);
+				p.affichage();
+				return true;
+
+			} else {
+				System.out.println("Erreur: trop loin.");
+				return deplacement(e, p);
+			}
+
 		}
-		System.out.println("erreur");
+
+		System.out.println("Erreur: la parcelle n'est pas traversable");
 		return deplacement(e, p);
 
 	}
@@ -206,6 +227,22 @@ public class Ile {
 		}
 
 		return true;
+	}
+	
+	/**Retourne la position du navire 1
+	 * 
+	 * @return
+	 */
+	public int getNav1() {
+		return posNav1;
+	}
+	
+	/**Retourne la position du navire 2
+	 * 
+	 * @return
+	 */
+	public int getNav2() {
+		return posNav2;
 	}
 
 	// Ajoute des rochers en fonction du pourcentage en parametre a la

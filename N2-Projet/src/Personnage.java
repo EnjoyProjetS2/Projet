@@ -6,7 +6,8 @@ public class Personnage extends Parcelle {
 	private int y;
 	protected boolean possessionClef;
 	protected boolean possessionCoffre;
-	/*
+	
+	/**
 	 * Constructeur par defaut
 	 * 
 	 * @param Personnage
@@ -14,7 +15,7 @@ public class Personnage extends Parcelle {
 	Personnage() {
 	}
 
-	/*
+	/**
 	 * Constructeur avec un nom, une equipe et des coordonnees
 	 * 
 	 * @param Personnage
@@ -29,7 +30,8 @@ public class Personnage extends Parcelle {
 		this.x = x;
 		this.y = y;
 	}
-	/*
+	
+	/**
 	 * Retourne le nom
 	 * 
 	 * @param getNom
@@ -40,7 +42,7 @@ public class Personnage extends Parcelle {
 		return nom;
 	}
 
-	/*
+	/**
 	 * Modifie le nom
 	 * 
 	 * @param setNom
@@ -49,7 +51,7 @@ public class Personnage extends Parcelle {
 		this.nom = nom;
 	}
 
-	/*
+	/**
 	 * Retourne le nom de l'equipe
 	 * 
 	 * @param getEquipe
@@ -60,7 +62,7 @@ public class Personnage extends Parcelle {
 		return this.equipe;
 	}
 
-	/*
+	/**
 	 * Modifie le nom de l'equipe
 	 * 
 	 * @param setEquipe
@@ -68,7 +70,7 @@ public class Personnage extends Parcelle {
 	public void setEquipe(Equipe equipe) { // verif 1 ou 2
 		this.equipe = equipe;
 	}
-	/*
+	/**
 	 * Retourne la coordonnee x
 	 * 
 	 * @param getX
@@ -79,7 +81,7 @@ public class Personnage extends Parcelle {
 		return x;
 	}
 
-	/*
+	/**
 	 * Modifie la valeur de x
 	 * 
 	 * @param setX
@@ -88,7 +90,7 @@ public class Personnage extends Parcelle {
 		this.x = x;
 	}
 
-	/*
+	/**
 	 * Retourne la coordonnee y
 	 * 
 	 * @param getY
@@ -99,7 +101,7 @@ public class Personnage extends Parcelle {
 		return y;
 	}
 
-	/*
+	/**
 	 * Modifie la valeur de y
 	 * 
 	 * @param setY
@@ -108,7 +110,7 @@ public class Personnage extends Parcelle {
 		this.y = y;
 	}
 
-//
+
 
 	
 }

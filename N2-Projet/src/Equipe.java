@@ -32,10 +32,18 @@ public class Equipe{
 		}
 	}
 	
+	/**Retourne le navire de l'equipe
+	 * 
+	 * @return
+	 */
 	public Navire getNavire() {
 		return navire;
 	}
 
+	/**Definit le navire de l'equipe
+	 * 
+	 * @param navire
+	 */
 	public void setNavire(Navire navire) {
 		this.navire = navire;
 		this.navire.setEquipe(this);
@@ -50,6 +58,9 @@ public class Equipe{
 		return this.listePersos;
 	}
 	
+	/**Affiche les membres de l'equipe
+	 * 
+	 */
 	public void afficherEquipe(){
 		System.out.println(this.nom +":");
 		for (int i = 0; i < listePersos.size(); i++) {
@@ -57,6 +68,11 @@ public class Equipe{
 		}
 	}
 	
+	/**Ajoute un personnage dans l'equipe
+	 * 
+	 * @param p
+	 * @return
+	 */
 	public boolean ajoutPersonnage(Personnage p){
 		if(!listePersos.contains(p)){
 			listePersos.add(p);
@@ -75,6 +91,10 @@ public class Equipe{
 		return ID;
 	}
 
+	/**Definit le nom de l'equipe
+	 * 
+	 * @param nom
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}

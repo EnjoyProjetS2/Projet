@@ -8,6 +8,9 @@ public class Eau extends Parcelle {
 		super.traversable = false;
 	}
 	
+	/**Retour une vague pour les parcelles d'eau
+	 * 
+	 */
 	public String toString() {
 		return "~";
 	}

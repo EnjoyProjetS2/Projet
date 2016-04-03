@@ -5,27 +5,29 @@ public abstract class Parcelle {
 	public static boolean poseCoffre = false;
 	public static boolean poseClef = false;
 		
+	/**Retourne vrai si la parcelle est traversable
+	 * 
+	 * @return
+	 */
 	public boolean estTraversable() {
 		return this.traversable;
 	}
 	
+	/**Retourne vrai si la parcelle est traversable par un personnage p
+	 * 
+	 * @param p
+	 * @return
+	 */
 	public boolean estTraversablePar(Personnage p) {
 		return this.traversable;
 	}
 	
+	/**Definit la traversabilite de la parcelle
+	 * 
+	 * @param b
+	 */
 	public void setTraversable(boolean b) {
 		this.traversable = b;
-	}
-	
-	
-	
-	
-	
-	/*public abstract boolean traverser(Personnage p); 
-	//Traverser: si la parcelle est traversable: alors p peut aller dessus (return true)
-	
-	public abstract boolean actionner(Personnage p);
-	//Actionner: si p a une action envers ce type de parcelle: alors action dessus
-	*/
+	}	
 
 }
