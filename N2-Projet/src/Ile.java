@@ -104,8 +104,14 @@ public class Ile {
 		}
 		return false;
 	}
-	// Deplacement au clique
-
+	
+	
+	/**Deplace un personnage grace au clic
+	 * 
+	 * @param perso
+	 * @param p
+	 * @return
+	 */
 	public boolean deplacement(Personnage perso, SuperPlateau p) {
 
 		System.out.println("Destination?");
@@ -144,6 +150,12 @@ public class Ile {
 		return deplacement(perso, p);
 	}
 
+	/**Sort un personnage de son navire grace au clic
+	 * 
+	 * @param e
+	 * @param p
+	 * @return
+	 */
 	public boolean deplacement(Equipe e, SuperPlateau p) {
 
 		System.out.println("Destination?");

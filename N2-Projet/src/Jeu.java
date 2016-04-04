@@ -39,8 +39,8 @@ public class Jeu {
 			saisieEquipe(deux);
 
 			// Affiche les membres des équipes
-			un.afficherEquipe();
-			deux.afficherEquipe();
+			//un.afficherEquipe();
+			//deux.afficherEquipe();
 
 			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
@@ -48,22 +48,38 @@ public class Jeu {
 			un.getNavire().embarquement();
 			deux.getNavire().embarquement();
 
+			System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 			p.setJeu(ile.getGrille());
-			p.affichage();	
+			p.affichage();
 
 			int clicX = -1;
 			int clicY = -1;
 
 			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
 			
+				/*Suite a de nombreux problemes avec Plateau, nous n'avons pas ete en mesure de terminer
+				 * l'utilisation du deplacement pour le jalon 2.
+				 * 
+				 * (reste du code dans ile.destination())
+				 * 
+				 * Bug connus: 
+				 * - parcelles autour du navire non detectees
+				 * - Le deplacement se fait souvent plusieurs clics apres
+				 *	
+				 *
+				 * Les fonctions d'action (voler pour voleur, fouiller le rocher pour l'explorateur) sont
+				 * cependant deja pretes dans leur classes respectives et n'ont juste qu'a etre 
+				 * implementee ici.
+				 */
+				
 				
 				p.getPlateau().waitEvent();
 				clicX = p.getPlateau().getPosX();
 				clicY = p.getPlateau().getPosY();
 				
 				System.out.println(ile.toString()); // Affichage texte
-				System.out.println("Cliquez sur un navire ou un personnage");
+				System.out.println("Cliquez sur un navire ou un personnage //non operationel, voir commentaires dans le code)");
 
 				boolean clicValide = false;
 				while (!clicValide) {
@@ -154,7 +170,7 @@ public class Jeu {
 		panGauche.add(labGauche, BorderLayout.NORTH);
 
 		// panCentre
-		JLabel labCentre = new JLabel("Nombre de Joueur");
+		JLabel labCentre = new JLabel("Nombre de personnages");
 		JSlider sliderCentre = new JSlider(JSlider.VERTICAL, 1, 5, 1);
 		sliderCentre.setMajorTickSpacing(4);
 		sliderCentre.setMinorTickSpacing(1);
@@ -228,9 +244,9 @@ public class Jeu {
 		pourcentageRocher = sliderDroite.getValue();
 		tailleX = sliderGauche.getValue();
 		tailleY = tailleX;
-		System.out.println(nbPerso + "  " + pourcentageRocher + "  " + tailleX);
+		//System.out.println(nbPerso + "  " + pourcentageRocher + "  " + tailleX);
 	}
-
+	
 	private void saisieEquipe(Equipe e) {
 
 		String[] personnages = { "Explorateur", "Voleur" };
@@ -240,7 +256,7 @@ public class Jeu {
 		e.ajoutPersonnage(
 
 				new Explorateur(JOptionPane.showInputDialog("Quel est le nom de votre explorateur?"), e,
-						e.getNavire().getX(), e.getNavire().getY()));
+						e.getNavire().getX(), e.getNavire().getY()));		
 
 		int cpt = 1;
 		while (cpt < nbPerso) {
