@@ -70,7 +70,6 @@ public class Navire extends Parcelle {
 			return -1;
 		}
 		
-		int idx;
 		for (int i=0; i<persoDansNavire.size(); i++) {
 			if (persoDansNavire.get(i) instanceof Personnage) {
 				return i;

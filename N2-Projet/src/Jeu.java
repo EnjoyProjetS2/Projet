@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -20,6 +22,7 @@ public class Jeu {
 	static int tailleX = 10;
 	static int tailleY = 10;
 	static boolean validerParametre = false;
+	static String choix;
 	static Equipe un;
 	static Equipe deux;
 
@@ -39,9 +42,9 @@ public class Jeu {
 			saisieEquipe(deux);
 
 			// Affiche les membres des équipes
-			//un.afficherEquipe();
-			//deux.afficherEquipe();
-
+			un.afficherEquipe();
+			deux.afficherEquipe();
+			
 			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
 			// Les membres des équipes se dirigent dans leurs bateaux respectifs
@@ -73,14 +76,15 @@ public class Jeu {
 				 * implementee ici.
 				 */
 				
+				//System.out.println(ile.toString()); // Affichage texte
+				System.out.println("Cliquez sur un navire ou un personnage //non operationel, voir commentaires dans le code)");
+
 				
 				p.getPlateau().waitEvent();
 				clicX = p.getPlateau().getPosX();
 				clicY = p.getPlateau().getPosY();
 				
-				System.out.println(ile.toString()); // Affichage texte
-				System.out.println("Cliquez sur un navire ou un personnage //non operationel, voir commentaires dans le code)");
-
+				
 				boolean clicValide = false;
 				while (!clicValide) {
 					
@@ -97,21 +101,174 @@ public class Jeu {
 							p.getPlateau().waitEvent();
 						} else {
 							clicValide = true;
-							ile.deplacement(un, p);							
+							ile.deplacement(un, p);		
+							
 						}
 						
 					} else if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
 
 						clicValide = true;
 						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-						ile.deplacement(perso, p);
+						
+						System.out.println(menuDeplacement());
+						
+						
+						//ile.deplacement(perso, p);
 					}
 				}
 			}
 
 		}
 	}
+	
+	
+	public String menuDeplacement(){
+	JFrame fenetre = new JFrame("Actions du personnage");
+	JButton gauche = new JButton("Gauche");
+	//bouton gauche
+	gauche.addMouseListener(new MouseListener() {
+		public void mouseClicked(MouseEvent arg0) {
+			choix = "gauche";
+		}
 
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	JButton droite = new JButton("Droite");
+	droite.addMouseListener(new MouseListener() {
+		public void mouseClicked(MouseEvent arg0) {
+			choix = "droite";
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	JButton haut = new JButton("Haut");
+	haut.addMouseListener(new MouseListener() {
+		public void mouseClicked(MouseEvent arg0) {
+			choix = "haut";
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	JButton bas = new JButton("Bas");
+	bas.addMouseListener(new MouseListener() {
+		public void mouseClicked(MouseEvent arg0) {
+			choix = "bas";
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+
+	
+	fenetre.setPreferredSize(new Dimension(500, 500));
+	fenetre.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
+	
+	//la fenetre
+	fenetre.getContentPane().add(gauche);
+	fenetre.getContentPane().add(droite);
+	fenetre.getContentPane().add(haut);
+	fenetre.getContentPane().add(bas);
+	
+	fenetre.pack();
+	fenetre.setLocationRelativeTo(null);
+	fenetre.setVisible(true);
+	
+	return choix;
+}
+	
+	
+		
+	
 	private boolean accueil() {
 
 		String[] accueil = { "Jouer", "Regles", "Quitter" };

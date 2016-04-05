@@ -1,5 +1,7 @@
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class Ile {
 
 	private Parcelle[][] grille;
@@ -113,9 +115,10 @@ public class Ile {
 	 * @return
 	 */
 	public boolean deplacement(Personnage perso, SuperPlateau p) {
-
+		
 		System.out.println("Destination?");
 
+		/*
 		p.getPlateau().waitEvent();
 		int clicX = p.getPlateau().getPosX();
 		int clicY = p.getPlateau().getPosY();
@@ -130,13 +133,20 @@ public class Ile {
 			int persoX = perso.getY();
 			int persoY = perso.getX();
 
-			if (Math.sqrt(persoX - clicX) <= 1 && Math.sqrt(persoY - clicY) <= 1) {
-
+			if ((clicX == persoX || clicX == persoX + 1 || clicX == persoX - 1) && (clicY == persoY || clicY == persoY + 1 || clicY == persoY - 1 )) {
 				grille[perso.getX()][perso.getY()] = new Sable();
 				grille[clicY][clicX] = perso;
 				perso.setX(clicY);
 				perso.setY(clicX);
-
+				
+				
+				//test
+				System.out.println("perso");
+				System.out.println(perso.getX());
+				System.out.println(perso.getY());
+				
+				//
+				
 				p.setJeu(grille);
 				p.affichage();
 				return true;
@@ -148,6 +158,9 @@ public class Ile {
 		}
 		System.out.println("Erreur: parcelle non traversable");
 		return deplacement(perso, p);
+		*/
+		
+		return false;
 	}
 
 	/**Sort un personnage de son navire grace au clic
@@ -163,7 +176,8 @@ public class Ile {
 		p.getPlateau().waitEvent();
 		int clicX = p.getPlateau().getPosX();
 		int clicY = p.getPlateau().getPosY();
-
+	    
+		
 		if (grille[clicY][clicX].estTraversable() && !(grille[clicY][clicX] instanceof Navire)) {
 
 			// int persoX =
@@ -174,8 +188,8 @@ public class Ile {
 			int navX = e.getNavire().getY();
 			int navY = e.getNavire().getX();
 
-			if (Math.sqrt(navX - clicX) <= 1 && Math.sqrt(navY - clicY) <= 1) {
-
+			if ( (clicX == navX || clicX == navX + 1 || clicX == navX - 1) && (clicY == navY || clicY == navY + 1 || clicY == navY - 1 )) {
+				
 				e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setX(clicY);
 				e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setY(clicX);
 
@@ -184,7 +198,7 @@ public class Ile {
 								.getPersoDansNavire().get(e.getNavire().dernierPassager());
 				e.getNavire().getPersoDansNavire().remove(e.getNavire().dernierPassager());
 				System.out.println("Le perso a été deplacé");
-
+				
 				p.setJeu(grille);
 				p.affichage();
 				return true;
@@ -198,7 +212,7 @@ public class Ile {
 
 		System.out.println("Erreur: la parcelle n'est pas traversable");
 		return deplacement(e, p);
-
+		
 	}
 
 	// Place deux navires aleatoirement sur des bords opposes de l'ile
