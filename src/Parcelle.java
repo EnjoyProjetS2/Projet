@@ -1,18 +1,33 @@
-public class Parcelle {
+public abstract class Parcelle {
 	
-	protected boolean traversable;
+	protected boolean traversable = true;
 	
-	public Parcelle() {
-	}
-	
-	
-	
-	public boolean estTraversable(Personnage p) {
+	public static boolean poseCoffre = false;
+	public static boolean poseClef = false;
+		
+	/**Retourne vrai si la parcelle est traversable
+	 * 
+	 * @return
+	 */
+	public boolean estTraversable() {
 		return this.traversable;
 	}
+	
+	/**Retourne vrai si la parcelle est traversable par un personnage p
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public boolean estTraversablePar(Personnage p) {
+		return this.traversable;
+	}
+	
+	/**Definit la traversabilite de la parcelle
+	 * 
+	 * @param b
+	 */
+	public void setTraversable(boolean b) {
+		this.traversable = b;
+	}	
 
-	
-	
-
-	
 }

@@ -1,106 +1,121 @@
-import java.util.ArrayList;
-import java.util.List;
+public class Personnage extends Parcelle {
 
-public class Personnage extends Parcelle{
-	
 	protected String nom;
-	protected int equipe;
+	protected Equipe equipe;
 	private int x;
 	private int y;
-	private static List<Personnage> listePersos = new ArrayList<>();	
-
-	/* Constructeur par défaut
-	 * @param Personnage
-	 */
-	Personnage(){}
+	protected boolean possessionClef;
+	protected boolean possessionCoffre;
 	
-	/* Constructeur avec un nom, une equipe et des coordonnées
+	/**
+	 * Constructeur par defaut
+	 * 
 	 * @param Personnage
 	 */
-	Personnage(String nom, int equipe, int x, int y){
+	Personnage() {
+		super.traversable = false;
+	}
+
+	/**
+	 * Constructeur avec un nom, une equipe et des coordonnees
+	 * 
+	 * @param Personnage
+	 */
+	Personnage(String nom, Equipe e, int x, int y) {
+		this();
 		this.nom = nom;
-		this.equipe = equipe; //verif 1 ou 2 lol
+
+		if (e.getID() == 1 || e.getID() == 2) {
+			this.equipe = e;
+		}
+
 		this.x = x;
 		this.y = y;
 	}
 	
-	/** Afficher la liste des personnages suivi de leur �quipe
-	 * 
-	 */
-	public static void afficherPersonnages() {
-		for (int i=0; i<listePersos.size(); i++) {
-			System.out.println(listePersos.get(i).getNom()+" | Equipe: "+listePersos.get(i).getEquipe());
-		}
+	public String toString() {
+		return "P";
 	}
-
-	/** Retourne la liste des personnagges
-	 * 
-	 * @return
-	 */
-	public static List<Personnage> getListePersos() {
-		return listePersos;
-	}	
-		
 	
-	/* Retourne le nom
+	/**
+	 * Retourne le nom
+	 * 
 	 * @param getNom
+	 * 
 	 * @return nom
 	 */
 	public String getNom() {
 		return nom;
 	}
-	
-	/* Modifie le nom
+
+	/**
+	 * Modifie le nom
+	 * 
 	 * @param setNom
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
-	/* Retourne le nom de l'equipe
+
+	/**
+	 * Retourne le nom de l'equipe
+	 * 
 	 * @param getEquipe
+	 * 
 	 * @return equipe
 	 */
-	public int getEquipe() {
-		return equipe;
+	public Equipe getEquipe() {
+		return this.equipe;
 	}
-	
-	/* Modifie le nom de l'equipe
+
+	/**
+	 * Modifie le nom de l'equipe
+	 * 
 	 * @param setEquipe
 	 */
-	public void setEquipe(int equipe) { //verif 1 ou 2
+	public void setEquipe(Equipe equipe) { // verif 1 ou 2
 		this.equipe = equipe;
 	}
-	
-	/* Retourne la coordonnee x
+	/**
+	 * Retourne la coordonnee x
+	 * 
 	 * @param getX
+	 * 
 	 * @return x
 	 */
 	public int getX() {
 		return x;
 	}
-	
-	/* Modifie la valeur de x
+
+	/**
+	 * Modifie la valeur de x
+	 * 
 	 * @param setX
 	 */
 	public void setX(int x) {
 		this.x = x;
 	}
-	
-	/* Retourne la coordonnee y
+
+	/**
+	 * Retourne la coordonnee y
+	 * 
 	 * @param getY
+	 * 
 	 * @return y
 	 */
 	public int getY() {
 		return y;
 	}
-	
-	/* Modifie la valeur de y
+
+	/**
+	 * Modifie la valeur de y
+	 * 
 	 * @param setY
 	 */
 	public void setY(int y) {
 		this.y = y;
 	}
+
 
 
 	

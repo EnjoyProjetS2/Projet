@@ -1,18 +1,22 @@
 
 public class SuperPlateau {
-	
+
 	private Plateau p;
-	private int taille = Constantes.TAILLEX;
+	private int taille = Jeu.tailleX;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] {"images/stone.png", "images/boat.png",  "images/sable.png", 
-			"images/eau.png", "un.gif"};
+	private String[] gifs = new String[] { "images/stone.png", "images/boat.png", "images/sable.png", "images/eau.png",
+			"images/Explo.png", "images/Voleur.png" };
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
 	}
 
 	public SuperPlateau(Ile ile) {
-		p = new Plateau(gifs, ile.getLigne());
+		p = new Plateau(gifs, ile.getLigne(), true);
+	}
+
+	public Plateau getPlateau() {
+		return p;
 	}
 
 	public int getTaille() {
@@ -38,22 +42,15 @@ public class SuperPlateau {
 					this.jeu[i][j] = 4;
 				} else if(tablo[i][j] instanceof Explorateur) {
 					this.jeu[i][j] = 5;
-				} 
+				} else if(tablo[i][j] instanceof Voleur) {
+					this.jeu[i][j] = 6;
+				}
 			}
-		}
-		
-		/*//test: affichage du tableau d'entiers
-		for (int i = 0; i < tablo.length; i++) {
-			for (int j = 0; j < tablo.length; j++) {
-			System.out.print(jeu[i][j]);
-			}
-			System.out.println();
-		}*/
-			
+		}		
 			
 		p.setJeu(this.jeu);
 	}
- 
+
 	public void affichage() {
 		p.affichage();
 	}
