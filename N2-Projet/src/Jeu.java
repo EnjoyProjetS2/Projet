@@ -22,7 +22,6 @@ public class Jeu {
 	static int tailleX = 10;
 	static int tailleY = 10;
 	static boolean validerParametre = false;
-	static String choix;
 	static Equipe un;
 	static Equipe deux;
 
@@ -110,7 +109,7 @@ public class Jeu {
 						clicValide = true;
 						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
 						
-						System.out.println(menuDeplacement());
+						ile.deplacement(perso, direction());
 						
 						
 						//ile.deplacement(perso, p);
@@ -121,8 +120,30 @@ public class Jeu {
 		}
 	}
 	
+	private String direction() {
+
+		String[] direction = { "Gauche", "Droite", "Haut", "Bas" };
+
+		String avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
+				JOptionPane.QUESTION_MESSAGE, null, direction, direction[0]);
+
+		if (avis.equals("Gauche")) {
+			return "gauche";
+		} else if (avis.equals("Droite")) {
+			return "droite";
+		} else if(avis.equals("Haut")){
+			return "haut";
+		} else if(avis.equals("Bas")){
+			return "bas";
+		}
+
+		return "faux";
+	}
 	
-	public String menuDeplacement(){
+	
+	
+	
+	/*public String menuDeplacement(){
 	JFrame fenetre = new JFrame("Actions du personnage");
 	JButton gauche = new JButton("Gauche");
 	//bouton gauche
@@ -264,7 +285,7 @@ public class Jeu {
 	fenetre.setVisible(true);
 	
 	return choix;
-}
+}*/
 	
 	
 		
