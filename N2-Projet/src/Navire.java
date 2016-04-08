@@ -13,6 +13,7 @@ public class Navire extends Parcelle {
 	 * 
 	 */
 	public Navire() {
+		super.traversable = false;
 	}
 	
 	/**Cree un navire a des coordonnees precises
@@ -21,6 +22,7 @@ public class Navire extends Parcelle {
 	 * @param y
 	 */
 	public Navire(int x, int y) {
+		this();
 		this.x = x;
 		this.y = y;	
 	}	
@@ -28,14 +30,18 @@ public class Navire extends Parcelle {
 	/**Retourne vrai si le personnage peut traverser le navire
 	 * 
 	 */
-	public boolean estTraversablePar(Personnage p) {
+	/*public boolean estTraversablePar(Personnage p) {
 		if (p.getEquipe().getID() == equipe.getID()) {
 			return true;
 		} else {
 			return false;
 		}
-	}
+	}*/
 	
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
 	/**Retourne vrai si un personnage dans le navire a ramene le butin et fait gagner la partie
 	 * 
 	 * @return
@@ -56,7 +62,7 @@ public class Navire extends Parcelle {
 		for (int i=0; i<equipe.getListePersos().size(); i++) {
 			getPersoDansNavire().add(equipe.getListePersos().get(i));
 			equipe.getListePersos().get(i).setX(this.x);
-			equipe.getListePersos().get(i).setX(this.y);
+			equipe.getListePersos().get(i).setY(this.y);
 		}
 	}
 	

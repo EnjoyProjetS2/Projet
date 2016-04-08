@@ -13,6 +13,7 @@ public class Personnage extends Parcelle {
 	 * @param Personnage
 	 */
 	Personnage() {
+		super.traversable = false;
 	}
 
 	/**
@@ -21,6 +22,7 @@ public class Personnage extends Parcelle {
 	 * @param Personnage
 	 */
 	Personnage(String nom, Equipe e, int x, int y) {
+		this();
 		this.nom = nom;
 
 		if (e.getID() == 1 || e.getID() == 2) {
@@ -29,6 +31,10 @@ public class Personnage extends Parcelle {
 
 		this.x = x;
 		this.y = y;
+	}
+	
+	public String toString() {
+		return "P";
 	}
 	
 	/**

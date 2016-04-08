@@ -15,9 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
+import jdk.internal.dynalink.DefaultBootstrapper;
+
 public class Jeu {
 
-	static int nbPerso = 3;
+	static int nbPerso = 1;
 	static int pourcentageRocher = 10;
 	static int tailleX = 10;
 	static int tailleY = 10;
@@ -25,17 +27,22 @@ public class Jeu {
 	static Equipe un;
 	static Equipe deux;
 
-	/**Constructeur: cree la partie, la parametre, cree les equipes, leurs joueurs et s'occupe du deroulement du jeu
+	/**
+	 * Constructeur: cree la partie, la parametre, cree les equipes, leurs
+	 * joueurs et s'occupe du deroulement du jeu
 	 * 
 	 */
 	public Jeu() {
 
 		if (accueil()) {
 
-			parametres();
+			// parametres();
+			
 
 			this.un = new Equipe(null, 1);
 			this.deux = new Equipe(null, 2);
+			
+			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
 			saisieEquipe(un);
 			saisieEquipe(deux);
@@ -43,8 +50,11 @@ public class Jeu {
 			// Affiche les membres des équipes
 			un.afficherEquipe();
 			deux.afficherEquipe();
+
 			
-			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
+
+			ile.getGrille()[8][1] = new Explorateur("billy", un, 8, 1);
+			ile.getGrille()[7][8] = new Voleur("swag", deux, 7, 8);
 
 			// Les membres des équipes se dirigent dans leurs bateaux respectifs
 			un.getNavire().embarquement();
@@ -55,254 +65,231 @@ public class Jeu {
 			p.setJeu(ile.getGrille());
 			p.affichage();
 
-			int clicX = -1;
-			int clicY = -1;
-
 			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
-			
-				/*Suite a de nombreux problemes avec Plateau, nous n'avons pas ete en mesure de terminer
-				 * l'utilisation du deplacement pour le jalon 2.
-				 * 
-				 * (reste du code dans ile.destination())
-				 * 
-				 * Bug connus: 
-				 * - parcelles autour du navire non detectees
-				 * - Le deplacement se fait souvent plusieurs clics apres
-				 *	
-				 *
-				 * Les fonctions d'action (voler pour voleur, fouiller le rocher pour l'explorateur) sont
-				 * cependant deja pretes dans leur classes respectives et n'ont juste qu'a etre 
-				 * implementee ici.
-				 */
-				
-				//System.out.println(ile.toString()); // Affichage texte
-				System.out.println("Cliquez sur un navire ou un personnage //non operationel, voir commentaires dans le code)");
 
-				
+				System.out.println("Cliquez sur un navire ou un personnage:");
+
+				int clicX = -1;
+				int clicY = -1;
+
 				p.getPlateau().waitEvent();
 				clicX = p.getPlateau().getPosX();
 				clicY = p.getPlateau().getPosY();
-				
-				
-				boolean clicValide = false;
-				while (!clicValide) {
-					
-					p.setJeu(ile.getGrille());
-					p.affichage();					
-					
-					clicX = p.getPlateau().getPosX();
-					clicY = p.getPlateau().getPosY();
 
-					if (ile.getGrille()[clicY][clicX] instanceof Navire) {
+				if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
+					Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
 
-						if (un.getNavire().dernierPassager() == -1) {
-							System.out.println("Le navire est vide");
-							p.getPlateau().waitEvent();
-						} else {
-							clicValide = true;
-							ile.deplacement(un, p);		
-							
+					if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
+						while (!ile.deplacement(perso, direction())) {
+							System.out.println("Erreur: la parcelle n'est pas traversable");
 						}
-						
-					} else if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
-
-						clicValide = true;
-						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-						
-						ile.deplacement(perso, direction());
-						
-						
-						//ile.deplacement(perso, p);
+					} else {
+						// action
 					}
+				} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
+
+					choisir(ile.getGrille()[clicY][clicX]);
+
+					Navire nav = (Navire) ile.getGrille()[clicY][clicX];
+
+					if (!nav.estVide()) {
+
+						Personnage[] choix = new Personnage[nav.getPersoDansNavire().size()];
+						for (int i = 0; i < choix.length; i++) {
+							choix[i] = nav.getPersoDansNavire().get(i);
+						}
+
+						Personnage perso = (Personnage) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.	DEFAULT_OPTION, null, choix, choix[0]);
+
+						while (!ile.debarquement(perso, direction())) {
+							System.out.println("Erreur: la parcelle n'est pas traversable");
+						}
+
+					} else {
+						System.out.println("Le navire est vide");
+					}
+
 				}
+
+				System.out.println(ile.toString());
+				p.setJeu(ile.getGrille());
+				p.affichage();
+
 			}
 
 		}
 	}
-	
+
+	private String choisir(Parcelle parcelle) {
+
+		if (parcelle instanceof Personnage) {
+			String[] choix = { "Deplacement", "Action" };
+			return (String) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.DEFAULT_OPTION,
+					null, choix, choix[0]);
+
+		} else if (parcelle instanceof Navire) {
+
+			String[] choix = { "Debarquer un personnage" };
+			return (String) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.DEFAULT_OPTION,
+					null, choix, choix[0]);
+
+		}
+
+		return null;
+
+	}
+
+	private String action() {
+
+		return "a faire";
+
+	}
+
 	private String direction() {
 
 		String[] direction = { "Gauche", "Droite", "Haut", "Bas" };
 
 		String avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
-				JOptionPane.QUESTION_MESSAGE, null, direction, direction[0]);
+				JOptionPane.DEFAULT_OPTION, null, direction, direction[0]);
 
-		if (avis.equals("Gauche")) {
+		if (avis.equals("Haut")) {
 			return "gauche";
-		} else if (avis.equals("Droite")) {
+		} else if (avis.equals("Bas")) {
 			return "droite";
-		} else if(avis.equals("Haut")){
+		} else if (avis.equals("Gauche")) {
 			return "haut";
-		} else if(avis.equals("Bas")){
+		} else if (avis.equals("Droite")) {
 			return "bas";
 		}
 
 		return "faux";
 	}
-	
-	
-	
-	
-	/*public String menuDeplacement(){
-	JFrame fenetre = new JFrame("Actions du personnage");
-	JButton gauche = new JButton("Gauche");
-	//bouton gauche
-	gauche.addMouseListener(new MouseListener() {
-		public void mouseClicked(MouseEvent arg0) {
-			choix = "gauche";
-		}
 
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+	/*
+	 * public String menuDeplacement(){ JFrame fenetre = new JFrame(
+	 * "Actions du personnage"); JButton gauche = new JButton("Gauche");
+	 * //bouton gauche gauche.addMouseListener(new MouseListener() { public void
+	 * mouseClicked(MouseEvent arg0) { choix = "gauche"; }
+	 * 
+	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseReleased(MouseEvent e) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * } });
+	 * 
+	 * JButton droite = new JButton("Droite"); droite.addMouseListener(new
+	 * MouseListener() { public void mouseClicked(MouseEvent arg0) { choix =
+	 * "droite"; }
+	 * 
+	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseReleased(MouseEvent e) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * } });
+	 * 
+	 * JButton haut = new JButton("Haut"); haut.addMouseListener(new
+	 * MouseListener() { public void mouseClicked(MouseEvent arg0) { choix =
+	 * "haut"; }
+	 * 
+	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseReleased(MouseEvent e) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * } });
+	 * 
+	 * JButton bas = new JButton("Bas"); bas.addMouseListener(new
+	 * MouseListener() { public void mouseClicked(MouseEvent arg0) { choix =
+	 * "bas"; }
+	 * 
+	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
+	 * method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void mouseReleased(MouseEvent e) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * } });
+	 * 
+	 * 
+	 * fenetre.setPreferredSize(new Dimension(500, 500));
+	 * fenetre.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
+	 * 
+	 * //la fenetre fenetre.getContentPane().add(gauche);
+	 * fenetre.getContentPane().add(droite); fenetre.getContentPane().add(haut);
+	 * fenetre.getContentPane().add(bas);
+	 * 
+	 * fenetre.pack(); fenetre.setLocationRelativeTo(null);
+	 * fenetre.setVisible(true);
+	 * 
+	 * return choix; }
+	 */
 
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	});
-	
-	JButton droite = new JButton("Droite");
-	droite.addMouseListener(new MouseListener() {
-		public void mouseClicked(MouseEvent arg0) {
-			choix = "droite";
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	});
-	
-	JButton haut = new JButton("Haut");
-	haut.addMouseListener(new MouseListener() {
-		public void mouseClicked(MouseEvent arg0) {
-			choix = "haut";
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	});
-	
-	JButton bas = new JButton("Bas");
-	bas.addMouseListener(new MouseListener() {
-		public void mouseClicked(MouseEvent arg0) {
-			choix = "bas";
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	});
-
-	
-	fenetre.setPreferredSize(new Dimension(500, 500));
-	fenetre.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
-	
-	//la fenetre
-	fenetre.getContentPane().add(gauche);
-	fenetre.getContentPane().add(droite);
-	fenetre.getContentPane().add(haut);
-	fenetre.getContentPane().add(bas);
-	
-	fenetre.pack();
-	fenetre.setLocationRelativeTo(null);
-	fenetre.setVisible(true);
-	
-	return choix;
-}*/
-	
-	
-		
-	
 	private boolean accueil() {
 
 		String[] accueil = { "Jouer", "Regles", "Quitter" };
 
 		String choix = (String) JOptionPane.showInputDialog(null, "Que faire:", "Bienvenue",
-				JOptionPane.QUESTION_MESSAGE, null, accueil, accueil[0]);
+				JOptionPane.	DEFAULT_OPTION, null, accueil, accueil[0]);
 
 		if (choix.equals("Jouer")) {
 			return true;
 		} else if (choix.equals("Regles")) {
 			JOptionPane.showMessageDialog(null,
 					"Le but du jeu est de trouver la clé cachée sous un rocher et de trouver le coffre puis ramener le trésor sur son navire. ",
-					"Regles du Jeu", JOptionPane.INFORMATION_MESSAGE);
+					"Regles du Jeu", JOptionPane.DEFAULT_OPTION);
 			return accueil();
 		} else {
 			return false;
@@ -315,8 +302,8 @@ public class Jeu {
 		String[] mode = { "1 contre 1" };
 
 		String choix = (String) JOptionPane.showInputDialog(null, "Choisissez un mode de jeu:", "Parametres",
-				JOptionPane.QUESTION_MESSAGE, null, mode, mode[0]);
-		JOptionPane.showMessageDialog(null, "Bien enregistré !", "Information", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.DEFAULT_OPTION, null, mode, mode[0]);
+		JOptionPane.showMessageDialog(null, "Bien enregistré !", "Information", JOptionPane.DEFAULT_OPTION);
 
 		// JSLIDE:
 		// ajouter taille de la carte
@@ -422,9 +409,10 @@ public class Jeu {
 		pourcentageRocher = sliderDroite.getValue();
 		tailleX = sliderGauche.getValue();
 		tailleY = tailleX;
-		//System.out.println(nbPerso + "  " + pourcentageRocher + "  " + tailleX);
+		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
+		// tailleX);
 	}
-	
+
 	private void saisieEquipe(Equipe e) {
 
 		String[] personnages = { "Explorateur", "Voleur" };
@@ -434,13 +422,13 @@ public class Jeu {
 		e.ajoutPersonnage(
 
 				new Explorateur(JOptionPane.showInputDialog("Quel est le nom de votre explorateur?"), e,
-						e.getNavire().getX(), e.getNavire().getY()));		
+						e.getNavire().getX(), e.getNavire().getY()));
 
 		int cpt = 1;
 		while (cpt < nbPerso) {
 			String classe = (String) JOptionPane.showInputDialog(null,
 					"Choisissez votre " + (cpt + 1) + "eme personnage:",
-					"Equipe " + e.getID() + " - Personnage " + (cpt + 1), JOptionPane.QUESTION_MESSAGE, null,
+					"Equipe " + e.getID() + " - Personnage " + (cpt + 1), JOptionPane.DEFAULT_OPTION, null,
 					personnages, personnages[0]);
 
 			if (classe.equals("Explorateur")) {

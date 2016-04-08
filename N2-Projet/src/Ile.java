@@ -73,16 +73,40 @@ public class Ile {
 			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
 				grille[e.getX()][e.getY() - 1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getY() - 1);
+				e.setY(e.getY() - 1);
 				return true;
+			} else if (grille[e.getX()][e.getY() - 1] instanceof Navire) {
+				Navire nav = (Navire) grille[e.getX()][e.getY() - 1];
+				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
+					e.getEquipe().getNavire().getPersoDansNavire().add(e);
+					System.out.println("personnage ajouté.");
+					grille[e.getX()][e.getY()] = tmp;
+					e.setY(e.getY() - 1);
+					return true;
+				} else {
+					System.out.println("Ce n'est pas le navire du personnage.");
+					return false;
+				}
 			}
 			break;
 		case "droite":
 			if (grille[e.getX()][e.getY() + 1].estTraversablePar(e)) {
 				grille[e.getX()][e.getY() + 1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getY() + 1);
+				e.setY(e.getY() + 1);
 				return true;
+			} else if (grille[e.getX()][e.getY() + 1] instanceof Navire) {
+				Navire nav = (Navire) grille[e.getX()][e.getY() + 1];
+				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
+					e.getEquipe().getNavire().getPersoDansNavire().add(e);
+					System.out.println("personnage ajouté.");
+					grille[e.getX()][e.getY()] = tmp;
+					e.setY(e.getY() + 1);
+					return true;
+				} else {
+					System.out.println("Ce n'est pas le navire du personnage.");
+					return false;
+				}
 			}
 			break;
 		case "haut":
@@ -91,6 +115,18 @@ public class Ile {
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX() - 1);
 				return true;
+			} else if (grille[e.getX() - 1][e.getY()] instanceof Navire) {
+				Navire nav = (Navire) grille[e.getX() - 1][e.getY()];
+				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
+					e.getEquipe().getNavire().getPersoDansNavire().add(e);
+					System.out.println("personnage ajouté.");
+					grille[e.getX()][e.getY()] = tmp;
+					e.setX(e.getX() - 1);
+					return true;
+				} else {
+					System.out.println("Ce n'est pas le navire du personnage.");
+					return false;
+				}
 			}
 			break;
 		case "bas":
@@ -99,6 +135,18 @@ public class Ile {
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX() + 1);
 				return true;
+			} else if (grille[e.getX() + 1][e.getY()] instanceof Navire) {
+				Navire nav = (Navire) grille[e.getX() + 1][e.getY()];
+				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
+					e.getEquipe().getNavire().getPersoDansNavire().add(e);
+					System.out.println("personnage ajouté.");
+					grille[e.getX()][e.getY()] = tmp;
+					e.setX(e.getX() + 1);
+					return true;
+				} else {
+					System.out.println("Ce n'est pas le navire du personnage.");
+					return false;
+				}
 			}
 			break;
 		default:
@@ -106,113 +154,46 @@ public class Ile {
 		}
 		return false;
 	}
-	
-	
-	/**Deplace un personnage grace au clic
-	 * 
-	 * @param perso
-	 * @param p
-	 * @return
-	 */
-	public boolean deplacement(Personnage perso, SuperPlateau p) {
-		
-		System.out.println("Destination?");
 
-		/*
-		p.getPlateau().waitEvent();
-		int clicX = p.getPlateau().getPosX();
-		int clicY = p.getPlateau().getPosY();
+	public boolean debarquement(Personnage e, String deplacement) {
 
-		if (grille[clicY][clicX] instanceof Navire) {
-			System.out.println("Erreur: navire");
-			return deplacement(perso, p);
-		}
-
-		if (grille[clicY][clicX].estTraversable()) {
-
-			int persoX = perso.getY();
-			int persoY = perso.getX();
-
-			if ((clicX == persoX || clicX == persoX + 1 || clicX == persoX - 1) && (clicY == persoY || clicY == persoY + 1 || clicY == persoY - 1 )) {
-				grille[perso.getX()][perso.getY()] = new Sable();
-				grille[clicY][clicX] = perso;
-				perso.setX(clicY);
-				perso.setY(clicX);
-				
-				
-				//test
-				System.out.println("perso");
-				System.out.println(perso.getX());
-				System.out.println(perso.getY());
-				
-				//
-				
-				p.setJeu(grille);
-				p.affichage();
+		switch (deplacement) {
+		case "gauche":
+			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
+				grille[e.getX()][e.getY() - 1] = e;
+				e.setY(e.getY() - 1);
+				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
 				return true;
-				
-			} else {
-				System.out.println("Erreur: trop loin");
-				return deplacement(perso, p);
-			}		
-		}
-		System.out.println("Erreur: parcelle non traversable");
-		return deplacement(perso, p);
-		*/
-		
-		return false;
-	}
-
-	/**Sort un personnage de son navire grace au clic
-	 * 
-	 * @param e
-	 * @param p
-	 * @return
-	 */
-	public boolean deplacement(Equipe e, SuperPlateau p) {
-
-		System.out.println("Destination?");
-
-		p.getPlateau().waitEvent();
-		int clicX = p.getPlateau().getPosX();
-		int clicY = p.getPlateau().getPosY();
-	    
-		
-		if (grille[clicY][clicX].estTraversable() && !(grille[clicY][clicX] instanceof Navire)) {
-
-			// int persoX =
-			// e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).getX();
-			// int persoY =
-			// e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).getY();
-
-			int navX = e.getNavire().getY();
-			int navY = e.getNavire().getX();
-
-			if ( (clicX == navX || clicX == navX + 1 || clicX == navX - 1) && (clicY == navY || clicY == navY + 1 || clicY == navY - 1 )) {
-				
-				e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setX(clicY);
-				e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).setY(clicX);
-
-				grille[e.getNavire().getPersoDansNavire().get(e.getNavire().dernierPassager()).getX()][e.getNavire()
-						.getPersoDansNavire().get(e.getNavire().dernierPassager()).getY()] = e.getNavire()
-								.getPersoDansNavire().get(e.getNavire().dernierPassager());
-				e.getNavire().getPersoDansNavire().remove(e.getNavire().dernierPassager());
-				System.out.println("Le perso a été deplacé");
-				
-				p.setJeu(grille);
-				p.affichage();
-				return true;
-
-			} else {
-				System.out.println("Erreur: trop loin.");
-				return deplacement(e, p);
 			}
-
+			break;
+		case "droite":
+			if (grille[e.getX()][e.getY() + 1].estTraversablePar(e)) {
+				grille[e.getX()][e.getY() + 1] = e;
+				e.setY(e.getY() + 1);
+				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
+				return true;
+			}
+			break;
+		case "haut":
+			if (grille[e.getX() - 1][e.getY()].estTraversablePar(e)) {
+				grille[e.getX() - 1][e.getY()] = e;
+				e.setX(e.getX() - 1);
+				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
+				return true;
+			}
+			break;
+		case "bas":
+			if (grille[e.getX() + 1][e.getY()].estTraversablePar(e)) {
+				grille[e.getX() + 1][e.getY()] = e;
+				e.setX(e.getX() + 1);
+				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
+				return true;
+			}
+			break;
+		default:
+			break;
 		}
-
-		System.out.println("Erreur: la parcelle n'est pas traversable");
-		return deplacement(e, p);
-		
+		return false;
 	}
 
 	// Place deux navires aleatoirement sur des bords opposes de l'ile
@@ -254,16 +235,18 @@ public class Ile {
 
 		return true;
 	}
-	
-	/**Retourne la position du navire 1
+
+	/**
+	 * Retourne la position du navire 1
 	 * 
 	 * @return
 	 */
 	public int getNav1() {
 		return posNav1;
 	}
-	
-	/**Retourne la position du navire 2
+
+	/**
+	 * Retourne la position du navire 2
 	 * 
 	 * @return
 	 */
