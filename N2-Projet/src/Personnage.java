@@ -33,9 +33,9 @@ public class Personnage extends Parcelle {
 		this.y = y;
 	}
 	
-	public String toString() {
+	/*public String toString() {
 		return "P";
-	}
+	}*/
 	
 	/**
 	 * Retourne le nom

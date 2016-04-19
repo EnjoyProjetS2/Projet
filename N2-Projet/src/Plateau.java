@@ -41,12 +41,15 @@ public class Plateau {
 		@Override
 		public void mouseClicked(MouseEvent event) {
 			currentEvent = event ;
-			println("PosX: "+getX(event)+ "PosY: "+ getY(event));
+			posX = graphic.getX(event) ;
+			posY = graphic.getY(event) ;			
 		}
 		@Override
 		public void mouseEntered(MouseEvent arg0) {	}
 		@Override
-		public void mouseExited(MouseEvent arg0) { }
+		public void mouseExited(MouseEvent arg0) {
+			currentEvent = null ;
+		}
 		@Override
 		public void mousePressed(MouseEvent arg0) { }
 		@Override
@@ -231,7 +234,7 @@ public class Plateau {
 	 * @return le numéro de la colonne ciblée (0 à taille-1)
 	 */
 	public int getX(MouseEvent event) {
-		posX = graphic.getX(event) ;
+		//posX = graphic.getX(event) ;
 		return posX ;
 	}
 	
@@ -250,7 +253,7 @@ public class Plateau {
 	 * @return le numéro de la colonne ciblée (0 à taille-1)
 	 */
 	public int getY(MouseEvent event) {
-		posY = graphic.getY(event);
+		//posY = graphic.getY(event);
 		return posY;
 	}
 	/** returne la position de Y au dernier click

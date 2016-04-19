@@ -34,10 +34,6 @@ public class Voleur extends Personnage {
 	 * 
 	 */
 	public String toString() {
-		if (super.getEquipe().getID() == 1) {
-			return "V";
-		} else {
-			return "v";
-		}
+		return "Voleur "+this.nom+" (Equipe: "+super.getEquipe().getNom()+") - Vie: "+super.energie+"/"+Jeu.maxVie;
 	}
 }

@@ -17,9 +17,12 @@ public class Jeu {
 	static int pourcentageRocher = 10;
 	static int tailleX = 10;
 	static int tailleY = 10;
+	static int maxVie = 100;
+	static int regenParTour = 10;
 	static boolean validerParametre = false;
 	static Equipe un;
 	static Equipe deux;
+
 	/**
 	 * Constructeur: cree la partie, la parametre, cree les equipes, leurs
 	 * joueurs et s'occupe du deroulement du jeu
@@ -29,7 +32,7 @@ public class Jeu {
 
 		if (accueil()) {
 
-			//parametres();
+			// parametres();
 
 			this.un = new Equipe(null, 1);
 			this.deux = new Equipe(null, 2);
@@ -50,34 +53,39 @@ public class Jeu {
 			un.getNavire().embarquement();
 			deux.getNavire().embarquement();
 
-			System.out.println(ile.toString()); // Affichage texte
+			//System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 			p.setJeu(ile.getGrille());
 			p.affichage();
 
 			Random alea = new Random();
 			int equipe = alea.nextInt(2) + 1;
+			
+			informations(un, p);
+			informations(deux, p);
+
 
 			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
 
 				boolean joue = false;
-				boolean restart = false;
+				
+				soigner(un);
+				soigner(deux);	
+				
+				p.getPlateau().println("Equipe " + equipe + " - Cliquez sur un de vos navires ou personnages:");
+				System.out.println("Equipe " + equipe + " - Cliquez sur un navire ou un personnage:");
 
-				while (!joue) {
-					if (restart == false) {
-						p.getPlateau().println("Equipe " + equipe + " - Cliquez sur un de vos navires ou personnages:");
-					}
-
-					System.out.println("Equipe " + equipe + " - Cliquez sur un navire ou un personnage:");
+				while (!joue) {					
 
 					p.getPlateau().waitEvent();
 					int clicX = p.getPlateau().getPosX();
 					int clicY = p.getPlateau().getPosY();
+					
 
 					if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
-						
+
 						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-						System.out.println("Vie de ce perso: " + perso.getEnergie());
+						p.getPlateau().println(perso.toString());
 						if (perso.getEquipe().getID() == equipe) {
 
 							if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
@@ -135,14 +143,11 @@ public class Jeu {
 
 					}
 
-					System.out.println(ile.toString());
+					//System.out.println(ile.toString());
 					p.setJeu(ile.getGrille());
 					p.affichage();
 
 				}
-				
-				
-				
 
 				if (equipe == 1) {
 					equipe = 2;
@@ -153,6 +158,19 @@ public class Jeu {
 			}
 
 		}
+	}
+	
+	private void informations(Equipe e, SuperPlateau p) {	
+		
+		
+		p.getPlateau().println("Equipe: "+e.getNom());
+
+		for (int i=0; i<e.getListePersos().size(); i++) {
+			p.getPlateau().println(e.getListePersos().get(i).toString());
+		}
+		
+		p.getPlateau().println("-------------------------");
+
 	}
 
 	private String choisir(Parcelle parcelle) {
@@ -193,7 +211,21 @@ public class Jeu {
 
 		return "faux";
 	}
-
+	
+	private void soigner(Equipe e) {
+		
+		for (int i=0; i<e.getNavire().getPersoDansNavire().size(); i++) {			
+			
+			if (e.getNavire().getPersoDansNavire().get(i).getEnergie() < maxVie-regenParTour && e.getNavire().getPersoDansNavire().get(i).getEnergie() >= 1) {
+				e.getNavire().getPersoDansNavire().get(i).setEnergie(e.getNavire().getPersoDansNavire().get(i).getEnergie()+regenParTour);
+			} else {
+				e.getNavire().getPersoDansNavire().get(i).setEnergie(maxVie);
+			}
+			
+		}
+		
+	}
+	
 
 	private boolean accueil() {
 
@@ -330,94 +362,93 @@ public class Jeu {
 		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
 		// tailleX);
 	}
+
 	private boolean action(Personnage perso, Ile ile) {
 		Rocher haut = null, bas = null, gauche = null, droite = null;
 		Personnage phaut = null, pbas = null, pgauche = null, pdroite = null;
-		
-		
-		//action de l'explorateur
-		if(perso instanceof Explorateur){
+
+		// action de l'explorateur
+		if (perso instanceof Explorateur) {
 			String[] roche = new String[4];
 			int nb = 0;
-			if(ile.getGrille()[perso.getX()][perso.getY()-1] instanceof Rocher){
-				haut = (Rocher) ile.getGrille()[perso.getX()][perso.getY()-1];
+			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Rocher) {
+				haut = (Rocher) ile.getGrille()[perso.getX()][perso.getY() - 1];
 				roche[nb] = "Haut";
 				nb++;
 			}
-			
-			if(ile.getGrille()[perso.getX()][perso.getY()+1] instanceof Rocher){
-				bas = (Rocher) ile.getGrille()[perso.getX()][perso.getY()+1];
+
+			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Rocher) {
+				bas = (Rocher) ile.getGrille()[perso.getX()][perso.getY() + 1];
 				roche[nb] = "Bas";
 				nb++;
 			}
-			
-			if(ile.getGrille()[perso.getX()-1][perso.getY()] instanceof Rocher){
-				gauche = (Rocher) ile.getGrille()[perso.getX()-1][perso.getY()];
+
+			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Rocher) {
+				gauche = (Rocher) ile.getGrille()[perso.getX() - 1][perso.getY()];
 				roche[nb] = "Gauche";
 				nb++;
 			}
-			
-			if(ile.getGrille()[perso.getX()+1][perso.getY()] instanceof Rocher){
-				droite = (Rocher) ile.getGrille()[perso.getX()+1][perso.getY()];
+
+			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Rocher) {
+				droite = (Rocher) ile.getGrille()[perso.getX() + 1][perso.getY()];
 				roche[nb] = "Droite";
 			}
-			
-			String aSoulever = (String) JOptionPane.showInputDialog(null, "Quel rocher soulever ?", "Rocher à soulever",
-					JOptionPane.DEFAULT_OPTION, null, roche, roche[0]);
-			
-			//faire l'action
-			if(aSoulever == "Haut"){
+
+			String aSoulever = (String) JOptionPane.showInputDialog(null, "Quel rocher soulever ?",
+					"Rocher à soulever", JOptionPane.DEFAULT_OPTION, null, roche, roche[0]);
+
+			// faire l'action
+			if (aSoulever == "Haut") {
 				return ((Explorateur) perso).souleverRocher(haut);
-			} else if(aSoulever == "Bas"){
+			} else if (aSoulever == "Bas") {
 				return ((Explorateur) perso).souleverRocher(bas);
-			} else if(aSoulever == "Gauche"){
+			} else if (aSoulever == "Gauche") {
 				return ((Explorateur) perso).souleverRocher(gauche);
-			} else if(aSoulever == "Droite"){
+			} else if (aSoulever == "Droite") {
 				return ((Explorateur) perso).souleverRocher(droite);
 			}
 
-			
-			//action du voleur
-		} else if(perso instanceof Voleur){
+			// action du voleur
+		} else if (perso instanceof Voleur) {
 			String[] adversaire = new String[4];
 			int nb = 0;
-			if(ile.getGrille()[perso.getX()][perso.getY()-1] instanceof Explorateur){
-				phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY()-1];
+			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Explorateur) {
+				phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY() - 1];
 				adversaire[nb] = "Haut";
 				nb++;
 			}
-			
-			if(ile.getGrille()[perso.getX()][perso.getY()+1] instanceof Explorateur){
-				pbas = (Personnage) ile.getGrille()[perso.getX()][perso.getY()+1];
+
+			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Explorateur) {
+				pbas = (Personnage) ile.getGrille()[perso.getX()][perso.getY() + 1];
 				adversaire[nb] = "Bas";
 				nb++;
 			}
-			
-			if(ile.getGrille()[perso.getX()-1][perso.getY()] instanceof Explorateur){
-				pgauche = (Personnage) ile.getGrille()[perso.getX()-1][perso.getY()];
+
+			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Explorateur) {
+				pgauche = (Personnage) ile.getGrille()[perso.getX() - 1][perso.getY()];
 				adversaire[nb] = "Gauche";
 				nb++;
 			}
-			
-			if(ile.getGrille()[perso.getX()+1][perso.getY()] instanceof Explorateur){
-				pdroite = (Personnage) ile.getGrille()[perso.getX()+1][perso.getY()];
+
+			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Explorateur) {
+				pdroite = (Personnage) ile.getGrille()[perso.getX() + 1][perso.getY()];
 				adversaire[nb] = "Droite";
 			}
-			
+
 			String aVoler = (String) JOptionPane.showInputDialog(null, "Qui voler ?", "Personnage à voler : ",
 					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
-			
-			//faire l'action
-			if(aVoler == "Haut"){
+
+			// faire l'action
+			if (aVoler == "Haut") {
 				return ((Voleur) perso).voler(phaut);
-			} else if(aVoler == "Bas"){
+			} else if (aVoler == "Bas") {
 				return ((Voleur) perso).voler(pbas);
-			} else if(aVoler == "Gauche"){
+			} else if (aVoler == "Gauche") {
 				return ((Voleur) perso).voler(pgauche);
-			} else if(aVoler == "Droite"){
+			} else if (aVoler == "Droite") {
 				return ((Voleur) perso).voler(pdroite);
-			}	
-			
+			}
+
 		}
 		return false;
 

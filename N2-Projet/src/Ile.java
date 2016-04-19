@@ -80,7 +80,6 @@ public class Ile {
 				Navire nav = (Navire) grille[e.getX()][e.getY() - 1];
 				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
 					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					System.out.println("personnage ajouté.");
 					grille[e.getX()][e.getY()] = tmp;
 					e.setY(e.getY() - 1);
 					e.setEnergie(e.getEnergie() - 1);
@@ -102,7 +101,6 @@ public class Ile {
 				Navire nav = (Navire) grille[e.getX()][e.getY() + 1];
 				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
 					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					System.out.println("personnage ajouté.");
 					grille[e.getX()][e.getY()] = tmp;
 					e.setY(e.getY() + 1);
 					e.setEnergie(e.getEnergie() - 1);
@@ -118,14 +116,15 @@ public class Ile {
 				grille[e.getX() - 1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX() - 1);
+				e.setEnergie(e.getEnergie() - 1);
 				return true;
 			} else if (grille[e.getX() - 1][e.getY()] instanceof Navire) {
 				Navire nav = (Navire) grille[e.getX() - 1][e.getY()];
 				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
 					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					System.out.println("personnage ajouté.");
 					grille[e.getX()][e.getY()] = tmp;
 					e.setX(e.getX() - 1);
+					e.setEnergie(e.getEnergie() - 1);
 					return true;
 				} else {
 					System.out.println("Ce n'est pas le navire du personnage.");
@@ -144,7 +143,6 @@ public class Ile {
 				Navire nav = (Navire) grille[e.getX() + 1][e.getY()];
 				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
 					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					System.out.println("personnage ajouté.");
 					grille[e.getX()][e.getY()] = tmp;
 					e.setX(e.getX() + 1);
 					e.setEnergie(e.getEnergie() - 1);

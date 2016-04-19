@@ -41,11 +41,7 @@ public class Explorateur extends Personnage {
 	 * Retourne un E ou un e selon l'equipe
 	 * 
 	 */
-	public String toString() {
-		if (super.getEquipe().getID() == 1) {
-			return "E";
-		} else {
-			return "e";
-		}
+	public String toString() {		
+		return "Explorateur "+this.nom+" (Equipe: "+super.getEquipe().getNom()+") - Vie: "+super.energie+"/"+Jeu.maxVie;
 	}
 }

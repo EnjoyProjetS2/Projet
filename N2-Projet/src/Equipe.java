@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Equipe{	
 	
+	
 	private String nom;
 	private Navire navire;
 	
@@ -30,6 +31,10 @@ public class Equipe{
 			this.nom = null;
 			this.ID = 0;
 		}
+	}
+	
+	public String getNom() {
+		return nom;
 	}
 	
 	/**Retourne le navire de l'equipe
