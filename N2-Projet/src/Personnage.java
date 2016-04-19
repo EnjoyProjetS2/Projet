@@ -6,7 +6,7 @@ public class Personnage extends Parcelle {
 	private int y;
 	protected boolean possessionClef;
 	protected boolean possessionCoffre;
-	
+	protected int energie;
 	/**
 	 * Constructeur par defaut
 	 * 
@@ -46,6 +46,14 @@ public class Personnage extends Parcelle {
 	 */
 	public String getNom() {
 		return nom;
+	}
+	
+	public int getEnergie() {
+		return energie;
+	}
+
+	public void setEnergie(int energie) {
+		this.energie = energie;
 	}
 
 	/**

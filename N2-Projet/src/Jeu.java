@@ -1,11 +1,8 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,9 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
-
-import jdk.internal.dynalink.DefaultBootstrapper;
 
 public class Jeu {
 
@@ -26,7 +20,6 @@ public class Jeu {
 	static boolean validerParametre = false;
 	static Equipe un;
 	static Equipe deux;
-
 	/**
 	 * Constructeur: cree la partie, la parametre, cree les equipes, leurs
 	 * joueurs et s'occupe du deroulement du jeu
@@ -36,12 +29,11 @@ public class Jeu {
 
 		if (accueil()) {
 
-			// parametres();
-			
+			//parametres();
 
 			this.un = new Equipe(null, 1);
 			this.deux = new Equipe(null, 2);
-			
+
 			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
 			saisieEquipe(un);
@@ -50,8 +42,6 @@ public class Jeu {
 			// Affiche les membres des �quipes
 			un.afficherEquipe();
 			deux.afficherEquipe();
-
-			
 
 			ile.getGrille()[8][1] = new Explorateur("billy", un, 8, 1);
 			ile.getGrille()[7][8] = new Voleur("swag", deux, 7, 8);
@@ -65,55 +55,100 @@ public class Jeu {
 			p.setJeu(ile.getGrille());
 			p.affichage();
 
+			Random alea = new Random();
+			int equipe = alea.nextInt(2) + 1;
+
 			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
 
-				System.out.println("Cliquez sur un navire ou un personnage:");
+				boolean joue = false;
+				boolean restart = false;
 
-				int clicX = -1;
-				int clicY = -1;
-
-				p.getPlateau().waitEvent();
-				clicX = p.getPlateau().getPosX();
-				clicY = p.getPlateau().getPosY();
-
-				if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
-					Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-
-					if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
-						while (!ile.deplacement(perso, direction())) {
-							System.out.println("Erreur: la parcelle n'est pas traversable");
-						}
-					} else {
-						// action
+				while (!joue) {
+					if (restart == false) {
+						p.getPlateau().println("Equipe " + equipe + " - Cliquez sur un de vos navires ou personnages:");
 					}
-				} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
 
-					choisir(ile.getGrille()[clicY][clicX]);
+					System.out.println("Equipe " + equipe + " - Cliquez sur un navire ou un personnage:");
 
-					Navire nav = (Navire) ile.getGrille()[clicY][clicX];
+					p.getPlateau().waitEvent();
+					int clicX = p.getPlateau().getPosX();
+					int clicY = p.getPlateau().getPosY();
 
-					if (!nav.estVide()) {
+					if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
+						
+						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
+						System.out.println("Vie de ce perso: " + perso.getEnergie());
+						if (perso.getEquipe().getID() == equipe) {
 
-						Personnage[] choix = new Personnage[nav.getPersoDansNavire().size()];
-						for (int i = 0; i < choix.length; i++) {
-							choix[i] = nav.getPersoDansNavire().get(i);
+							if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
+								while (!ile.deplacement(perso, direction())) {
+
+									p.getPlateau().println("Erreur: la parcelle n'est pas traversable");
+									System.out.println("Erreur: la parcelle n'est pas traversable");
+								}
+								joue = true;
+							} else {
+								action(perso, ile);
+								joue = true;
+							}
+
+						} else {
+							p.getPlateau().println("Erreur: ce personnage appartient a l'autre equipe");
+
+							System.out.println("Erreur: ce personnage appartient a l'autre equipe");
 						}
 
-						Personnage perso = (Personnage) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.	DEFAULT_OPTION, null, choix, choix[0]);
+					} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
 
-						while (!ile.debarquement(perso, direction())) {
-							System.out.println("Erreur: la parcelle n'est pas traversable");
+						choisir(ile.getGrille()[clicY][clicX]);
+
+						Navire nav = (Navire) ile.getGrille()[clicY][clicX];
+
+						if (nav.getEquipe().getID() == equipe) {
+
+							if (!nav.estVide()) {
+
+								Personnage[] choix = new Personnage[nav.getPersoDansNavire().size()];
+								for (int i = 0; i < choix.length; i++) {
+									choix[i] = nav.getPersoDansNavire().get(i);
+								}
+
+								Personnage perso = (Personnage) JOptionPane.showInputDialog(null, "Que faire:",
+										"Que faire ?", JOptionPane.DEFAULT_OPTION, null, choix, choix[0]);
+
+								while (!ile.debarquement(perso, direction())) {
+									p.getPlateau().println("Erreur: la parcelle n'est pas traversable");
+									System.out.println("Erreur: la parcelle n'est pas traversable");
+								}
+								joue = true;
+							} else {
+								p.getPlateau().println("Erreur: le navire est vide");
+
+								System.out.println("Le navire est vide");
+							}
+
+						} else {
+							p.getPlateau().println("Erreur: ce navire appartient a l'autre equipe");
+
+							System.out.println("Erreur: ce navire appartient a l'autre equipe");
 						}
 
-					} else {
-						System.out.println("Le navire est vide");
 					}
+
+					System.out.println(ile.toString());
+					p.setJeu(ile.getGrille());
+					p.affichage();
 
 				}
+				
+				
+				
 
-				System.out.println(ile.toString());
-				p.setJeu(ile.getGrille());
-				p.affichage();
+				if (equipe == 1) {
+					equipe = 2;
+				} else if (equipe == 2) {
+					equipe = 1;
+				}
 
 			}
 
@@ -139,12 +174,6 @@ public class Jeu {
 
 	}
 
-	private String action() {
-
-		return "a faire";
-
-	}
-
 	private String direction() {
 
 		String[] direction = { "Gauche", "Droite", "Haut", "Bas" };
@@ -165,124 +194,13 @@ public class Jeu {
 		return "faux";
 	}
 
-	/*
-	 * public String menuDeplacement(){ JFrame fenetre = new JFrame(
-	 * "Actions du personnage"); JButton gauche = new JButton("Gauche");
-	 * //bouton gauche gauche.addMouseListener(new MouseListener() { public void
-	 * mouseClicked(MouseEvent arg0) { choix = "gauche"; }
-	 * 
-	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseReleased(MouseEvent e) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * } });
-	 * 
-	 * JButton droite = new JButton("Droite"); droite.addMouseListener(new
-	 * MouseListener() { public void mouseClicked(MouseEvent arg0) { choix =
-	 * "droite"; }
-	 * 
-	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseReleased(MouseEvent e) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * } });
-	 * 
-	 * JButton haut = new JButton("Haut"); haut.addMouseListener(new
-	 * MouseListener() { public void mouseClicked(MouseEvent arg0) { choix =
-	 * "haut"; }
-	 * 
-	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseReleased(MouseEvent e) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * } });
-	 * 
-	 * JButton bas = new JButton("Bas"); bas.addMouseListener(new
-	 * MouseListener() { public void mouseClicked(MouseEvent arg0) { choix =
-	 * "bas"; }
-	 * 
-	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseReleased(MouseEvent e) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * } });
-	 * 
-	 * 
-	 * fenetre.setPreferredSize(new Dimension(500, 500));
-	 * fenetre.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
-	 * 
-	 * //la fenetre fenetre.getContentPane().add(gauche);
-	 * fenetre.getContentPane().add(droite); fenetre.getContentPane().add(haut);
-	 * fenetre.getContentPane().add(bas);
-	 * 
-	 * fenetre.pack(); fenetre.setLocationRelativeTo(null);
-	 * fenetre.setVisible(true);
-	 * 
-	 * return choix; }
-	 */
 
 	private boolean accueil() {
 
 		String[] accueil = { "Jouer", "Regles", "Quitter" };
 
-		String choix = (String) JOptionPane.showInputDialog(null, "Que faire:", "Bienvenue",
-				JOptionPane.	DEFAULT_OPTION, null, accueil, accueil[0]);
+		String choix = (String) JOptionPane.showInputDialog(null, "Que faire:", "Bienvenue", JOptionPane.DEFAULT_OPTION,
+				null, accueil, accueil[0]);
 
 		if (choix.equals("Jouer")) {
 			return true;
@@ -412,6 +330,98 @@ public class Jeu {
 		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
 		// tailleX);
 	}
+	private boolean action(Personnage perso, Ile ile) {
+		Rocher haut = null, bas = null, gauche = null, droite = null;
+		Personnage phaut = null, pbas = null, pgauche = null, pdroite = null;
+		
+		
+		//action de l'explorateur
+		if(perso instanceof Explorateur){
+			String[] roche = new String[4];
+			int nb = 0;
+			if(ile.getGrille()[perso.getX()][perso.getY()-1] instanceof Rocher){
+				haut = (Rocher) ile.getGrille()[perso.getX()][perso.getY()-1];
+				roche[nb] = "Haut";
+				nb++;
+			}
+			
+			if(ile.getGrille()[perso.getX()][perso.getY()+1] instanceof Rocher){
+				bas = (Rocher) ile.getGrille()[perso.getX()][perso.getY()+1];
+				roche[nb] = "Bas";
+				nb++;
+			}
+			
+			if(ile.getGrille()[perso.getX()-1][perso.getY()] instanceof Rocher){
+				gauche = (Rocher) ile.getGrille()[perso.getX()-1][perso.getY()];
+				roche[nb] = "Gauche";
+				nb++;
+			}
+			
+			if(ile.getGrille()[perso.getX()+1][perso.getY()] instanceof Rocher){
+				droite = (Rocher) ile.getGrille()[perso.getX()+1][perso.getY()];
+				roche[nb] = "Droite";
+			}
+			
+			String aSoulever = (String) JOptionPane.showInputDialog(null, "Quel rocher soulever ?", "Rocher à soulever",
+					JOptionPane.DEFAULT_OPTION, null, roche, roche[0]);
+			
+			//faire l'action
+			if(aSoulever == "Haut"){
+				return ((Explorateur) perso).souleverRocher(haut);
+			} else if(aSoulever == "Bas"){
+				return ((Explorateur) perso).souleverRocher(bas);
+			} else if(aSoulever == "Gauche"){
+				return ((Explorateur) perso).souleverRocher(gauche);
+			} else if(aSoulever == "Droite"){
+				return ((Explorateur) perso).souleverRocher(droite);
+			}
+
+			
+			//action du voleur
+		} else if(perso instanceof Voleur){
+			String[] adversaire = new String[4];
+			int nb = 0;
+			if(ile.getGrille()[perso.getX()][perso.getY()-1] instanceof Explorateur){
+				phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY()-1];
+				adversaire[nb] = "Haut";
+				nb++;
+			}
+			
+			if(ile.getGrille()[perso.getX()][perso.getY()+1] instanceof Explorateur){
+				pbas = (Personnage) ile.getGrille()[perso.getX()][perso.getY()+1];
+				adversaire[nb] = "Bas";
+				nb++;
+			}
+			
+			if(ile.getGrille()[perso.getX()-1][perso.getY()] instanceof Explorateur){
+				pgauche = (Personnage) ile.getGrille()[perso.getX()-1][perso.getY()];
+				adversaire[nb] = "Gauche";
+				nb++;
+			}
+			
+			if(ile.getGrille()[perso.getX()+1][perso.getY()] instanceof Explorateur){
+				pdroite = (Personnage) ile.getGrille()[perso.getX()+1][perso.getY()];
+				adversaire[nb] = "Droite";
+			}
+			
+			String aVoler = (String) JOptionPane.showInputDialog(null, "Qui voler ?", "Personnage à voler : ",
+					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
+			
+			//faire l'action
+			if(aVoler == "Haut"){
+				return ((Voleur) perso).voler(phaut);
+			} else if(aVoler == "Bas"){
+				return ((Voleur) perso).voler(pbas);
+			} else if(aVoler == "Gauche"){
+				return ((Voleur) perso).voler(pgauche);
+			} else if(aVoler == "Droite"){
+				return ((Voleur) perso).voler(pdroite);
+			}	
+			
+		}
+		return false;
+
+	}
 
 	private void saisieEquipe(Equipe e) {
 
@@ -428,8 +438,8 @@ public class Jeu {
 		while (cpt < nbPerso) {
 			String classe = (String) JOptionPane.showInputDialog(null,
 					"Choisissez votre " + (cpt + 1) + "eme personnage:",
-					"Equipe " + e.getID() + " - Personnage " + (cpt + 1), JOptionPane.DEFAULT_OPTION, null,
-					personnages, personnages[0]);
+					"Equipe " + e.getID() + " - Personnage " + (cpt + 1), JOptionPane.DEFAULT_OPTION, null, personnages,
+					personnages[0]);
 
 			if (classe.equals("Explorateur")) {
 				e.ajoutPersonnage(new Explorateur(JOptionPane.showInputDialog("Quel est le nom de cet explorateur?"), e,
