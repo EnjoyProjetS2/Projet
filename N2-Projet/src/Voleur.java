@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Voleur extends Personnage {
 
@@ -20,12 +21,20 @@ public class Voleur extends Personnage {
 	 * @param perso
 	 */
 	public boolean voler(Personnage perso) {
-		super.energie -= 10;
-		if (perso.possessionClef == true) { // si ce perso a la cle
-			perso.possessionClef = false;
-			this.possessionClef = true;
-			return true;
+		
+		super.energie -= 10; //Le voleur perd 10 d'energie a chaque tentative	
+		
+		if (new Random().nextInt(100) > 50) { //Le voleur a 50% de chance de reussir son vol
+			
+			if (perso.possessionClef == true) { // si ce perso a la cle
+				perso.possessionClef = false;
+				this.possessionClef = true;
+				return true;
+			}		
+		} else {
+			System.out.println("Le vol n'a ete reussi");
 		}
+		
 		return false;
 	}
 

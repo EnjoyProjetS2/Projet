@@ -104,6 +104,23 @@ public class Equipe{
 		this.nom = nom;
 	}
 	
+	/**
+	 * Test si un personnage de l'equipe ne serait pas (malencontreusement) mort
+	 * Retourne vrai si au moins un personnage est en vie
+	 * @return
+	 */
+	public boolean survie() {
+
+		for (int i=0; i<this.getListePersos().size(); i++) {
+			
+			if (this.getListePersos().get(i).getEnergie() > 0) {
+				return true;
+			}			
+		}
+		return false;
+		
+	}
+	
 	
 	
 }

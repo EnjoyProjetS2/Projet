@@ -53,34 +53,35 @@ public class Jeu {
 			un.getNavire().embarquement();
 			deux.getNavire().embarquement();
 
-			//System.out.println(ile.toString()); // Affichage texte
+			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 			p.setJeu(ile.getGrille());
 			p.affichage();
 
 			Random alea = new Random();
 			int equipe = alea.nextInt(2) + 1;
-			
+
 			informations(un, p);
 			informations(deux, p);
 
+			boolean coffreAuBateau = false;
+			boolean equipeMorte = false;
 
-			while (!un.getNavire().presenceDuCoffre() || !deux.getNavire().presenceDuCoffre()) {
+			while (!coffreAuBateau && !equipeMorte) {
 
-				boolean joue = false;
-				
 				soigner(un);
-				soigner(deux);	
-				
+				soigner(deux);
+
 				p.getPlateau().println("Equipe " + equipe + " - Cliquez sur un de vos navires ou personnages:");
 				System.out.println("Equipe " + equipe + " - Cliquez sur un navire ou un personnage:");
 
-				while (!joue) {					
+				boolean joue = false;
+
+				while (!joue) {
 
 					p.getPlateau().waitEvent();
 					int clicX = p.getPlateau().getPosX();
 					int clicY = p.getPlateau().getPosY();
-					
 
 					if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
 
@@ -143,11 +144,19 @@ public class Jeu {
 
 					}
 
-					//System.out.println(ile.toString());
+					if (!un.survie() || !deux.survie()) {
+						equipeMorte = true;
+					} else if (un.getNavire().presenceDuCoffre() || deux.getNavire().presenceDuCoffre()) {
+						coffreAuBateau = true;
+					} else {
+						tuer(un, ile);
+						tuer(deux, ile);
+					}
+
 					p.setJeu(ile.getGrille());
 					p.affichage();
 
-				}
+				} // fin du tour
 
 				if (equipe == 1) {
 					equipe = 2;
@@ -155,20 +164,49 @@ public class Jeu {
 					equipe = 1;
 				}
 
+			} // fin du jeu
+
+			int gagnant = 0;
+
+			System.out.println("test");
+
+			// Victoire par mort de l'equipe adverse
+			if (!un.survie()) {
+				p.getPlateau().println("Tous les personnages de l'equipe " + un.getNom() + " sont morts.");
+				gagnant = 2;
+			} else if (!deux.survie()) {
+				p.getPlateau().println("Tous les personnages de l'equipe " + deux.getNom() + " sont morts.");
+				gagnant = 1;
+			}
+
+			// Victoire par depot du tresor
+			if (un.getNavire().presenceDuCoffre()) {
+				p.getPlateau().println("L'equipe " + un.getNom() + " a ramenee le tresor!");
+				gagnant = 1;
+			} else if (deux.getNavire().presenceDuCoffre()) {
+				p.getPlateau().println("L'equipe " + deux.getNom() + " a ramenee le tresor!");
+				gagnant = 2;
+			}
+
+			if (gagnant == 1) {
+				p.getPlateau().println("L'equipe " + un.getNom() + " remporte la partie!");
+			} else if (gagnant == 2) {
+				p.getPlateau().println("L'equipe " + deux.getNom() + " remporte la partie!");
+			} else {
+				p.getPlateau().println("Erreur: mais que font les developpeurs?");
 			}
 
 		}
 	}
-	
-	private void informations(Equipe e, SuperPlateau p) {	
-		
-		
-		p.getPlateau().println("Equipe: "+e.getNom());
 
-		for (int i=0; i<e.getListePersos().size(); i++) {
+	private void informations(Equipe e, SuperPlateau p) {
+
+		p.getPlateau().println("Equipe: " + e.getNom());
+
+		for (int i = 0; i < e.getListePersos().size(); i++) {
 			p.getPlateau().println(e.getListePersos().get(i).toString());
 		}
-		
+
 		p.getPlateau().println("-------------------------");
 
 	}
@@ -211,21 +249,40 @@ public class Jeu {
 
 		return "faux";
 	}
-	
+
 	private void soigner(Equipe e) {
-		
-		for (int i=0; i<e.getNavire().getPersoDansNavire().size(); i++) {			
-			
-			if (e.getNavire().getPersoDansNavire().get(i).getEnergie() < maxVie-regenParTour && e.getNavire().getPersoDansNavire().get(i).getEnergie() >= 1) {
-				e.getNavire().getPersoDansNavire().get(i).setEnergie(e.getNavire().getPersoDansNavire().get(i).getEnergie()+regenParTour);
+
+		for (int i = 0; i < e.getNavire().getPersoDansNavire().size(); i++) {
+
+			if (e.getNavire().getPersoDansNavire().get(i).getEnergie() < maxVie - regenParTour
+					&& e.getNavire().getPersoDansNavire().get(i).getEnergie() >= 1) {
+				e.getNavire().getPersoDansNavire().get(i)
+						.setEnergie(e.getNavire().getPersoDansNavire().get(i).getEnergie() + regenParTour);
 			} else {
 				e.getNavire().getPersoDansNavire().get(i).setEnergie(maxVie);
 			}
-			
+
 		}
-		
+
 	}
-	
+
+	private void tuer(Equipe e, Ile ile) {
+
+		for (int i = 0; i < e.getListePersos().size(); i++) {
+
+			if (e.getListePersos().get(i).getEnergie() <= 0) {
+
+				if (e.getListePersos().get(i).getX() == e.getNavire().getX()
+						&& e.getListePersos().get(i).getY() == e.getNavire().getY()) {
+					e.getNavire().getPersoDansNavire().remove(i);
+				} else {
+					ile.getGrille()[e.getListePersos().get(i).getX()][e.getListePersos().get(i).getY()] = new Sable();
+				}
+				e.getListePersos().remove(i);
+			}
+		}
+
+	}
 
 	private boolean accueil() {
 
