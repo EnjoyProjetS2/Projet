@@ -13,7 +13,7 @@ import javax.swing.JSlider;
 
 public class Jeu {
 
-	static int nbPerso = 1;
+	static int nbPerso = 3;
 	static int pourcentageRocher = 10;
 	static int tailleX = 10;
 	static int tailleY = 10;
@@ -57,7 +57,8 @@ public class Jeu {
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 			p.setJeu(ile.getGrille());
 			p.affichage();
-
+			modeCreatif(p, ile, un);
+			modeCreatif(p, ile, deux);
 			Random alea = new Random();
 			int equipe = alea.nextInt(2) + 1;
 
@@ -228,6 +229,34 @@ public class Jeu {
 
 		return null;
 
+	}
+
+	private void modeCreatif(SuperPlateau p, Ile ile, Equipe equipe) {
+		p.getPlateau().println(
+				"Place tes personnages equipe "+equipe.getID());
+		int cpt = 0;
+		while(cpt < nbPerso) {
+			String[] tabChoix = { "Explorateur", "Voleur" };
+			String choix = (String) JOptionPane.showInputDialog(null, "Choisir un perso a placer (equipe "+equipe.getID()+" )", "Mode Creatif",
+					JOptionPane.DEFAULT_OPTION, null, tabChoix, tabChoix[0]);
+			if (choix.equals("Explorateur")) {
+				p.getPlateau().waitEvent();
+				if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
+					ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = new Explorateur(
+							"explorateur " + cpt, equipe, p.getPlateau().getPosY(), p.getPlateau().getPosX());
+					cpt++;
+				}
+			} else if (choix.equals("Voleur")) {
+				p.getPlateau().waitEvent();
+				if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
+					ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = new Voleur("Voleur " + cpt,
+							equipe, p.getPlateau().getPosY(), p.getPlateau().getPosX());
+					cpt++;
+				}
+			}
+			p.setJeu(ile.getGrille());
+			p.affichage();
+		}
 	}
 
 	private String direction() {
