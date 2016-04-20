@@ -22,6 +22,7 @@ public class Jeu {
 	static boolean validerParametre = false;
 	static Equipe un;
 	static Equipe deux;
+	static boolean modeCreatif = false;
 
 	/**
 	 * Constructeur: cree la partie, la parametre, cree les equipes, leurs
@@ -32,7 +33,7 @@ public class Jeu {
 
 		if (accueil()) {
 
-			// parametres();
+			parametres();
 
 			this.un = new Equipe(null, 1);
 			this.deux = new Equipe(null, 2);
@@ -44,26 +45,32 @@ public class Jeu {
 
 			// Affiche les membres des équipes
 			un.afficherEquipe();
-			deux.afficherEquipe();
+			deux.afficherEquipe();			
 
-			ile.getGrille()[8][1] = new Explorateur("billy", un, 8, 1);
-			ile.getGrille()[7][8] = new Voleur("swag", deux, 7, 8);
-
-			// Les membres des équipes se dirigent dans leurs bateaux respectifs
-			un.getNavire().embarquement();
-			deux.getNavire().embarquement();
-
+			
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 			p.setJeu(ile.getGrille());
 			p.affichage();
-			modeCreatif(p, ile, un);
-			modeCreatif(p, ile, deux);
+			
+			
+
+			if (this.modeCreatif) {
+				modeCreatif(p, ile, un);
+				modeCreatif(p, ile, deux);
+			} else {
+				// Les membres des équipes se dirigent dans leurs bateaux respectifs
+				un.getNavire().embarquement();
+				deux.getNavire().embarquement();
+			}
+			
 			Random alea = new Random();
 			int equipe = alea.nextInt(2) + 1;
 
 			informations(un, p);
 			informations(deux, p);
+			
+			p.getPlateau().println("Début de la partie !");
 
 			boolean coffreAuBateau = false;
 			boolean equipeMorte = false;
@@ -232,12 +239,12 @@ public class Jeu {
 	}
 
 	private void modeCreatif(SuperPlateau p, Ile ile, Equipe equipe) {
-		p.getPlateau().println(
-				"Place tes personnages equipe "+equipe.getID());
+		p.getPlateau().println("Place tes personnages equipe " + equipe.getID());
 		int cpt = 0;
-		while(cpt < nbPerso) {
+		while (cpt < nbPerso) {
 			String[] tabChoix = { "Explorateur", "Voleur" };
-			String choix = (String) JOptionPane.showInputDialog(null, "Choisir un perso a placer (equipe "+equipe.getID()+" )", "Mode Creatif",
+			String choix = (String) JOptionPane.showInputDialog(null,
+					"Choisir un perso a placer (equipe " + equipe.getID() + " )", "Mode Creatif",
 					JOptionPane.DEFAULT_OPTION, null, tabChoix, tabChoix[0]);
 			if (choix.equals("Explorateur")) {
 				p.getPlateau().waitEvent();
@@ -335,11 +342,15 @@ public class Jeu {
 
 	private void parametres() {
 
-		String[] mode = { "1 contre 1" };
+		String[] mode = { "1 contre 1", "1 contre 1 (Mode creatif)" };
 
 		String choix = (String) JOptionPane.showInputDialog(null, "Choisissez un mode de jeu:", "Parametres",
 				JOptionPane.DEFAULT_OPTION, null, mode, mode[0]);
 		JOptionPane.showMessageDialog(null, "Bien enregistré !", "Information", JOptionPane.DEFAULT_OPTION);
+
+		if (choix.equals("1 contre 1 (Mode creatif)")) {
+			this.modeCreatif = true;
+		}
 
 		// JSLIDE:
 		// ajouter taille de la carte
