@@ -50,8 +50,8 @@ public class Jeu {
 
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
-			p.setJeu(ile.getGrille());
-			p.affichage();
+			//p.setJeu(ile.getGrille());
+			//p.affichage();
 
 			if (this.modeCreatif) {
 				modeCreatif(p, ile, un);
@@ -70,6 +70,13 @@ public class Jeu {
 			informations(deux, p);
 
 			p.getPlateau().println("Début de la partie !");
+			
+			if (un.getID() == equipe) {
+				p.setJeu(un.setVision(ile));
+			} else if (deux.getID() == equipe){
+				p.setJeu(deux.setVision(ile));
+			}
+			p.affichage();	
 
 			boolean coffreAuBateau = false;
 			boolean equipeMorte = false;
@@ -160,8 +167,12 @@ public class Jeu {
 						tuer(deux, ile);
 					}
 
-					p.setJeu(ile.getGrille());
-					p.affichage();
+					if (un.getID() == equipe) {
+						p.setJeu(un.setVision(ile));
+					} else if (deux.getID() == equipe){
+						p.setJeu(deux.setVision(ile));
+					}
+					p.affichage();	
 
 				} // fin du tour
 

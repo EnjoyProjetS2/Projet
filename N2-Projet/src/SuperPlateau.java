@@ -5,7 +5,7 @@ public class SuperPlateau {
 	private int taille = Jeu.tailleX;
 	private int[][] jeu = new int[taille][taille];
 	private String[] gifs = new String[] { "images/stone.png", "images/boat.png", "images/sable.png", "images/eau.png",
-			"images/Explo.png", "images/Voleur.png" };
+			"images/Explo.png", "images/Voleur.png", "images/vision.png" };
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
@@ -28,27 +28,30 @@ public class SuperPlateau {
 	}
 
 	public void setJeu(Parcelle[][] tablo) {
-		
+
 		for (int i = 0; i < tablo.length; i++) {
 			for (int j = 0; j < tablo[i].length; j++) {
-				
+
 				if (tablo[i][j] instanceof Rocher) {
 					this.jeu[i][j] = 1;
 				} else if (tablo[i][j] instanceof Navire) {
 					this.jeu[i][j] = 2;
 				} else if (tablo[i][j] instanceof Sable) {
 					this.jeu[i][j] = 3;
-				} else if(tablo[i][j] instanceof Eau) {
+				} else if (tablo[i][j] instanceof Eau) {
 					this.jeu[i][j] = 4;
-				} else if(tablo[i][j] instanceof Explorateur) {
+				} else if (tablo[i][j] instanceof Explorateur) {
 					this.jeu[i][j] = 5;
-				} else if(tablo[i][j] instanceof Voleur) {
+				} else if (tablo[i][j] instanceof Voleur) {
 					this.jeu[i][j] = 6;
 				}
 			}
-		}		
-			
+		}
 		p.setJeu(this.jeu);
+	}
+	
+	public void setJeu(int[][] tablo) {
+		p.setJeu(tablo);
 	}
 
 	public void affichage() {

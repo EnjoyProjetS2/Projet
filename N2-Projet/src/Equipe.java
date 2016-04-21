@@ -1,43 +1,98 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equipe{	
-	
-	
+public class Equipe {
+
 	private String nom;
 	private Navire navire;
-	
-
-	private final int ID; //1 ou 2
-
+	private final int ID; // 1 ou 2
 	private List<Personnage> listePersos = new ArrayList<>();
-	
-	//private boolean[][] vision = new boolean[Constantes.TAILLEX][Constantes.TAILLEY];
-	
-	
-	/**Constructeur: Cree une equipe avec un nom et un ID (1 ou 2)
+	private int[][] vision;
+
+	// private boolean[][] vision = new
+	// boolean[Constantes.TAILLEX][Constantes.TAILLEY];
+
+	/**
+	 * Constructeur: Cree une equipe avec un nom et un ID (1 ou 2)
 	 * 
 	 * @param nom
 	 * @param ID
 	 */
-	public Equipe(String nom, int ID) {		
+	public Equipe(String nom, int ID) {
 		if (ID == 1 || ID == 2) {
 			this.nom = nom;
 			this.ID = ID;
 			this.navire = new Navire();
 			this.navire.setEquipe(this);
-			
+
 		} else {
 			this.nom = null;
 			this.ID = 0;
 		}
+
+
 	}
-	
+
+	public int[][] setVision(Ile ile) {
+
+		int[][] grille = new int[Jeu.tailleX][Jeu.tailleY];
+		
+		for (int i = 0; i < ile.getGrille().length; i++) {
+			for (int j = 0; j < ile.getGrille()[i].length; j++) {
+				grille[i][j] = 7;
+			}
+		}
+				
+		for (int i = 0; i < ile.getGrille().length; i++) {
+			for (int j = 0; j < ile.getGrille()[i].length; j++) {
+
+				if (ile.getGrille()[i][j] instanceof Navire || ile.getGrille()[i][j] instanceof Personnage) {
+					grille[i][j] = idParcelle(ile.getGrille()[i][j]);
+					
+					for (int x=i-1; x<=i+1; x++) {
+						for (int y=j-1; y<=j+1; y++) {
+							grille[x][y] = idParcelle(ile.getGrille()[x][y]);
+						}
+					}					
+					
+				} else {
+					grille[i][j] = 7;
+				}
+
+			}
+		}
+		
+		return grille;
+	}
+
+	public int[][] getVision() {
+		return this.vision;
+	}
+
+	private int idParcelle(Parcelle parcelle) {
+
+		if (parcelle instanceof Rocher) {
+			return 1;
+		} else if (parcelle instanceof Navire) {
+			return 2;
+		} else if (parcelle instanceof Sable) {
+			return 3;
+		} else if (parcelle instanceof Eau) {
+			return 4;
+		} else if (parcelle instanceof Explorateur) {
+			return 5;
+		} else if (parcelle instanceof Voleur) {
+			return 6;
+		}
+		return 0;
+	}
+
 	public String getNom() {
 		return nom;
 	}
-	
-	/**Retourne le navire de l'equipe
+
+	/**
+	 * Retourne le navire de l'equipe
 	 * 
 	 * @return
 	 */
@@ -45,7 +100,8 @@ public class Equipe{
 		return navire;
 	}
 
-	/**Definit le navire de l'equipe
+	/**
+	 * Definit le navire de l'equipe
 	 * 
 	 * @param navire
 	 */
@@ -54,41 +110,44 @@ public class Equipe{
 		this.navire.setEquipe(this);
 
 	}
-	
-	/**Retourne la liste des personnages de l'equipe
+
+	/**
+	 * Retourne la liste des personnages de l'equipe
 	 * 
 	 * @return
 	 */
 	public List<Personnage> getListePersos() {
 		return this.listePersos;
 	}
-	
-	/**Affiche les membres de l'equipe
+
+	/**
+	 * Affiche les membres de l'equipe
 	 * 
 	 */
-	public void afficherEquipe(){
-		System.out.println(this.nom +":");
+	public void afficherEquipe() {
+		System.out.println(this.nom + ":");
 		for (int i = 0; i < listePersos.size(); i++) {
 			System.out.println(listePersos.get(i));
 		}
 	}
-	
-	/**Ajoute un personnage dans l'equipe
+
+	/**
+	 * Ajoute un personnage dans l'equipe
 	 * 
 	 * @param p
 	 * @return
 	 */
-	public boolean ajoutPersonnage(Personnage p){
-		if(!listePersos.contains(p)){
+	public boolean ajoutPersonnage(Personnage p) {
+		if (!listePersos.contains(p)) {
 			listePersos.add(p);
-			
+
 			return true;
 		}
 		return false;
 	}
-		
 
-	/**Retourne l'identifiant de l'equipe
+	/**
+	 * Retourne l'identifiant de l'equipe
 	 * 
 	 * @return
 	 */
@@ -96,31 +155,31 @@ public class Equipe{
 		return ID;
 	}
 
-	/**Definit le nom de l'equipe
+	/**
+	 * Definit le nom de l'equipe
 	 * 
 	 * @param nom
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
+
 	/**
 	 * Test si un personnage de l'equipe ne serait pas (malencontreusement) mort
 	 * Retourne vrai si au moins un personnage est en vie
+	 * 
 	 * @return
 	 */
 	public boolean survie() {
 
-		for (int i=0; i<this.getListePersos().size(); i++) {
-			
+		for (int i = 0; i < this.getListePersos().size(); i++) {
+
 			if (this.getListePersos().get(i).getEnergie() > 0) {
 				return true;
-			}			
+			}
 		}
 		return false;
-		
+
 	}
-	
-	
-	
+
 }
