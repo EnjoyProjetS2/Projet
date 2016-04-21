@@ -1,3 +1,4 @@
+import javax.swing.JOptionPane;
 
 public class Explorateur extends Personnage {
 
@@ -26,6 +27,7 @@ public class Explorateur extends Personnage {
 		if (terrain.clef == true) { // si ce rocher a la cle
 			terrain.clef = false;
 			this.possessionClef = true;
+			JOptionPane.showMessageDialog(null, "l equipe "+super.equipe.getNom()+" a trouve la clef !");
 			return true;
 		} else if (terrain.coffre == true) {
 			System.out.println("Le coffre est la  !");

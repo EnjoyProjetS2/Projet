@@ -13,7 +13,7 @@ import javax.swing.JSlider;
 
 public class Jeu {
 
-	static int nbPerso = 3;
+	static int nbPerso = 1;
 	static int pourcentageRocher = 10;
 	static int tailleX = 10;
 	static int tailleY = 10;
@@ -23,6 +23,7 @@ public class Jeu {
 	static Equipe un;
 	static Equipe deux;
 	static boolean modeCreatif = false;
+	static boolean solo = false;
 
 	/**
 	 * Constructeur: cree la partie, la parametre, cree les equipes, leurs
@@ -45,31 +46,29 @@ public class Jeu {
 
 			// Affiche les membres des équipes
 			un.afficherEquipe();
-			deux.afficherEquipe();			
+			deux.afficherEquipe();
 
-			
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 			p.setJeu(ile.getGrille());
 			p.affichage();
-			
-			
 
 			if (this.modeCreatif) {
 				modeCreatif(p, ile, un);
 				modeCreatif(p, ile, deux);
 			} else {
-				// Les membres des équipes se dirigent dans leurs bateaux respectifs
+				// Les membres des équipes se dirigent dans leurs bateaux
+				// respectifs
 				un.getNavire().embarquement();
 				deux.getNavire().embarquement();
 			}
-			
+
 			Random alea = new Random();
 			int equipe = alea.nextInt(2) + 1;
 
 			informations(un, p);
 			informations(deux, p);
-			
+
 			p.getPlateau().println("Début de la partie !");
 
 			boolean coffreAuBateau = false;
@@ -241,30 +240,28 @@ public class Jeu {
 	private void modeCreatif(SuperPlateau p, Ile ile, Equipe equipe) {
 		p.getPlateau().println("Place tes personnages equipe " + equipe.getID());
 		int cpt = 0;
-		while (cpt < nbPerso) {
-			String[] tabChoix = { "Explorateur", "Voleur" };
-			String choix = (String) JOptionPane.showInputDialog(null,
-					"Choisir un perso a placer (equipe " + equipe.getID() + " )", "Mode Creatif",
-					JOptionPane.DEFAULT_OPTION, null, tabChoix, tabChoix[0]);
-			if (choix.equals("Explorateur")) {
-				p.getPlateau().waitEvent();
-				if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
-					ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = new Explorateur(
-							"explorateur " + cpt, equipe, p.getPlateau().getPosY(), p.getPlateau().getPosX());
-					cpt++;
-				}
-			} else if (choix.equals("Voleur")) {
-				p.getPlateau().waitEvent();
-				if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
-					ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = new Voleur("Voleur " + cpt,
-							equipe, p.getPlateau().getPosY(), p.getPlateau().getPosX());
-					cpt++;
-				}
+		while (cpt < equipe.getListePersos().size()) {
+			/*
+			 * String[] tabChoix = { "Explorateur", "Voleur" }; String choix =
+			 * (String) JOptionPane.showInputDialog(null,
+			 * "Choisir un perso a placer (equipe " + equipe.getID() + " )",
+			 * "Mode Creatif", JOptionPane.DEFAULT_OPTION, null, tabChoix,
+			 * tabChoix[0]);
+			 */
+			p.getPlateau().println("Perso "+cpt);
+			p.getPlateau().waitEvent();
+			if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
+				ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = equipe.getListePersos().get(cpt);
+				 equipe.getListePersos().get(cpt).setX(p.getPlateau().getPosY());
+				 equipe.getListePersos().get(cpt).setY(p.getPlateau().getPosX());
+				cpt++;
 			}
 			p.setJeu(ile.getGrille());
 			p.affichage();
 		}
+		
 	}
+
 
 	private String direction() {
 
@@ -342,14 +339,16 @@ public class Jeu {
 
 	private void parametres() {
 
-		String[] mode = { "1 contre 1", "1 contre 1 (Mode creatif)" };
+		String[] mode = { "1 contre 1", "1 contre 1 (Mode creatif)", "Mode solo" };
 
 		String choix = (String) JOptionPane.showInputDialog(null, "Choisissez un mode de jeu:", "Parametres",
 				JOptionPane.DEFAULT_OPTION, null, mode, mode[0]);
 		JOptionPane.showMessageDialog(null, "Bien enregistré !", "Information", JOptionPane.DEFAULT_OPTION);
-
+		
 		if (choix.equals("1 contre 1 (Mode creatif)")) {
 			this.modeCreatif = true;
+		}else if(choix.equals("Mode solo")){
+			this.solo = true;
 		}
 
 		// JSLIDE:
@@ -450,6 +449,12 @@ public class Jeu {
 		// proco
 		do {
 			System.out.println();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} while (!validerParametre);
 		// modification desparametres
 		nbPerso = sliderCentre.getValue();

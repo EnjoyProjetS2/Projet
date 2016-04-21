@@ -1,6 +1,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -42,7 +43,8 @@ public class Plateau {
 		public void mouseClicked(MouseEvent event) {
 			currentEvent = event ;
 			posX = graphic.getX(event) ;
-			posY = graphic.getY(event) ;			
+			
+			posY = graphic.getY(event) ;
 		}
 		@Override
 		public void mouseEntered(MouseEvent arg0) {	}
@@ -104,7 +106,7 @@ public class Plateau {
 
 		// Caractéristiques initiales pour la fenetre.
 		window.setTitle("Plateau de jeu ("+taille+"X"+taille+")");
-		window.setLocationRelativeTo(null);
+		window.setLocation(new Point(200, 0));
 		window.setLayout(new BorderLayout());
 		// La fermeture de la fenetre ne fait que la cacher. 
 		// cf Javadoc setDefaultCloseOperation
