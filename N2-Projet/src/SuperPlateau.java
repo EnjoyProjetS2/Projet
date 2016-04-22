@@ -5,7 +5,7 @@ public class SuperPlateau {
 	private int taille = Jeu.tailleX;
 	private int[][] jeu = new int[taille][taille];
 	private String[] gifs = new String[] { "images/stone.png", "images/boat.png", "images/sable.png", "images/eau.png",
-			"images/Explo.png", "images/Voleur.png", "images/vision.png" };
+			"images/Explo.png", "images/Voleur.png", "images/vision.png", "images/Guerrier.png" };
 
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
@@ -44,6 +44,8 @@ public class SuperPlateau {
 					this.jeu[i][j] = 5;
 				} else if (tablo[i][j] instanceof Voleur) {
 					this.jeu[i][j] = 6;
+				} else if (tablo[i][j] instanceof Guerrier) {
+					this.jeu[i][j] = 8;
 				}
 			}
 		}

@@ -1,11 +1,11 @@
 public abstract class Parcelle {
 	
 	protected boolean traversable = true;
+	public boolean visitee = false;
 	
 	public static boolean poseCoffre = false;
 	public static boolean poseClef = false;
-	
-	
+		
 		
 	/**Retourne vrai si la parcelle est traversable
 	 * 
@@ -30,6 +30,14 @@ public abstract class Parcelle {
 	 */
 	public void setTraversable(boolean b) {
 		this.traversable = b;
+	}
+
+	public boolean isVisitee() {
+		return visitee;
+	}
+
+	public void setVisitee(boolean visitee) {
+		this.visitee = visitee;
 	}	
 
 }

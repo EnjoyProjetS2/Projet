@@ -30,39 +30,46 @@ public class Equipe {
 			this.ID = 0;
 		}
 
-
 	}
 
 	public int[][] setVision(Ile ile) {
 
 		int[][] grille = new int[Jeu.tailleX][Jeu.tailleY];
-		
+
 		for (int i = 0; i < ile.getGrille().length; i++) {
 			for (int j = 0; j < ile.getGrille()[i].length; j++) {
 				grille[i][j] = 7;
+
 			}
 		}
-				
+
 		for (int i = 0; i < ile.getGrille().length; i++) {
 			for (int j = 0; j < ile.getGrille()[i].length; j++) {
 
-				if (ile.getGrille()[i][j] instanceof Navire || ile.getGrille()[i][j] instanceof Personnage) {
+				if (ile.getGrille()[i][j] instanceof Personnage || ile.getGrille()[i][j] instanceof Navire) {
 					grille[i][j] = idParcelle(ile.getGrille()[i][j]);
-					
-					for (int x=i-1; x<=i+1; x++) {
-						for (int y=j-1; y<=j+1; y++) {
+					for (int x = i - 1; x <= i + 1; x++) {
+						for (int y = j - 1; y <= j + 1; y++) {
 							grille[x][y] = idParcelle(ile.getGrille()[x][y]);
+							ile.getGrille()[x][y].setVisitee(true);
+
 						}
-					}					
+					}
 					
 				} else {
 					grille[i][j] = 7;
 				}
 
+				if (ile.getGrille()[i][j].isVisitee() == true) {
+					grille[i][j] = idParcelle(ile.getGrille()[i][j]);
+
+				}
 			}
+
 		}
-		
+
 		return grille;
+
 	}
 
 	public int[][] getVision() {
@@ -83,6 +90,8 @@ public class Equipe {
 			return 5;
 		} else if (parcelle instanceof Voleur) {
 			return 6;
+		} else if (parcelle instanceof Guerrier) {
+			return 8;
 		}
 		return 0;
 	}

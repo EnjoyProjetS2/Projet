@@ -50,8 +50,8 @@ public class Jeu {
 
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
-			//p.setJeu(ile.getGrille());
-			//p.affichage();
+			// p.setJeu(ile.getGrille());
+			// p.affichage();
 
 			if (this.modeCreatif) {
 				modeCreatif(p, ile, un);
@@ -70,13 +70,13 @@ public class Jeu {
 			informations(deux, p);
 
 			p.getPlateau().println("Début de la partie !");
-			
+
 			if (un.getID() == equipe) {
 				p.setJeu(un.setVision(ile));
-			} else if (deux.getID() == equipe){
+			} else if (deux.getID() == equipe) {
 				p.setJeu(deux.setVision(ile));
 			}
-			p.affichage();	
+			p.affichage();
 
 			boolean coffreAuBateau = false;
 			boolean equipeMorte = false;
@@ -167,13 +167,6 @@ public class Jeu {
 						tuer(deux, ile);
 					}
 
-					if (un.getID() == equipe) {
-						p.setJeu(un.setVision(ile));
-					} else if (deux.getID() == equipe){
-						p.setJeu(deux.setVision(ile));
-					}
-					p.affichage();	
-
 				} // fin du tour
 
 				if (equipe == 1) {
@@ -181,6 +174,13 @@ public class Jeu {
 				} else if (equipe == 2) {
 					equipe = 1;
 				}
+
+				if (un.getID() == equipe) {
+					p.setJeu(un.setVision(ile));
+				} else if (deux.getID() == equipe) {
+					p.setJeu(deux.setVision(ile));
+				}
+				p.affichage();
 
 			} // fin du jeu
 
@@ -259,20 +259,19 @@ public class Jeu {
 			 * "Mode Creatif", JOptionPane.DEFAULT_OPTION, null, tabChoix,
 			 * tabChoix[0]);
 			 */
-			p.getPlateau().println("Perso "+cpt);
+			p.getPlateau().println("Perso " + cpt);
 			p.getPlateau().waitEvent();
 			if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
 				ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = equipe.getListePersos().get(cpt);
-				 equipe.getListePersos().get(cpt).setX(p.getPlateau().getPosY());
-				 equipe.getListePersos().get(cpt).setY(p.getPlateau().getPosX());
+				equipe.getListePersos().get(cpt).setX(p.getPlateau().getPosY());
+				equipe.getListePersos().get(cpt).setY(p.getPlateau().getPosX());
 				cpt++;
 			}
 			p.setJeu(ile.getGrille());
 			p.affichage();
 		}
-		
-	}
 
+	}
 
 	private String direction() {
 
@@ -355,10 +354,10 @@ public class Jeu {
 		String choix = (String) JOptionPane.showInputDialog(null, "Choisissez un mode de jeu:", "Parametres",
 				JOptionPane.DEFAULT_OPTION, null, mode, mode[0]);
 		JOptionPane.showMessageDialog(null, "Bien enregistré !", "Information", JOptionPane.DEFAULT_OPTION);
-		
+
 		if (choix.equals("1 contre 1 (Mode creatif)")) {
 			this.modeCreatif = true;
-		}else if(choix.equals("Mode solo")){
+		} else if (choix.equals("Mode solo")) {
 			this.solo = true;
 		}
 
@@ -548,7 +547,7 @@ public class Jeu {
 				adversaire[nb] = "Droite";
 			}
 
-			String aVoler = (String) JOptionPane.showInputDialog(null, "Qui voler ?", "Personnage Ã  voler : ",
+			String aVoler = (String) JOptionPane.showInputDialog(null, "Qui voler ?", "Personnage a  voler : ",
 					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
 
 			// faire l'action
@@ -562,14 +561,54 @@ public class Jeu {
 				return ((Voleur) perso).voler(pdroite);
 			}
 
+		} else if (perso instanceof Guerrier) {
+			String[] adversaire = new String[4];
+			int nb = 0;
+			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Personnage) {
+				phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY() - 1];
+				adversaire[nb] = "Haut";
+				nb++;
+			}
+
+			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Personnage) {
+				pbas = (Personnage) ile.getGrille()[perso.getX()][perso.getY() + 1];
+				adversaire[nb] = "Bas";
+				nb++;
+			}
+
+			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Personnage) {
+				pgauche = (Personnage) ile.getGrille()[perso.getX() - 1][perso.getY()];
+				adversaire[nb] = "Gauche";
+				nb++;
+			}
+
+			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Personnage) {
+				pdroite = (Personnage) ile.getGrille()[perso.getX() + 1][perso.getY()];
+				adversaire[nb] = "Droite";
+			}
+
+			String aAttaquer = (String) JOptionPane.showInputDialog(null, "Qui attaquer ?", "Personnage a attaquer : ",
+					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
+
+			// faire l'action
+			if (aAttaquer == "Haut") {
+				return ((Guerrier) perso).attaquer(phaut);
+			} else if (aAttaquer == "Bas") {
+				return ((Guerrier) perso).attaquer(pbas);
+			} else if (aAttaquer == "Gauche") {
+				return ((Guerrier) perso).attaquer(pgauche);
+			} else if (aAttaquer == "Droite") {
+				return ((Guerrier) perso).attaquer(pdroite);
+			}
 		}
+
 		return false;
 
 	}
 
 	private void saisieEquipe(Equipe e) {
 
-		String[] personnages = { "Explorateur", "Voleur" };
+		String[] personnages = { "Explorateur", "Voleur", "Guerrier" };
 
 		e.setNom(JOptionPane.showInputDialog("Equipe " + e.getID() + " - Entrez un nom d'equipe:"));
 
@@ -590,6 +629,9 @@ public class Jeu {
 						e.getNavire().getX(), e.getNavire().getY()));
 			} else if (classe.equals("Voleur")) {
 				e.ajoutPersonnage(new Voleur(JOptionPane.showInputDialog("Quel est le nom de ce voleur?"), e,
+						e.getNavire().getX(), e.getNavire().getY()));
+			} else if (classe.equals("Guerrier")) {
+				e.ajoutPersonnage(new Guerrier(JOptionPane.showInputDialog("Quel est le nom de ce guerrier?"), e,
 						e.getNavire().getX(), e.getNavire().getY()));
 			}
 
