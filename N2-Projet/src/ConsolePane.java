@@ -1,4 +1,6 @@
 
+import java.awt.Font;
+
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -15,7 +17,8 @@ class ConsolePane extends JScrollPane {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setFocusable(false);
-		textArea.setText("Console:\n");
+		textArea.setFont(new Font("Serif", Font.PLAIN, 18));
+		textArea.setText("Bienvenue dans la chasse au tresor !\n");
 		this.setViewportView(textArea);
 	}
 	

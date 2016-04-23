@@ -22,7 +22,7 @@ public class Jeu {
 	static boolean validerParametre = false;
 	static Equipe un;
 	static Equipe deux;
-	static boolean modeCreatif = false;
+	boolean modeCreatif = false;
 	static boolean solo = false;
 
 	/**
