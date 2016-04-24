@@ -23,29 +23,28 @@ public class Voleur extends Personnage {
 	 * 
 	 * @param perso
 	 */
-	public boolean voler(Personnage perso) {
+	boolean voler(Personnage perso){
+        //si pas de la même équipe on vole
+        if(perso.getEquipe() != this.getEquipe()){
+            if(perso.possessionCoffre){
+                perso.possessionCoffre = false;
+                this.possessionCoffre = true;
+            }else if(perso.possessionClef == true){ //si ce perso a la cle
+                    perso.possessionClef = false;
+                    this.possessionClef = true;
+                    return true;
+            }
+        } 
+        //si de la même équipe, on donne la clé
+        else if(perso.getEquipe() == this.getEquipe()){
+            if(this.possessionClef){
+                perso.possessionClef = true;
+                this.possessionClef = false;
+            }
+        }
+        return false;
+    }
 
-		super.energie -= 10; // Le voleur perd 10 d'energie a chaque tentative
-
-		if (new Random().nextInt(100) > 50) { // Le voleur a 50% de chance de
-												// reussir son vol
-
-			if (perso.possessionClef == true) { // si ce perso a la cle
-				perso.possessionClef = false;
-				this.possessionClef = true;
-				JOptionPane.showMessageDialog(null,
-						"Le voleur de l'equipe " + super.equipe.getNom() + " a pris la clef !");
-				return true;
-			} else {
-				JOptionPane.showMessageDialog(null, "La cible ne portait pas de clef.");
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Le voleur n'a pas reussi a voler la clef.");
-
-		}
-
-		return false;
-	}
 
 	/**
 	 * Retourne les informations du personnage
