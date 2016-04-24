@@ -47,10 +47,10 @@ public class Equipe {
 			for (int j = 0; j < ile.getGrille()[i].length; j++) {
 
 				if (ile.getGrille()[i][j] instanceof Personnage || ile.getGrille()[i][j] instanceof Navire) {
-					grille[i][j] = idParcelle(ile.getGrille()[i][j]);
+					grille[i][j] = ile.getGrille()[i][j].getId();
 					for (int x = i - 1; x <= i + 1; x++) {
 						for (int y = j - 1; y <= j + 1; y++) {
-							grille[x][y] = idParcelle(ile.getGrille()[x][y]);
+							grille[x][y] = ile.getGrille()[x][y].getId();
 							ile.getGrille()[x][y].setVisitee(true);
 
 						}
@@ -61,7 +61,7 @@ public class Equipe {
 				}
 
 				if (ile.getGrille()[i][j].isVisitee() == true) {
-					grille[i][j] = idParcelle(ile.getGrille()[i][j]);
+					grille[i][j] = ile.getGrille()[i][j].getId();
 
 				}
 			}
@@ -74,27 +74,7 @@ public class Equipe {
 
 	public int[][] getVision() {
 		return this.vision;
-	}
-
-	private int idParcelle(Parcelle parcelle) {
-
-		if (parcelle instanceof Rocher) {
-			return 1;
-		} else if (parcelle instanceof Navire) {
-			return 2;
-		} else if (parcelle instanceof Sable) {
-			return 3;
-		} else if (parcelle instanceof Eau) {
-			return 4;
-		} else if (parcelle instanceof Explorateur) {
-			return 5;
-		} else if (parcelle instanceof Voleur) {
-			return 6;
-		} else if (parcelle instanceof Guerrier) {
-			return 8;
-		}
-		return 0;
-	}
+	}	
 
 	public String getNom() {
 		return nom;

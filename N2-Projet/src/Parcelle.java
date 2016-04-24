@@ -1,7 +1,9 @@
 public abstract class Parcelle {
 	
+	
+	protected int id;
 	protected boolean traversable = true;
-	public boolean visitee = false;
+	private boolean visitee = false;
 	
 	public static boolean poseCoffre = false;
 	public static boolean poseClef = false;
@@ -38,6 +40,12 @@ public abstract class Parcelle {
 
 	public void setVisitee(boolean visitee) {
 		this.visitee = visitee;
-	}	
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	
 
 }

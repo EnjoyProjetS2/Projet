@@ -8,7 +8,8 @@ public class Rocher extends Parcelle{
 		 * 
 		 */
 		public Rocher() {
-			super.traversable = false;		
+			super.traversable = false;
+			super.id = 1;
 			
 			if (Rocher.poseClef == false) {
 				this.clef = true;

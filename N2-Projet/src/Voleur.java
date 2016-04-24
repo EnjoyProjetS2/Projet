@@ -15,6 +15,7 @@ public class Voleur extends Personnage {
 	Voleur(String nom, Equipe e, int x, int y) {
 		super(nom, e, x, y);
 		super.energie = 100;
+		super.id = 6;
 	}
 
 	/**
@@ -35,16 +36,19 @@ public class Voleur extends Personnage {
 				JOptionPane.showMessageDialog(null,
 						"Le voleur de l'equipe " + super.equipe.getNom() + " a pris la clef !");
 				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "La cible ne portait pas de clef.");
 			}
 		} else {
-			System.out.println("Le vol n'a ete reussi");
+			JOptionPane.showMessageDialog(null, "Le voleur n'a pas reussi a voler la clef.");
+
 		}
 
 		return false;
 	}
 
 	/**
-	 * Retourne V ou v selon son equipe
+	 * Retourne les informations du personnage
 	 * 
 	 */
 	public String toString() {

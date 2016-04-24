@@ -13,6 +13,7 @@ public class Explorateur extends Personnage {
 	public Explorateur(String nom, Equipe e, int x, int y) {
 		super(nom, e, x, y);
 		super.energie = 100;
+		super.id = 5;
 	}
 
 	/**
@@ -27,20 +28,21 @@ public class Explorateur extends Personnage {
 		if (terrain.clef == true) { // si ce rocher a la cle
 			terrain.clef = false;
 			this.possessionClef = true;
-			JOptionPane.showMessageDialog(null, "l equipe "+super.equipe.getNom()+" a trouve la clef !");
+			JOptionPane.showMessageDialog(null, "L'equipe "+super.equipe.getNom()+" a trouve la clef !");
 			return true;
 		} else if (terrain.coffre == true) {
-			System.out.println("Le coffre est la  !");
+			JOptionPane.showMessageDialog(null, "Oh...un coffre a l'air ici.");
 			if(this.possessionClef){
 				this.possessionCoffre = true;
 			}
+			JOptionPane.showMessageDialog(null, "L'equipe "+super.equipe.getNom() +" vient de prendre le tresor !");
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Retourne un E ou un e selon l'equipe
+	 * Retourne les informations du personnage
 	 * 
 	 */
 	public String toString() {		

@@ -14,6 +14,7 @@ public class Navire extends Parcelle {
 	 */
 	public Navire() {
 		super.traversable = false;
+		super.id = 2;
 	}
 	
 	/**Cree un navire a des coordonnees precises
@@ -146,11 +147,7 @@ public class Navire extends Parcelle {
 	 */
 	public String toString() {
 
-		if (equipe.getID() == 1) {
-			return "N";
-		} else {
-			return "n";
-		}
+		return "Navire de l'equipe "+equipe.getNom();
 	}
 	
 	

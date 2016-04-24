@@ -13,12 +13,12 @@ import javax.swing.JSlider;
 
 public class Jeu {
 
-	static int nbPerso = 1;
-	static int pourcentageRocher = 10;
-	static int tailleX = 10;
-	static int tailleY = 10;
-	static int maxVie = 100;
-	static int regenParTour = 10;
+	static int nbPerso = 1; //nombre de personnages par equipes
+	static int pourcentageRocher = 10; //pourcentage de rochers sur la carte
+	static int tailleX = 10; //longueur
+	static int tailleY = 10; //largeur
+	static int maxVie = 100; //vie des personnages
+	static int regenParTour = 10; //vie regeneree par tour dans les navires
 	static boolean validerParametre = false;
 	static Equipe un;
 	static Equipe deux;
@@ -50,10 +50,12 @@ public class Jeu {
 
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
-			// p.setJeu(ile.getGrille());
-			// p.affichage();
 
 			if (this.modeCreatif) {
+
+				p.setJeu(ile.getGrille());
+				p.affichage();
+
 				modeCreatif(p, ile, un);
 				modeCreatif(p, ile, deux);
 			} else {
@@ -116,20 +118,23 @@ public class Jeu {
 							}
 
 						} else {
+							
 							p.getPlateau().println("Erreur: ce personnage appartient a l'autre equipe");
-
 							System.out.println("Erreur: ce personnage appartient a l'autre equipe");
 						}
 
 					} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
 
-						choisir(ile.getGrille()[clicY][clicX]);
+						
 
 						Navire nav = (Navire) ile.getGrille()[clicY][clicX];
+						p.getPlateau().println(nav.toString());
 
-						if (nav.getEquipe().getID() == equipe) {
+						if (nav.getEquipe().getID() == equipe) {	
 
 							if (!nav.estVide()) {
+								
+								choisir(ile.getGrille()[clicY][clicX]);
 
 								Personnage[] choix = new Personnage[nav.getPersoDansNavire().size()];
 								for (int i = 0; i < choix.length; i++) {
@@ -249,7 +254,7 @@ public class Jeu {
 	}
 
 	private void modeCreatif(SuperPlateau p, Ile ile, Equipe equipe) {
-		p.getPlateau().println("Place tes personnages equipe " + equipe.getID());
+		p.getPlateau().println("[Mode Creatif] C'est a l'equipe " + equipe.getNom() + " de placer ses personnages:");
 		int cpt = 0;
 		while (cpt < equipe.getListePersos().size()) {
 			/*
@@ -259,7 +264,7 @@ public class Jeu {
 			 * "Mode Creatif", JOptionPane.DEFAULT_OPTION, null, tabChoix,
 			 * tabChoix[0]);
 			 */
-			p.getPlateau().println("Perso " + cpt);
+			p.getPlateau().println("[Mode Creatif] Clique ou tu veux placer: " + equipe.getListePersos().get(cpt));
 			p.getPlateau().waitEvent();
 			if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
 				ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = equipe.getListePersos().get(cpt);
@@ -309,9 +314,9 @@ public class Jeu {
 
 	}
 
-	private void tuer(Equipe e, Ile ile) {
+	private void tuer(Equipe e, Ile ile) {		
 
-		for (int i = 0; i < e.getListePersos().size(); i++) {
+		for (int i = 0; i < e.getListePersos().size(); i++) {	
 
 			if (e.getListePersos().get(i).getEnergie() <= 0) {
 
@@ -477,6 +482,7 @@ public class Jeu {
 
 	private boolean action(Personnage perso, Ile ile) {
 		Rocher haut = null, bas = null, gauche = null, droite = null;
+		Sable shaut = null, sbas = null, sgauche = null, sdroite = null;
 		Personnage phaut = null, pbas = null, pgauche = null, pdroite = null;
 
 		// action de l'explorateur
@@ -600,6 +606,46 @@ public class Jeu {
 			} else if (aAttaquer == "Droite") {
 				return ((Guerrier) perso).attaquer(pdroite);
 			}
+			
+		}  else if (perso instanceof Piegeur) {
+			String[] adversaire = new String[4];
+			int nb = 0;
+			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Sable) {
+				shaut = (Sable) ile.getGrille()[perso.getX()][perso.getY() - 1];
+				adversaire[nb] = "Haut";
+				nb++;
+			}
+
+			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Sable) {
+				sbas = (Sable) ile.getGrille()[perso.getX()][perso.getY() + 1];
+				adversaire[nb] = "Bas";
+				nb++;
+			}
+
+			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Sable) {
+				sgauche = (Sable) ile.getGrille()[perso.getX() - 1][perso.getY()];
+				adversaire[nb] = "Gauche";
+				nb++;
+			}
+
+			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Sable) {
+				sdroite = (Sable) ile.getGrille()[perso.getX() + 1][perso.getY()];
+				adversaire[nb] = "Droite";
+			}
+
+			String aPieger = (String) JOptionPane.showInputDialog(null, "Quelle parcelle pieger ?", "Parcelle a pieger : ",
+					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
+
+			// faire l'action
+			if (aPieger == "Haut") {
+				return ((Piegeur) perso).pieger(shaut);
+			} else if (aPieger == "Bas") {
+				return ((Piegeur) perso).pieger(sbas);
+			} else if (aPieger == "Gauche") {
+				return ((Piegeur) perso).pieger(sgauche);
+			} else if (aPieger == "Droite") {
+				return ((Piegeur) perso).pieger(sdroite);
+			}
 		}
 
 		return false;
@@ -608,7 +654,7 @@ public class Jeu {
 
 	private void saisieEquipe(Equipe e) {
 
-		String[] personnages = { "Explorateur", "Voleur", "Guerrier" };
+		String[] personnages = { "Explorateur", "Voleur", "Guerrier", "Piegeur" };
 
 		e.setNom(JOptionPane.showInputDialog("Equipe " + e.getID() + " - Entrez un nom d'equipe:"));
 
@@ -632,6 +678,9 @@ public class Jeu {
 						e.getNavire().getX(), e.getNavire().getY()));
 			} else if (classe.equals("Guerrier")) {
 				e.ajoutPersonnage(new Guerrier(JOptionPane.showInputDialog("Quel est le nom de ce guerrier?"), e,
+						e.getNavire().getX(), e.getNavire().getY()));
+			} else if (classe.equals("Piegeur")) {
+				e.ajoutPersonnage(new Piegeur(JOptionPane.showInputDialog("Quel est le nom de ce piegeur?"), e,
 						e.getNavire().getX(), e.getNavire().getY()));
 			}
 

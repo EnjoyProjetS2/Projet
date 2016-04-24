@@ -103,10 +103,10 @@ public class Plateau {
 		window = new JFrame() ;
 		graphic = new GraphicPane(gif, taille) ;
 		console = null ;
-
+		
 		// Caractéristiques initiales pour la fenetre.
 		window.setTitle("Plateau de jeu ("+taille+"X"+taille+")");
-		window.setLocation(new Point(200, 0));
+		window.setLocation(new Point(100, 100));
 		window.setLayout(new BorderLayout());
 		// La fermeture de la fenetre ne fait que la cacher. 
 		// cf Javadoc setDefaultCloseOperation

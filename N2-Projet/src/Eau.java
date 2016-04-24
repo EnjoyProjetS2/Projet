@@ -6,6 +6,7 @@ public class Eau extends Parcelle {
 	 */
 	public Eau() {
 		super.traversable = false;
+		super.id = 4;
 	}
 	
 	/**Retour une vague pour les parcelles d'eau

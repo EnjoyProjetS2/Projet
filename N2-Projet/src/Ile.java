@@ -67,14 +67,16 @@ public class Ile {
 	 * @return
 	 */
 	public boolean deplacement(Personnage e, String deplacement) {
-		Parcelle tmp = new Sable();		
+		Parcelle tmp = new Sable();
 		switch (deplacement) {
 		case "gauche":
 			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
 				grille[e.getX()][e.getY() - 1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setY(e.getY() - 1);
+
 				e.setEnergie(e.getEnergie() - 1);
+
 				return true;
 			} else if (grille[e.getX()][e.getY() - 1] instanceof Navire) {
 				Navire nav = (Navire) grille[e.getX()][e.getY() - 1];
@@ -95,7 +97,9 @@ public class Ile {
 				grille[e.getX()][e.getY() + 1] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setY(e.getY() + 1);
+
 				e.setEnergie(e.getEnergie() - 1);
+
 				return true;
 			} else if (grille[e.getX()][e.getY() + 1] instanceof Navire) {
 				Navire nav = (Navire) grille[e.getX()][e.getY() + 1];
@@ -116,7 +120,9 @@ public class Ile {
 				grille[e.getX() - 1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX() - 1);
+
 				e.setEnergie(e.getEnergie() - 1);
+
 				return true;
 			} else if (grille[e.getX() - 1][e.getY()] instanceof Navire) {
 				Navire nav = (Navire) grille[e.getX() - 1][e.getY()];
@@ -137,7 +143,9 @@ public class Ile {
 				grille[e.getX() + 1][e.getY()] = grille[e.getX()][e.getY()];
 				grille[e.getX()][e.getY()] = tmp;
 				e.setX(e.getX() + 1);
+
 				e.setEnergie(e.getEnergie() - 1);
+
 				return true;
 			} else if (grille[e.getX() + 1][e.getY()] instanceof Navire) {
 				Navire nav = (Navire) grille[e.getX() + 1][e.getY()];

@@ -15,6 +15,7 @@ public class Guerrier extends Personnage {
 	public Guerrier(String nom, Equipe e, int x, int y) {
 		super(nom, e, x, y);
 		super.energie = 100;
+		super.id = 8;
 	}
 
 	public boolean attaquer(Personnage perso) {
@@ -37,7 +38,7 @@ public class Guerrier extends Personnage {
 			}
 
 		} else {
-			System.out.println("Impossible d'attaquer un personnage de son équipe");
+			System.out.println("Erreur: Impossible d'attaquer un personnage de son équipe");
 		}
 
 		return false;
@@ -45,7 +46,7 @@ public class Guerrier extends Personnage {
 	}
 
 	/**
-	 * Retourne un E ou un e selon l'equipe
+	 * Retourne les informations du personnage
 	 * 
 	 */
 	public String toString() {
