@@ -57,156 +57,127 @@ public class Ile {
 
 	}
 
-	// Le parametre deplacement est provisoire
-
 	/**
-	 * Déplace un personnage vers une direction précise
+	 * Deplace le personnage en parametre vers une direction precise
 	 * 
 	 * @param e
 	 * @param deplacement
 	 * @return
 	 */
 	public boolean deplacement(Personnage e, String deplacement) {
+
 		Parcelle tmp = new Sable();
+		int newPosX = 1, newPosY = 1;
+
 		switch (deplacement) {
 		case "gauche":
-			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
-				grille[e.getX()][e.getY() - 1] = grille[e.getX()][e.getY()];
-				grille[e.getX()][e.getY()] = tmp;
-				e.setY(e.getY() - 1);
-
-				e.setEnergie(e.getEnergie() - 1);
-
-				return true;
-			} else if (grille[e.getX()][e.getY() - 1] instanceof Navire) {
-				Navire nav = (Navire) grille[e.getX()][e.getY() - 1];
-				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
-					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					grille[e.getX()][e.getY()] = tmp;
-					e.setY(e.getY() - 1);
-					e.setEnergie(e.getEnergie() - 1);
-					return true;
-				} else {
-					System.out.println("Ce n'est pas le navire du personnage.");
-					return false;
-				}
-			}
+			newPosX = e.getX();
+			newPosY = e.getY() - 1;
 			break;
+
 		case "droite":
-			if (grille[e.getX()][e.getY() + 1].estTraversablePar(e)) {
-				grille[e.getX()][e.getY() + 1] = grille[e.getX()][e.getY()];
-				grille[e.getX()][e.getY()] = tmp;
-				e.setY(e.getY() + 1);
-
-				e.setEnergie(e.getEnergie() - 1);
-
-				return true;
-			} else if (grille[e.getX()][e.getY() + 1] instanceof Navire) {
-				Navire nav = (Navire) grille[e.getX()][e.getY() + 1];
-				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
-					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					grille[e.getX()][e.getY()] = tmp;
-					e.setY(e.getY() + 1);
-					e.setEnergie(e.getEnergie() - 1);
-					return true;
-				} else {
-					System.out.println("Ce n'est pas le navire du personnage.");
-					return false;
-				}
-			}
+			newPosX = e.getX();
+			newPosY = e.getY() + 1;
 			break;
+
 		case "haut":
-			if (grille[e.getX() - 1][e.getY()].estTraversablePar(e)) {
-				grille[e.getX() - 1][e.getY()] = grille[e.getX()][e.getY()];
-				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getX() - 1);
-
-				e.setEnergie(e.getEnergie() - 1);
-
-				return true;
-			} else if (grille[e.getX() - 1][e.getY()] instanceof Navire) {
-				Navire nav = (Navire) grille[e.getX() - 1][e.getY()];
-				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
-					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					grille[e.getX()][e.getY()] = tmp;
-					e.setX(e.getX() - 1);
-					e.setEnergie(e.getEnergie() - 1);
-					return true;
-				} else {
-					System.out.println("Ce n'est pas le navire du personnage.");
-					return false;
-				}
-			}
+			newPosX = e.getX() - 1;
+			newPosY = e.getY();
 			break;
+
 		case "bas":
-			if (grille[e.getX() + 1][e.getY()].estTraversablePar(e)) {
-				grille[e.getX() + 1][e.getY()] = grille[e.getX()][e.getY()];
-				grille[e.getX()][e.getY()] = tmp;
-				e.setX(e.getX() + 1);
-
-				e.setEnergie(e.getEnergie() - 1);
-
-				return true;
-			} else if (grille[e.getX() + 1][e.getY()] instanceof Navire) {
-				Navire nav = (Navire) grille[e.getX() + 1][e.getY()];
-				if (nav.getEquipe().getID() == e.getEquipe().getID()) {
-					e.getEquipe().getNavire().getPersoDansNavire().add(e);
-					grille[e.getX()][e.getY()] = tmp;
-					e.setX(e.getX() + 1);
-					e.setEnergie(e.getEnergie() - 1);
-					return true;
-				} else {
-					System.out.println("Ce n'est pas le navire du personnage.");
-					return false;
-				}
-			}
+			newPosX = e.getX() + 1;
+			newPosY = e.getY();
 			break;
+
 		default:
 			break;
 		}
+
+		if (grille[newPosX][newPosY].estTraversablePar(e)) {
+
+			grille[newPosX][newPosY] = grille[e.getX()][e.getY()];
+			grille[e.getX()][e.getY()] = tmp;
+
+			e.setX(newPosX);
+			e.setY(newPosY);
+
+			e.setEnergie(e.getEnergie() - 1);
+
+			return true;
+
+		} else if (grille[newPosX][newPosY] instanceof Navire) {
+
+			Navire nav = (Navire) grille[newPosX][newPosY];
+
+			if (nav.getEquipe().getID() == e.getEquipe().getID()) {
+
+				e.getEquipe().getNavire().getPersoDansNavire().add(e);
+				grille[e.getX()][e.getY()] = tmp;
+
+				e.setX(newPosX);
+				e.setY(newPosY);
+
+				e.setEnergie(e.getEnergie() - 1);
+
+				return true;
+
+			}
+
+		}
+
 		return false;
 	}
 
+	/**
+	 * Sort le personnage en parametre du navire en le placant autour
+	 * 
+	 * @param e
+	 * @param deplacement
+	 * @return
+	 */
 	public boolean debarquement(Personnage e, String deplacement) {
 
+		int newPosX = 1, newPosY = 1;
+
 		switch (deplacement) {
 		case "gauche":
-			if (grille[e.getX()][e.getY() - 1].estTraversablePar(e)) {
-				grille[e.getX()][e.getY() - 1] = e;
-				e.setY(e.getY() - 1);
-				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
-				return true;
-			}
+			newPosX = e.getX();
+			newPosY = e.getY() - 1;
 			break;
+
 		case "droite":
-			if (grille[e.getX()][e.getY() + 1].estTraversablePar(e)) {
-				grille[e.getX()][e.getY() + 1] = e;
-				e.setY(e.getY() + 1);
-				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
-				return true;
-			}
+			newPosX = e.getX();
+			newPosY = e.getY() + 1;
 			break;
+
 		case "haut":
-			if (grille[e.getX() - 1][e.getY()].estTraversablePar(e)) {
-				grille[e.getX() - 1][e.getY()] = e;
-				e.setX(e.getX() - 1);
-				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
-				return true;
-			}
+			newPosX = e.getX() - 1;
+			newPosY = e.getY();
 			break;
+
 		case "bas":
-			if (grille[e.getX() + 1][e.getY()].estTraversablePar(e)) {
-				grille[e.getX() + 1][e.getY()] = e;
-				e.setX(e.getX() + 1);
-				e.getEquipe().getNavire().getPersoDansNavire().remove(e);
-				return true;
-			}
+			newPosX = e.getX() + 1;
+			newPosY = e.getY();
 			break;
+
 		default:
 			break;
 		}
+
+		if (grille[newPosX][newPosY].estTraversablePar(e)) {
+
+			grille[newPosX][newPosY] = e;
+			e.setX(newPosX);
+			e.setY(newPosY);
+			e.getEquipe().getNavire().getPersoDansNavire().remove(e);
+			return true;
+
+		}
+
 		return false;
-	}
+
+	}	
 
 	// Place deux navires aleatoirement sur des bords opposes de l'ile
 	private void setNavires() {
