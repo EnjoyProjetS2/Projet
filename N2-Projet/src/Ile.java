@@ -88,6 +88,26 @@ public class Ile {
 			newPosX = e.getX() + 1;
 			newPosY = e.getY();
 			break;
+			
+		case "hautgauche":
+			newPosX = e.getX() - 1;
+			newPosY = e.getY() - 1;
+			break;
+			
+		case "hautdroite":
+			newPosX = e.getX() - 1;
+			newPosY = e.getY() + 1;
+			break;
+			
+		case "basgauche":
+			newPosX = e.getX() + 1;
+			newPosY = e.getY() - 1;
+			break;
+			
+		case "basdroite":
+			newPosX = e.getX() + 1;
+			newPosY = e.getY() + 1;
+			break;
 
 		default:
 			break;
@@ -158,6 +178,26 @@ public class Ile {
 		case "bas":
 			newPosX = e.getX() + 1;
 			newPosY = e.getY();
+			break;
+			
+		case "hautgauche":
+			newPosX = e.getX() - 1;
+			newPosY = e.getY() - 1;
+			break;
+			
+		case "hautdroite":
+			newPosX = e.getX() - 1;
+			newPosY = e.getY() + 1;
+			break;
+			
+		case "basgauche":
+			newPosX = e.getX() + 1;
+			newPosY = e.getY() - 1;
+			break;
+			
+		case "basdroite":
+			newPosX = e.getX() + 1;
+			newPosY = e.getY() + 1;
 			break;
 
 		default:

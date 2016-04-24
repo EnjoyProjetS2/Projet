@@ -112,7 +112,7 @@ public class Jeu {
 							if (perso.getEquipe().getID() == equipe) {
 
 								if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
-									while (!ile.deplacement(perso, direction())) {
+									while (!ile.deplacement(perso, direction(perso))) {
 
 										p.getPlateau().println("Erreur: la parcelle n'est pas traversable");
 										System.out.println("Erreur: la parcelle n'est pas traversable");
@@ -148,7 +148,7 @@ public class Jeu {
 									Personnage perso = (Personnage) JOptionPane.showInputDialog(null, "Que faire:",
 											"Que faire ?", JOptionPane.DEFAULT_OPTION, null, choix, choix[0]);
 
-									while (!ile.debarquement(perso, direction())) {
+									while (!ile.debarquement(perso, direction(perso))) {
 										p.getPlateau().println("Erreur: la parcelle n'est pas traversable");
 										System.out.println("Erreur: la parcelle n'est pas traversable");
 									}
@@ -227,7 +227,9 @@ public class Jeu {
 	}
 
 	/**
-	 * Affiche la liste des informations utiles en debut de jeu (nom des equipes et personnages qui la composent)
+	 * Affiche la liste des informations utiles en debut de jeu (nom des equipes
+	 * et personnages qui la composent)
+	 * 
 	 * @param e
 	 * @param p
 	 */
@@ -244,7 +246,9 @@ public class Jeu {
 	}
 
 	/**
-	 * Fenetre qui demande a l'utilisateur de choisir l'action qu'il veut effectuer
+	 * Fenetre qui demande a l'utilisateur de choisir l'action qu'il veut
+	 * effectuer
+	 * 
 	 * @param parcelle
 	 * @return choix
 	 */
@@ -263,6 +267,7 @@ public class Jeu {
 
 	/**
 	 * Mise en place du mode creatif pour placer ses personnages
+	 * 
 	 * @param p
 	 * @param ile
 	 * @param equipe
@@ -291,15 +296,16 @@ public class Jeu {
 		}
 
 	}
-	
+
 	/**
 	 * Choix de la direction de l'intelligence artificielle
+	 * 
 	 * @param perso
 	 * @param ile
 	 * @param choixMouvement
 	 * @return direction
 	 */
-	private String mouvementIA(Personnage perso, Ile ile, int choixMouvement){
+	private String mouvementIA(Personnage perso, Ile ile, int choixMouvement) {
 		if (choixMouvement == 1) {
 			return "haut";
 		} else if (choixMouvement == 2) {
@@ -309,42 +315,48 @@ public class Jeu {
 		} else if (choixMouvement == 4) {
 			return "droite";
 		}
-		
+
 		return "Impossible";
 	}
 
 	/**
 	 * Mise en place de l'intelligence artificielle
+	 * 
 	 * @param p
 	 * @param ile
 	 * @param equipe
-	 * @return 
+	 * @return
 	 */
 	private boolean modeIA(SuperPlateau p, Ile ile, Equipe equipe) {
 		Random rand = new Random();
-		
+
 		int choixPerso = rand.nextInt(equipe.getListePersos().size());
 		int choixAction = rand.nextInt(5);
 		int choixMouvement = rand.nextInt(4) + 1;
 		Personnage perso;
-		
-		
-		//si le navire est plein, on doit debarquer un perso
-		if(equipe.getNavire().getPersoDansNavire().size() == equipe.getListePersos().size()){
-			perso = equipe.getNavire().getPersoDansNavire().get(choixPerso); //un personnage au hasard dans le navire
+
+		// si le navire est plein, on doit debarquer un perso
+		if (equipe.getNavire().getPersoDansNavire().size() == equipe.getListePersos().size()) {
+			perso = equipe.getNavire().getPersoDansNavire().get(choixPerso); // un
+																				// personnage
+																				// au
+																				// hasard
+																				// dans
+																				// le
+																				// navire
 			ile.debarquement(perso, mouvementIA(perso, ile, choixMouvement));
-		} else { //sinon, on fait n'importe quelle autre action
-			//3 chances sur 5 de se deplacer
+		} else { // sinon, on fait n'importe quelle autre action
+			// 3 chances sur 5 de se deplacer
 			perso = equipe.getListePersos().get(choixPerso);
-			
-			if(choixAction == 0 || choixAction == 1 || choixAction == 2){
-				//deplacer un perso PRESENT SUR LA MAP
+
+			if (choixAction == 0 || choixAction == 1 || choixAction == 2) {
+				// deplacer un perso PRESENT SUR LA MAP
 				ile.deplacement(perso, mouvementIA(perso, ile, choixMouvement));
-			} else if(choixAction == 3){
-				//faire une action
-			} else{
-				//debarquer un personnage
-				perso = equipe.getNavire().getPersoDansNavire().get(choixPerso); 
+			} else if (choixAction == 3) {
+				// faire une action
+			} else {
+				// debarquer un personnage
+				perso = equipe.getNavire().getPersoDansNavire().get(choixPerso);
 				ile.debarquement(perso, mouvementIA(perso, ile, choixMouvement));
 			}
 
@@ -356,23 +368,39 @@ public class Jeu {
 
 	/**
 	 * Choix de la direction demandee a l'utilisateur
+	 * 
 	 * @return String : direction
 	 */
-	private String direction() {
+	private String direction(Personnage p) {
 
-		String[] direction = { "gauche", "droite", "haut", "bas" };
+		String avis;
 
-		String avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
-				JOptionPane.DEFAULT_OPTION, null, direction, direction[0]);
+		if (p instanceof Guerrier || p instanceof Piegeur) {
+			String[] direction = { "Ouest", "Est", "Nord", "Sud", "Nord-Ouest", "Nord-Est", "Sud-Ouest", "Sud-Est" };
+			avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
+					JOptionPane.DEFAULT_OPTION, null, direction, direction[0]);
+		} else {
+			String[] direction = { "Ouest", "Est", "Nord", "Sud" };
+			avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
+					JOptionPane.DEFAULT_OPTION, null, direction, direction[0]);
+		}
 
-		if (avis.equals("haut")) {
+		if (avis.equals("Nord")) {
 			return "gauche";
-		} else if (avis.equals("bas")) {
+		} else if (avis.equals("Sud")) {
 			return "droite";
-		} else if (avis.equals("gauche")) {
+		} else if (avis.equals("Ouest")) {
 			return "haut";
-		} else if (avis.equals("droite")) {
+		} else if (avis.equals("Est")) {
 			return "bas";
+		} else if (avis.equals("Nord-Ouest")) {
+			return "hautgauche";
+		} else if (avis.equals("Nord-Est")) {
+			return "basgauche";
+		} else if (avis.equals("Sud-Ouest")) {
+			return "hautdroite";
+		} else if (avis.equals("Sud-Est")) {
+			return "basdroite";
 		}
 
 		return "faux";
@@ -380,6 +408,7 @@ public class Jeu {
 
 	/**
 	 * Soigne les personnages dans le navire
+	 * 
 	 * @param e
 	 */
 	private void soigner(Equipe e) {
@@ -400,6 +429,7 @@ public class Jeu {
 
 	/**
 	 * Tue un personnage
+	 * 
 	 * @param e
 	 * @param ile
 	 */
@@ -423,6 +453,7 @@ public class Jeu {
 
 	/**
 	 * Menu d'accueil de choix de jeu
+	 * 
 	 * @return
 	 */
 	private boolean accueil() {
@@ -574,11 +605,11 @@ public class Jeu {
 		tailleY = tailleX;
 		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
 		// tailleX);
-		}
+	}
 
 	/**
-	 * Retourne vrai si l'action est realisee
-	 * Action du personnage selectionne
+	 * Retourne vrai si l'action est realisee Action du personnage selectionne
+	 * 
 	 * @param perso
 	 * @param ile
 	 * @return boolean
@@ -594,38 +625,38 @@ public class Jeu {
 			int nb = 0;
 			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Rocher) {
 				haut = (Rocher) ile.getGrille()[perso.getX()][perso.getY() - 1];
-				roche[nb] = "haut";
+				roche[nb] = "Nord";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Rocher) {
 				bas = (Rocher) ile.getGrille()[perso.getX()][perso.getY() + 1];
-				roche[nb] = "bas";
+				roche[nb] = "Sud";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Rocher) {
 				gauche = (Rocher) ile.getGrille()[perso.getX() - 1][perso.getY()];
-				roche[nb] = "gauche";
+				roche[nb] = "Ouest";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Rocher) {
 				droite = (Rocher) ile.getGrille()[perso.getX() + 1][perso.getY()];
-				roche[nb] = "droite";
+				roche[nb] = "Est";
 			}
 
 			String aSoulever = (String) JOptionPane.showInputDialog(null, "Quel rocher soulever ?",
-					"Rocher Ã  soulever", JOptionPane.DEFAULT_OPTION, null, roche, roche[0]);
+					"Rocher a  soulever", JOptionPane.DEFAULT_OPTION, null, roche, roche[0]);
 
 			// faire l'action
-			if (aSoulever == "haut") {
+			if (aSoulever == "Nord") {
 				return ((Explorateur) perso).souleverRocher(haut);
-			} else if (aSoulever == "bas") {
+			} else if (aSoulever == "Sud") {
 				return ((Explorateur) perso).souleverRocher(bas);
-			} else if (aSoulever == "gauche") {
+			} else if (aSoulever == "Ouest") {
 				return ((Explorateur) perso).souleverRocher(gauche);
-			} else if (aSoulever == "droite") {
+			} else if (aSoulever == "Est") {
 				return ((Explorateur) perso).souleverRocher(droite);
 			}
 
@@ -635,38 +666,38 @@ public class Jeu {
 			int nb = 0;
 			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Explorateur) {
 				phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY() - 1];
-				adversaire[nb] = "haut";
+				adversaire[nb] = "Nord";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Explorateur) {
 				pbas = (Personnage) ile.getGrille()[perso.getX()][perso.getY() + 1];
-				adversaire[nb] = "bas";
+				adversaire[nb] = "Sud";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Explorateur) {
 				pgauche = (Personnage) ile.getGrille()[perso.getX() - 1][perso.getY()];
-				adversaire[nb] = "gauche";
+				adversaire[nb] = "Ouest";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Explorateur) {
 				pdroite = (Personnage) ile.getGrille()[perso.getX() + 1][perso.getY()];
-				adversaire[nb] = "droite";
+				adversaire[nb] = "Est";
 			}
 
 			String aVoler = (String) JOptionPane.showInputDialog(null, "Qui voler ?", "Personnage a  voler : ",
 					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
 
 			// faire l'action
-			if (aVoler == "haut") {
+			if (aVoler == "Nord") {
 				return ((Voleur) perso).voler(phaut);
-			} else if (aVoler == "bas") {
+			} else if (aVoler == "Sud") {
 				return ((Voleur) perso).voler(pbas);
-			} else if (aVoler == "gauche") {
+			} else if (aVoler == "Ouest") {
 				return ((Voleur) perso).voler(pgauche);
-			} else if (aVoler == "droite") {
+			} else if (aVoler == "Est") {
 				return ((Voleur) perso).voler(pdroite);
 			}
 
@@ -675,38 +706,38 @@ public class Jeu {
 			int nb = 0;
 			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Personnage) {
 				phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY() - 1];
-				adversaire[nb] = "haut";
+				adversaire[nb] = "Nord";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Personnage) {
 				pbas = (Personnage) ile.getGrille()[perso.getX()][perso.getY() + 1];
-				adversaire[nb] = "bas";
+				adversaire[nb] = "Sud";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Personnage) {
 				pgauche = (Personnage) ile.getGrille()[perso.getX() - 1][perso.getY()];
-				adversaire[nb] = "gauche";
+				adversaire[nb] = "Ouest";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Personnage) {
 				pdroite = (Personnage) ile.getGrille()[perso.getX() + 1][perso.getY()];
-				adversaire[nb] = "droite";
+				adversaire[nb] = "Est";
 			}
 
 			String aAttaquer = (String) JOptionPane.showInputDialog(null, "Qui attaquer ?", "Personnage a attaquer : ",
 					JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
 
 			// faire l'action
-			if (aAttaquer == "haut") {
+			if (aAttaquer == "Nord") {
 				return ((Guerrier) perso).attaquer(phaut);
-			} else if (aAttaquer == "bas") {
+			} else if (aAttaquer == "Sud") {
 				return ((Guerrier) perso).attaquer(pbas);
-			} else if (aAttaquer == "gauche") {
+			} else if (aAttaquer == "Ouest") {
 				return ((Guerrier) perso).attaquer(pgauche);
-			} else if (aAttaquer == "droite") {
+			} else if (aAttaquer == "Est") {
 				return ((Guerrier) perso).attaquer(pdroite);
 			}
 
@@ -715,38 +746,38 @@ public class Jeu {
 			int nb = 0;
 			if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Sable) {
 				shaut = (Sable) ile.getGrille()[perso.getX()][perso.getY() - 1];
-				adversaire[nb] = "haut";
+				adversaire[nb] = "Nord";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Sable) {
 				sbas = (Sable) ile.getGrille()[perso.getX()][perso.getY() + 1];
-				adversaire[nb] = "bas";
+				adversaire[nb] = "Sud";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Sable) {
 				sgauche = (Sable) ile.getGrille()[perso.getX() - 1][perso.getY()];
-				adversaire[nb] = "gauche";
+				adversaire[nb] = "Ouest";
 				nb++;
 			}
 
 			if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Sable) {
 				sdroite = (Sable) ile.getGrille()[perso.getX() + 1][perso.getY()];
-				adversaire[nb] = "droite";
+				adversaire[nb] = "Est";
 			}
 
 			String aPieger = (String) JOptionPane.showInputDialog(null, "Quelle parcelle pieger ?",
 					"Parcelle a pieger : ", JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
 
 			// faire l'action
-			if (aPieger == "haut") {
+			if (aPieger == "Nord") {
 				return ((Piegeur) perso).pieger(shaut);
-			} else if (aPieger == "bas") {
+			} else if (aPieger == "Sud") {
 				return ((Piegeur) perso).pieger(sbas);
-			} else if (aPieger == "gauche") {
+			} else if (aPieger == "Ouest") {
 				return ((Piegeur) perso).pieger(sgauche);
-			} else if (aPieger == "droite") {
+			} else if (aPieger == "Est") {
 				return ((Piegeur) perso).pieger(sdroite);
 			}
 		}
@@ -757,6 +788,7 @@ public class Jeu {
 
 	/**
 	 * Menu de dialogue avec l'utilisateur pour selectionner son equipe
+	 * 
 	 * @param e
 	 */
 	private void saisieEquipe(Equipe e) {
