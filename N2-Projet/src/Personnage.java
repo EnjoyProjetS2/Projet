@@ -9,19 +9,20 @@ public class Personnage extends Parcelle {
 	protected int energie;
 	/**
 	 * Constructeur par defaut
-	 * 
-	 * @param Personnage
 	 */
-	Personnage() {
+	public Personnage() {
 		super.traversable = false;
 	}
 
 	/**
 	 * Constructeur avec un nom, une equipe et des coordonnees
 	 * 
-	 * @param Personnage
+	 * @param nom
+	 * @param equipe
+	 * @param x
+	 * @param y
 	 */
-	Personnage(String nom, Equipe e, int x, int y) {
+	public Personnage(String nom, Equipe e, int x, int y) {
 		this();
 		this.nom = nom;
 
@@ -33,33 +34,35 @@ public class Personnage extends Parcelle {
 		this.y = y;
 	}
 	
-	/*public String toString() {
-		return "P";
-	}*/
 	
 	/**
 	 * Retourne le nom
-	 * 
 	 * @param getNom
-	 * 
 	 * @return nom
 	 */
 	public String getNom() {
 		return nom;
 	}
 	
+	/**
+	 * Retourne la quantite d'energie
+	 * @return int : energie
+	 */
 	public int getEnergie() {
 		return energie;
 	}
 
+	/**
+	 * Modifie la quantite d'energie
+	 * @param energie
+	 */
 	public void setEnergie(int energie) {
 		this.energie = energie;
 	}
 
 	/**
 	 * Modifie le nom
-	 * 
-	 * @param setNom
+	 * @param nom
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -67,9 +70,6 @@ public class Personnage extends Parcelle {
 
 	/**
 	 * Retourne le nom de l'equipe
-	 * 
-	 * @param getEquipe
-	 * 
 	 * @return equipe
 	 */
 	public Equipe getEquipe() {
@@ -78,17 +78,14 @@ public class Personnage extends Parcelle {
 
 	/**
 	 * Modifie le nom de l'equipe
-	 * 
-	 * @param setEquipe
+	 * @param equipe
 	 */
 	public void setEquipe(Equipe equipe) { // verif 1 ou 2
 		this.equipe = equipe;
 	}
+	
 	/**
 	 * Retourne la coordonnee x
-	 * 
-	 * @param getX
-	 * 
 	 * @return x
 	 */
 	public int getX() {
@@ -106,9 +103,6 @@ public class Personnage extends Parcelle {
 
 	/**
 	 * Retourne la coordonnee y
-	 * 
-	 * @param getY
-	 * 
 	 * @return y
 	 */
 	public int getY() {
@@ -117,8 +111,7 @@ public class Personnage extends Parcelle {
 
 	/**
 	 * Modifie la valeur de y
-	 * 
-	 * @param setY
+	 * @param y
 	 */
 	public void setY(int y) {
 		this.y = y;

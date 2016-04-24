@@ -17,11 +17,11 @@ public class Explorateur extends Personnage {
 	}
 
 	/**
-	 * Capacite de l'explorateur, il peut soulever les rocher et verifier
-	 * l'interieur
+	 * Retourne vrai si l'action est possible et effectuee
+	 * Capacite de l'explorateur, il peut soulever les rocher et verifier dessous
 	 * 
 	 * @param terrain
-	 * @return
+	 * @return boolean
 	 */
 	public boolean souleverRocher(Rocher terrain) {
 		super.energie -= 5;
@@ -34,8 +34,9 @@ public class Explorateur extends Personnage {
 			JOptionPane.showMessageDialog(null, "Oh...un coffre a l'air ici.");
 			if(this.possessionClef){
 				this.possessionCoffre = true;
+				JOptionPane.showMessageDialog(null, "L'equipe "+super.equipe.getNom() +" vient de prendre le tresor !");
 			}
-			JOptionPane.showMessageDialog(null, "L'equipe "+super.equipe.getNom() +" vient de prendre le tresor !");
+			
 			return true;
 		}
 		return false;
@@ -43,7 +44,7 @@ public class Explorateur extends Personnage {
 
 	/**
 	 * Retourne les informations du personnage
-	 * 
+	 * @return String
 	 */
 	public String toString() {		
 		return "Explorateur "+this.nom+" (Equipe: "+super.getEquipe().getNom()+") - Vie: "+super.energie+"/"+Jeu.maxVie;

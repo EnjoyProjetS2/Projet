@@ -32,6 +32,11 @@ public class Equipe {
 
 	}
 
+	/**
+	 * Modifie la vision 
+	 * @param ile
+	 * @return tableau d'int
+	 */
 	public int[][] setVision(Ile ile) {
 
 		int[][] grille = new int[Jeu.tailleX][Jeu.tailleY];
@@ -72,18 +77,25 @@ public class Equipe {
 
 	}
 
+	/**
+	 * Affiche la vision associee
+	 * @return tableau d'int représentant la vision
+	 */
 	public int[][] getVision() {
 		return this.vision;
 	}	
 
+	/**
+	 * Retourne le nom de l'equipe
+	 * @return nom
+	 */
 	public String getNom() {
 		return nom;
 	}
 
 	/**
 	 * Retourne le navire de l'equipe
-	 * 
-	 * @return
+	 * @return navire
 	 */
 	public Navire getNavire() {
 		return navire;
@@ -91,19 +103,16 @@ public class Equipe {
 
 	/**
 	 * Definit le navire de l'equipe
-	 * 
 	 * @param navire
 	 */
 	public void setNavire(Navire navire) {
 		this.navire = navire;
 		this.navire.setEquipe(this);
-
 	}
 
 	/**
 	 * Retourne la liste des personnages de l'equipe
-	 * 
-	 * @return
+	 * @return listePersos
 	 */
 	public List<Personnage> getListePersos() {
 		return this.listePersos;
@@ -111,7 +120,6 @@ public class Equipe {
 
 	/**
 	 * Affiche les membres de l'equipe
-	 * 
 	 */
 	public void afficherEquipe() {
 		System.out.println(this.nom + ":");
@@ -122,9 +130,8 @@ public class Equipe {
 
 	/**
 	 * Ajoute un personnage dans l'equipe
-	 * 
 	 * @param p
-	 * @return
+	 * @return boolean
 	 */
 	public boolean ajoutPersonnage(Personnage p) {
 		if (!listePersos.contains(p)) {
@@ -137,8 +144,7 @@ public class Equipe {
 
 	/**
 	 * Retourne l'identifiant de l'equipe
-	 * 
-	 * @return
+	 * @return ID
 	 */
 	public int getID() {
 		return ID;
@@ -146,7 +152,6 @@ public class Equipe {
 
 	/**
 	 * Definit le nom de l'equipe
-	 * 
 	 * @param nom
 	 */
 	public void setNom(String nom) {
@@ -154,21 +159,17 @@ public class Equipe {
 	}
 
 	/**
-	 * Test si un personnage de l'equipe ne serait pas (malencontreusement) mort
+	 * Teste si un personnage de l'equipe ne serait pas (malencontreusement) mort
 	 * Retourne vrai si au moins un personnage est en vie
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean survie() {
-
 		for (int i = 0; i < this.getListePersos().size(); i++) {
-
 			if (this.getListePersos().get(i).getEnergie() > 0) {
 				return true;
 			}
 		}
 		return false;
-
 	}
-
 }

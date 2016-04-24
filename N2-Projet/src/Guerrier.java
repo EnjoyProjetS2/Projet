@@ -18,6 +18,11 @@ public class Guerrier extends Personnage {
 		super.id = 8;
 	}
 
+	/**
+	 * Action du guerrier : retourne vrai si elle réussit
+	 * @param perso
+	 * @return boolean
+	 */
 	public boolean attaquer(Personnage perso) {
 
 		super.energie -= 10; // Le guerrier perd 10 d'energie a chaque tentative
@@ -47,7 +52,7 @@ public class Guerrier extends Personnage {
 
 	/**
 	 * Retourne les informations du personnage
-	 * 
+	 * @return String
 	 */
 	public String toString() {
 		return "Guerrier " + this.nom + " (Equipe: " + super.getEquipe().getNom() + ") - Vie: " + super.energie + "/"

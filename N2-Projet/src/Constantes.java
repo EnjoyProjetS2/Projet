@@ -1,9 +1,9 @@
 public class Constantes {
 	
-	//Classe regroupant les constantes pour + de simpliciter à parametrer
+	//Classe regroupant les constantes pour + de simplicité à parametrer
 	
 		
-	//Les differents elements present sur le plateau
+	//Les differents elements presents sur le plateau
 	public static final String VIDE = "vide";
 	public static final String EAU = "eau";
 	public static final String NAV1 = "navire1";

@@ -208,24 +208,29 @@ public class Jeu {
 
 			// Victoire par depot du tresor
 			if (un.getNavire().presenceDuCoffre()) {
-				p.getPlateau().println("L'equipe " + un.getNom() + " a ramene le tresor!");
+				p.getPlateau().println("L'equipe " + un.getNom() + " a ramene le tresor !");
 				gagnant = 1;
 			} else if (deux.getNavire().presenceDuCoffre()) {
-				p.getPlateau().println("L'equipe " + deux.getNom() + " a ramene le tresor!");
+				p.getPlateau().println("L'equipe " + deux.getNom() + " a ramene le tresor !");
 				gagnant = 2;
 			}
 
 			if (gagnant == 1) {
-				p.getPlateau().println("L'equipe " + un.getNom() + " remporte la partie!");
+				p.getPlateau().println("L'equipe " + un.getNom() + " remporte la partie !");
 			} else if (gagnant == 2) {
-				p.getPlateau().println("L'equipe " + deux.getNom() + " remporte la partie!");
+				p.getPlateau().println("L'equipe " + deux.getNom() + " remporte la partie !");
 			} else {
-				p.getPlateau().println("Erreur: mais que font les developpeurs ?");
+				p.getPlateau().println("Erreur : mais que font les developpeurs ?");
 			}
 
 		}
 	}
 
+	/**
+	 * Affiche la liste des informations utiles en debut de jeu (nom des equipes et personnages qui la composent)
+	 * @param e
+	 * @param p
+	 */
 	private void informations(Equipe e, SuperPlateau p) {
 
 		p.getPlateau().println("Equipe: " + e.getNom());
@@ -238,25 +243,30 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Fenetre qui demande a l'utilisateur de choisir l'action qu'il veut effectuer
+	 * @param parcelle
+	 * @return choix
+	 */
 	private String choisir(Parcelle parcelle) {
-
 		if (parcelle instanceof Personnage) {
 			String[] choix = { "Deplacement", "Action" };
 			return (String) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.DEFAULT_OPTION,
 					null, choix, choix[0]);
-
 		} else if (parcelle instanceof Navire) {
-
 			String[] choix = { "Debarquer un personnage" };
 			return (String) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.DEFAULT_OPTION,
 					null, choix, choix[0]);
-
 		}
-
 		return null;
-
 	}
 
+	/**
+	 * Mise en place du mode creatif pour placer ses personnages
+	 * @param p
+	 * @param ile
+	 * @param equipe
+	 */
 	private void modeCreatif(SuperPlateau p, Ile ile, Equipe equipe) {
 		p.getPlateau().println("[Mode Creatif] C'est a l'equipe " + equipe.getNom() + " de placer ses personnages:");
 		int cpt = 0;
@@ -282,7 +292,13 @@ public class Jeu {
 
 	}
 	
-	
+	/**
+	 * Choix de la direction de l'intelligence artificielle
+	 * @param perso
+	 * @param ile
+	 * @param choixMouvement
+	 * @return direction
+	 */
 	private String mouvementIA(Personnage perso, Ile ile, int choixMouvement){
 		if (choixMouvement == 1) {
 			return "haut";
@@ -297,6 +313,13 @@ public class Jeu {
 		return "Impossible";
 	}
 
+	/**
+	 * Mise en place de l'intelligence artificielle
+	 * @param p
+	 * @param ile
+	 * @param equipe
+	 * @return 
+	 */
 	private boolean modeIA(SuperPlateau p, Ile ile, Equipe equipe) {
 		Random rand = new Random();
 		
@@ -331,6 +354,10 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Choix de la direction demandee a l'utilisateur
+	 * @return String : direction
+	 */
 	private String direction() {
 
 		String[] direction = { "gauche", "droite", "haut", "bas" };
@@ -351,6 +378,10 @@ public class Jeu {
 		return "faux";
 	}
 
+	/**
+	 * Soigne les personnages dans le navire
+	 * @param e
+	 */
 	private void soigner(Equipe e) {
 
 		for (int i = 0; i < e.getNavire().getPersoDansNavire().size(); i++) {
@@ -367,6 +398,11 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Tue un personnage
+	 * @param e
+	 * @param ile
+	 */
 	private void tuer(Equipe e, Ile ile) {
 
 		for (int i = 0; i < e.getListePersos().size(); i++) {
@@ -385,6 +421,10 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Menu d'accueil de choix de jeu
+	 * @return
+	 */
 	private boolean accueil() {
 
 		String[] accueil = { "Jouer", "Regles", "Quitter" };
@@ -405,6 +445,9 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Initialisation des parametres par l'utilisateur
+	 */
 	private void parametres() {
 
 		String[] mode = { "1 contre 1", "1 contre 1 (Mode creatif)", "Mode solo" };
@@ -531,8 +574,15 @@ public class Jeu {
 		tailleY = tailleX;
 		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
 		// tailleX);
-	}
+		}
 
+	/**
+	 * Retourne vrai si l'action est realisee
+	 * Action du personnage selectionne
+	 * @param perso
+	 * @param ile
+	 * @return boolean
+	 */
 	private boolean action(Personnage perso, Ile ile) {
 		Rocher haut = null, bas = null, gauche = null, droite = null;
 		Sable shaut = null, sbas = null, sgauche = null, sdroite = null;
@@ -705,6 +755,10 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Menu de dialogue avec l'utilisateur pour selectionner son equipe
+	 * @param e
+	 */
 	private void saisieEquipe(Equipe e) {
 
 		String[] personnages = { "Explorateur", "Voleur", "Guerrier", "Piegeur" };

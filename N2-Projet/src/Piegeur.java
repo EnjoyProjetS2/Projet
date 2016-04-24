@@ -16,6 +16,11 @@ public class Piegeur extends Personnage {
 		super.id = 9;
 	}
 
+	/**
+	 * Piege une parcelle adjacente
+	 * @param p
+	 * @return boolean : piegee ou non
+	 */
 	public boolean pieger(Parcelle p) {
 
 		if (p instanceof Sable) {

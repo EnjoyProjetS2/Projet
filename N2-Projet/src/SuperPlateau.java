@@ -7,26 +7,49 @@ public class SuperPlateau {
 	private String[] gifs = new String[] { "images/stone.png", "images/boat.png", "images/sable.png", "images/eau.png",
 			"images/Explo.png", "images/Voleur.png", "images/vision.png", "images/Guerrier.png", "images/Piegeur.png" };
 
+	/**
+	 * Constructeur de base: cree un super plateau a partir de plateau
+	 */
 	public SuperPlateau() {
 		p = new Plateau(gifs, taille);
 	}
 
+	/**
+	 * Constructeur : cree un super plateau a partir de plateau
+	 * @param ile
+	 */
 	public SuperPlateau(Ile ile) {
 		p = new Plateau(gifs, ile.getLigne(), true);
 	}
 
+	/**
+	 * retourne le plateau
+	 * @return Plateau : plateau
+	 */
 	public Plateau getPlateau() {
 		return p;
 	}
 
+	/**
+	 * retourne la taille
+	 * @return int : taille
+	 */
 	public int getTaille() {
 		return taille;
 	}
 
+	/**
+	 * retourne le jeu en tableau
+	 * @return int[][] jeu
+	 */
 	public int[][] getJeu() {
 		return jeu;
 	}
 
+	/**
+	 * Modifie le tableau de jeu avec des parcelles
+	 * @param tablo
+	 */
 	public void setJeu(Parcelle[][] tablo) {
 
 		for (int i = 0; i < tablo.length; i++) {
@@ -38,10 +61,17 @@ public class SuperPlateau {
 		p.setJeu(this.jeu);
 	}
 	
+	/**
+	 * Modifie le tableau de jeu avec des chiffres
+	 * @param tablo
+	 */
 	public void setJeu(int[][] tablo) {
 		p.setJeu(tablo);
 	}
 
+	/**
+	 * Affiche le plateau
+	 */
 	public void affichage() {
 		p.affichage();
 	}

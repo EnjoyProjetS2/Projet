@@ -10,7 +10,7 @@ public class Eau extends Parcelle {
 	}
 	
 	/**Retour une vague pour les parcelles d'eau
-	 * 
+	 * @return String 
 	 */
 	public String toString() {
 		return "~";

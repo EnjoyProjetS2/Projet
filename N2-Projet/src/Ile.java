@@ -13,8 +13,6 @@ public class Ile {
 
 	/**
 	 * Constructeur par defaut : Cree une ile vide avec des parcelles
-	 * 
-	 * @param Ile
 	 */
 	public Ile() { // ile vide sans navires
 
@@ -27,7 +25,7 @@ public class Ile {
 	/**
 	 * Constructeur : cree une ile avec un tableau de parcelles en parametres
 	 * 
-	 * @param Ile
+	 * @param tablo
 	 */
 	public Ile(Parcelle[][] tablo) {
 
@@ -43,7 +41,8 @@ public class Ile {
 	 * Constructeur : cree une ile avec un tableau de parcelles et un
 	 * pourcentage de rochers en parametres
 	 * 
-	 * @param Ile
+	 * @param tablo
+	 * @param pourcent
 	 */
 	public Ile(Parcelle[][] tablo, int pourcent) {
 
@@ -58,11 +57,11 @@ public class Ile {
 	}
 
 	/**
-	 * Deplace le personnage en parametre vers une direction precise
+	 * Retourne vrai si le deplacement est possible et deplace le personnage en parametre vers une direction precise
 	 * 
 	 * @param e
 	 * @param deplacement
-	 * @return
+	 * @return boolean 
 	 */
 	public boolean deplacement(Personnage e, String deplacement) {
 
@@ -130,11 +129,11 @@ public class Ile {
 	}
 
 	/**
-	 * Sort le personnage en parametre du navire en le placant autour
+	 * Retourne vrai si c'est possible et sort le personnage en parametre du navire en le placant autour
 	 * 
 	 * @param e
 	 * @param deplacement
-	 * @return
+	 * @return boolean
 	 */
 	public boolean debarquement(Personnage e, String deplacement) {
 
@@ -179,7 +178,9 @@ public class Ile {
 
 	}	
 
-	// Place deux navires aleatoirement sur des bords opposes de l'ile
+	/**
+	 * Place deux navires aleatoirement sur des bords opposes de l'ile
+	 */
 	private void setNavires() {
 
 		Random alea = new Random();
@@ -194,7 +195,10 @@ public class Ile {
 
 	}
 
-	// Verifie que les parcelles autour des navires sont vides
+	/**
+	 * Verifie que les parcelles autour des navires sont vides : retourne vrai si c'est le cas
+	 * @return boolean
+	 */
 	private boolean verifierNavires() {
 
 		if (!(grille[posNav1 + 1][1] instanceof Sable)) {
@@ -222,7 +226,7 @@ public class Ile {
 	/**
 	 * Retourne la position du navire 1
 	 * 
-	 * @return
+	 * @return posNav1
 	 */
 	public int getNav1() {
 		return posNav1;
@@ -231,14 +235,15 @@ public class Ile {
 	/**
 	 * Retourne la position du navire 2
 	 * 
-	 * @return
+	 * @return posNav2
 	 */
 	public int getNav2() {
 		return posNav2;
 	}
 
-	// Ajoute des rochers en fonction du pourcentage en parametre a la
-	// construction
+	/**
+	 * Ajoute des rochers en fonction du pourcentage en parametre a la construction
+	 */
 	private void setElements() {
 
 		do {
@@ -261,7 +266,10 @@ public class Ile {
 
 	}
 
-	// Retourne true si tous les rochers sont accessibles, false sinon
+	/**
+	 * Retourne true si tous les rochers sont accessibles, false sinon
+	 * @return boolean
+	 */
 	private boolean verifierIle() {
 		int[][] tablo = new int[ligne][colonne];
 
@@ -276,7 +284,7 @@ public class Ile {
 			}
 		}
 
-		// Bato
+		// Bateau
 		tablo[1][1] = 1;
 		grille[1][1].setTraversable(true);
 
@@ -333,8 +341,6 @@ public class Ile {
 
 	/**
 	 * Retourne le pourcentage de rochers qui doit etre place sur l'ile
-	 * 
-	 * @param getNbRocher
 	 * @return pourcentage de rochers
 	 */
 	public int getNbRocher() {
@@ -343,8 +349,6 @@ public class Ile {
 
 	/**
 	 * Retourne le nombre de lignes de l'ile
-	 * 
-	 * @param getLigne
 	 * @return nombre de lignes
 	 */
 	public int getLigne() {
@@ -353,8 +357,6 @@ public class Ile {
 
 	/**
 	 * Retourne le nombre de colonnes de l'ile
-	 * 
-	 * @param getColonne
 	 * @return nombre de colonnes
 	 */
 	public int getColonne() {
@@ -363,15 +365,15 @@ public class Ile {
 
 	/**
 	 * Retourne la grille
-	 * 
-	 * @param getGrille
 	 * @return grille
 	 */
 	public Parcelle[][] getGrille() {
 		return grille;
 	}
 
-	// Cree une ile de sable et entouree d'eau
+	/**
+	 * Cree une ile de sable et entouree d'eau
+	 */
 	private void ileVierge() {
 
 		for (int i = 0; i < grille.length; i++) {

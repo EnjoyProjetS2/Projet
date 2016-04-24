@@ -2,15 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Navire extends Parcelle {
-	
 	private Equipe equipe;
 	private int x;
 	private int y;
 	private List<Personnage> persoDansNavire = new ArrayList<>();
-	
-	
-	/**Constructeur: cree un navire
-	 * 
+
+	/**
+	 * Constructeur: cree un navire
 	 */
 	public Navire() {
 		super.traversable = false;
@@ -18,7 +16,6 @@ public class Navire extends Parcelle {
 	}
 	
 	/**Cree un navire a des coordonnees precises
-	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -28,24 +25,17 @@ public class Navire extends Parcelle {
 		this.y = y;	
 	}	
 
-	/**Retourne vrai si le personnage peut traverser le navire
-	 * 
+	/**
+	 * Retourne l'équipe
+	 * @return equipe
 	 */
-	/*public boolean estTraversablePar(Personnage p) {
-		if (p.getEquipe().getID() == equipe.getID()) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
-	
 	public Equipe getEquipe() {
 		return equipe;
 	}
 
 	/**Retourne vrai si un personnage dans le navire a ramene le butin et fait gagner la partie
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean presenceDuCoffre(){
 		for (Personnage personnage : persoDansNavire) {
@@ -69,7 +59,7 @@ public class Navire extends Parcelle {
 	
 	/**Retourne un passager tant qu'il y en a dans le navire
 	 * 
-	 * @return
+	 * @return int
 	 */
 	public int dernierPassager() {
 		
@@ -88,7 +78,7 @@ public class Navire extends Parcelle {
 	
 	/**Retourne la liste des personnges dans le navire
 	 * 
-	 * @return
+	 * @return liste des personnages
 	 */
 	public List<Personnage> getPersoDansNavire() {
 		return persoDansNavire;
@@ -96,7 +86,7 @@ public class Navire extends Parcelle {
 	
 	/**Retourne vrai si le navire est vide
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean estVide() {
 		return persoDansNavire.isEmpty();
@@ -120,7 +110,7 @@ public class Navire extends Parcelle {
 	
 	/**Retourne la position X du navire
 	 * 
-	 * @return
+	 * @return x
 	 */
 	public int getX() {
 		return x;
@@ -128,13 +118,13 @@ public class Navire extends Parcelle {
 
 	/**Retourne la position Y du navire
 	 * 
-	 * @return
+	 * @return y
 	 */
 	public int getY() {
 		return y;
 	}
 
-	/**Definit l'equipe auquelle appartient le navire
+	/**Definit l'equipe à laquelle appartient le navire
 	 * 
 	 * @param equipe
 	 */
@@ -142,8 +132,8 @@ public class Navire extends Parcelle {
 		this.equipe = equipe;
 	}
 
-	/**Retourne N ou n selon l'equipe du navire
-	 * 
+	/**Retourne l'appartenance du navire
+	 * @return nom de l'equipe
 	 */
 	public String toString() {
 

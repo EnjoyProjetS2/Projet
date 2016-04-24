@@ -139,7 +139,7 @@ public class Plateau {
 		resizeFromGraphic() ;
 	}
 	/**
-	 * Retourne le tableau d'entiers représentant le plateau
+	 * Retourne le tableau d'entiers representant le plateau
 	 * @return le tableau d'entiers
 	 */
 	public int[][] getJeu(){
@@ -241,7 +241,8 @@ public class Plateau {
 	}
 	
 	/** returne la position de X au dernier click
-	 * JAVADOC a faire*/
+	 * @return position X du dernier click 
+	 */
 	public int getPosX(){
 		return posX;
 	}
@@ -258,12 +259,14 @@ public class Plateau {
 		//posY = graphic.getY(event);
 		return posY;
 	}
-	/** returne la position de Y au dernier click
-	 * JAVADOC a faire*/
+	/** retourne la position de Y au dernier click
+	 * @return position Y du dernier click
+	 */
 	public int getPosY(){
 		return posY;
 	}
 	// Note la taille initiale est calculée d'après la taille du graphique.
+
 	private void resizeFromGraphic() {
 		Dimension dim = graphic.getGraphicSize() ;
 		if (console == null) {
