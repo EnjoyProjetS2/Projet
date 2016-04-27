@@ -40,14 +40,13 @@ public class Equipe {
 	public int[][] setVision(Ile ile) {
 
 		int[][] grille = new int[Jeu.tailleX][Jeu.tailleY];
-
+		// initialisation du brouillard
 		for (int i = 0; i < ile.getGrille().length; i++) {
 			for (int j = 0; j < ile.getGrille()[i].length; j++) {
 				grille[i][j] = 7;
 
 			}
 		}
-
 		for (int i = 0; i < ile.getGrille().length; i++) {
 			for (int j = 0; j < ile.getGrille()[i].length; j++) {
 

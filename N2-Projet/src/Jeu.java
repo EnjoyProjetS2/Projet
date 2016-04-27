@@ -21,7 +21,6 @@ public class Jeu {
 	static int tailleY = 10; // largeur
 	static int maxVie = 100; // vie des personnages
 	static int regenParTour = 10; // vie regeneree par tour dans les navires
-	static boolean validerParametre = false;
 	static Equipe un;
 	static Equipe deux;
 	boolean modeCreatif = false;
@@ -605,116 +604,9 @@ public class Jeu {
 		// ajouter taille de la carte
 		// ajouter nombre de joueur par equipe
 		// ajouter pourcentage de rochers
-		JFrame fen = new JFrame("Parametres de partie");
-		fen.setPreferredSize(new Dimension(500, 500));
-		fen.getContentPane().setLayout(new BorderLayout());
-		JPanel pangauche = new JPanel();
-		JPanel panCentre = new JPanel();
-		JPanel pandroite = new JPanel();
-		JPanel panhaut = new JPanel();
-		JButton validation = new JButton("Valider");
-		// Panhaut
-		JLabel labhaut = new JLabel("Les parametres");
-		// ajout panhaut
-		panhaut.add(labhaut);
-		// pangauche
-		JLabel labgauche = new JLabel("Taille");
-		JSlider slidergauche = new JSlider(JSlider.VERTICAL, 5, 15, 10);
-		slidergauche.setMajorTickSpacing(10);
-		slidergauche.setMinorTickSpacing(1);
-		slidergauche.setPaintTicks(true);
-		slidergauche.setPaintLabels(true);
-
-		// ajout a pangauche
-		pangauche.setLayout(new BorderLayout());
-		pangauche.add(slidergauche, BorderLayout.CENTER);
-		pangauche.add(labgauche, BorderLayout.NORTH);
-
-		// panCentre
-		JLabel labCentre = new JLabel("Nombre de personnages");
-		JSlider sliderCentre = new JSlider(JSlider.VERTICAL, 1, 5, 1);
-		sliderCentre.setMajorTickSpacing(4);
-		sliderCentre.setMinorTickSpacing(1);
-		sliderCentre.setPaintTicks(true);
-		sliderCentre.setPaintLabels(true);
-		labCentre.setHorizontalAlignment(JLabel.CENTER);
-		// ajout a panCentre
-		panCentre.setLayout(new BorderLayout());
-		panCentre.add(labCentre, BorderLayout.NORTH);
-		panCentre.add(sliderCentre, BorderLayout.CENTER);
-		// panDroit
-		JLabel labDroit = new JLabel("Pourcentage de rocher");
-		JSlider sliderdroite = new JSlider(JSlider.VERTICAL, 0, 40, 10);
-		sliderdroite.setMajorTickSpacing(40);
-		sliderdroite.setMinorTickSpacing(0);
-		sliderdroite.setPaintTicks(true);
-		sliderdroite.setPaintLabels(true);
-		pandroite.setLayout(new BorderLayout());
-		pandroite.add(labDroit, BorderLayout.NORTH);
-		pandroite.add(sliderdroite, BorderLayout.CENTER);
-		// ajout Validation
-		validation.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				validerParametre = true;
-				fen.setVisible(false);
-			}
-		});
-		fen.getContentPane().add(validation, BorderLayout.SOUTH);
-		fen.getContentPane().add(pangauche, BorderLayout.WEST);
-		fen.getContentPane().add(panCentre, BorderLayout.CENTER);
-		fen.getContentPane().add(pandroite, BorderLayout.EAST);
-		fen.getContentPane().add(panhaut, BorderLayout.NORTH);
-		fen.pack();
-		fen.setLocationRelativeTo(null);
-		fen.setVisible(true);
-		// la tempo pour attendre que le bouton soit appuyé sans bouffer tout le
-		// proco
-		do {
-			System.out.println();
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} while (!validerParametre);
-		// modification desparametres
-		nbPerso = sliderCentre.getValue();
-		pourcentageRocher = sliderdroite.getValue();
-		tailleX = slidergauche.getValue();
-		tailleY = tailleX;
-		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
-		// tailleX);
+		new ParametreGraph();
+		
 	}
-
 	/**
 	 * Retourne vrai si l'action est realisee Action du personnage selectionne
 	 * 

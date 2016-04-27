@@ -32,9 +32,7 @@ public class Personnage extends Parcelle {
 
 		this.x = x;
 		this.y = y;
-	}
-	
-	
+	}	
 	/**
 	 * Retourne le nom
 	 * @param getNom

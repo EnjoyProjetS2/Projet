@@ -41,6 +41,7 @@ public class Explorateur extends Personnage {
 		}
 		return false;
 	}
+	
 
 	/**
 	 * Retourne les informations du personnage
