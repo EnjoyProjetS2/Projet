@@ -1,7 +1,6 @@
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -9,7 +8,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -141,19 +143,26 @@ public class Plateau {
 		// Caractéristiques initiales pour la fenetre.
 		window.setTitle("Plateau de jeu (" + taille + "X" + taille + ")");
 		window.setLocation(new Point(200, 50));
-		window.setLayout(new BorderLayout());
+		window.setLayout(null);
 		// La fermeture de la fenetre ne fait que la cacher.
 		// cf Javadoc setDefaultCloseOperation
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		// Ajout des deux composants à la fenetre
-		window.getContentPane().add(graphic, BorderLayout.NORTH);
+		graphic.setBounds(600, 50, taille*48, taille*48);
+		window.getContentPane().add(graphic);
 		if (withTextArea) {
 			consoleEquipe1 = new ConsolePane();
 			consoleEquipe2 = new ConsolePane();
-			window.setLayout(new FlowLayout());
-			window.getContentPane().add(consoleEquipe1, FlowLayout.LEFT);
-			window.getContentPane().add(consoleEquipe2, FlowLayout.RIGHT);
+			consoleEquipe1.setBounds(50, 50, 500, taille*48/3);
+			consoleEquipe1.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+			consoleEquipe2.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+			consoleEquipe2.setBounds(50, 50+taille*48-taille*48/3, 500, taille*48/3);
+			JLabel labelImg = new JLabel(new ImageIcon("./images/carte_tresor.png"));
+			labelImg.setBounds(50, 70+taille*48/3, 500,taille*48/3-40 );
+			labelImg.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+			window.getContentPane().add(labelImg);
+			window.getContentPane().add(consoleEquipe1);
+			window.getContentPane().add(consoleEquipe2);
 		}
 		resizeFromGraphic();
 

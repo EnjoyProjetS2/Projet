@@ -1,7 +1,9 @@
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -18,7 +20,6 @@ class ConsolePane extends JScrollPane {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setFocusable(false);
-		textArea.setPreferredSize(new Dimension(500, 200));
 		textArea.setFont(new Font("Serif", Font.PLAIN, 12));
 		this.setViewportView(textArea);
 	}
