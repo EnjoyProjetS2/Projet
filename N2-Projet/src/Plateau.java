@@ -12,7 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * La classe Plateau permet d'afficher un plateau de Jeu carré sur lequel sont
@@ -136,29 +135,29 @@ public class Plateau {
 		// Instancie la fenetre principale et et les deux composants.
 		window = new JFrame();
 		graphic = new GraphicPane(gif, taille);
-		window.setPreferredSize(new Dimension(600, 1000));
+		window.setPreferredSize(new Dimension(700 + taille * 37, 165 + taille * 37));
 		consoleEquipe1 = null;
 		consoleEquipe2 = null;
 
-		// Caractéristiques initiales pour la fenetre.
-		window.setTitle("Plateau de jeu (" + taille + "X" + taille + ")");
+		// Caracteristiques initiales pour la fenetre.
+		window.setTitle("Treasure Hunt");
 		window.setLocation(new Point(200, 50));
 		window.setLayout(null);
 		// La fermeture de la fenetre ne fait que la cacher.
 		// cf Javadoc setDefaultCloseOperation
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Ajout des deux composants à la fenetre
-		graphic.setBounds(600, 50, taille*37, taille*37);
+		graphic.setBounds(600, 50, taille * 37, taille * 37);
 		window.getContentPane().add(graphic);
 		if (withTextArea) {
 			consoleEquipe1 = new ConsolePane();
 			consoleEquipe2 = new ConsolePane();
-			consoleEquipe1.setBounds(50, 50, 500, taille*48/3);
+			consoleEquipe1.setBounds(50, 50, 500, taille * 37 / 3);
 			consoleEquipe1.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
 			consoleEquipe2.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-			consoleEquipe2.setBounds(50, 50+taille*37-taille*37/3, 500, taille*37/3);
+			consoleEquipe2.setBounds(50, 50 + taille * 37 - taille * 37 / 3, 500, taille * 37 / 3);
 			JLabel labelImg = new JLabel(new ImageIcon("./images/carte_tresor.png"));
-			labelImg.setBounds(50, 70+taille*37/3, 500,taille*37/3-40 );
+			labelImg.setBounds(50, 70 + taille * 37 / 3, 500, taille * 37 / 3 - 40);
 			labelImg.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 			window.getContentPane().add(labelImg);
 			window.getContentPane().add(consoleEquipe1);
@@ -286,7 +285,7 @@ public class Plateau {
 	public void println(String message, int equipe) {
 		if (equipe == 1 && message != null) {
 			consoleEquipe1.println(message);
-		}else if(message != null && equipe == 2){
+		} else if (message != null && equipe == 2) {
 			consoleEquipe2.println(message);
 		}
 	}

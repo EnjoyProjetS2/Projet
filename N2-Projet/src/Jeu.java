@@ -1,17 +1,6 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Random;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-
-import jdk.internal.dynalink.DefaultBootstrapper;
 
 public class Jeu {
 
@@ -43,11 +32,7 @@ public class Jeu {
 			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
 			saisieEquipe(un);
-			saisieEquipe(deux);
-
-			// Affiche les membres des équipes
-			un.afficherEquipe();
-			deux.afficherEquipe();
+			saisieEquipe(deux);		
 
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
@@ -72,8 +57,8 @@ public class Jeu {
 			informations(un, p);
 			informations(deux, p);
 
-			p.getPlateau().println("Début de la partie ! (equipe "+ un.getID()+")" , un.getID());
-			p.getPlateau().println("Début de la partie ! (equipe "+ deux.getID()+")", deux.getID());
+			p.getPlateau().println("Début de la partie ! (equipe " + un.getID() + ")", un.getID());
+			p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
 			if (un.getID() == equipe) {
 				p.setJeu(un.setVision(ile));
 			} else if (deux.getID() == equipe) {
@@ -111,7 +96,7 @@ public class Jeu {
 								if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
 									while (!ile.deplacement(perso, direction(perso))) {
 
-										 p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
+										p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
 									}
 									joue = true;
 								} else {
@@ -121,13 +106,13 @@ public class Jeu {
 
 							} else {
 
-								 p.getPlateau().println("Erreur: ce personnag appartient a l'autre equipe", equipe);
+								p.getPlateau().println("Erreur: ce personnag appartient a l'autre equipe", equipe);
 							}
 
 						} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
 
 							Navire nav = (Navire) ile.getGrille()[clicY][clicX];
-							 p.getPlateau().println(nav.toString(), equipe);
+							p.getPlateau().println(nav.toString(), equipe);
 
 							if (nav.getEquipe().getID() == equipe) {
 
@@ -148,11 +133,11 @@ public class Jeu {
 									}
 									joue = true;
 								} else {
-									 p.getPlateau().println("Erreur: le navire est vide", equipe);
+									p.getPlateau().println("Erreur: le navire est vide", equipe);
 								}
 
 							} else {
-								 p.getPlateau().println("Erreur: ce navire appartient a l'autre equipe", equipe);
+								p.getPlateau().println("Erreur: ce navire appartient a l'autre equipe", equipe);
 							}
 
 						}
@@ -185,39 +170,31 @@ public class Jeu {
 
 			int gagnant = 0;
 
-			System.out.println("test");
-
 			// Victoire par mort de l'equipe adverse
 			if (!un.survie()) {
-				// p.getPlateau().println("Tous les personnages de l'equipe " +
-				// un.getNom() + " sont morts.");
+				p.getPlateau().println("Tous les personnages de l'equipe " + un.getNom() + " sont morts.", un.getID());
 				gagnant = 2;
 			} else if (!deux.survie()) {
-				// p.getPlateau().println("Tous les personnages de l'equipe " +
-				// deux.getNom() + " sont morts.");
+				p.getPlateau().println("Tous les personnages de l'equipe " + deux.getNom() + " sont morts.",
+						deux.getID());
 				gagnant = 1;
 			}
 
 			// Victoire par depot du tresor
 			if (un.getNavire().presenceDuCoffre()) {
-				// p.getPlateau().println("L'equipe " + un.getNom() + " a ramene
-				// le tresor !");
+				p.getPlateau().println("L'equipe " + un.getNom() + " a ramene le tresor !", un.getID());
 				gagnant = 1;
 			} else if (deux.getNavire().presenceDuCoffre()) {
-				// p.getPlateau().println("L'equipe " + deux.getNom() + " a
-				// ramene le tresor !");
+				p.getPlateau().println("L'equipe " + deux.getNom() + " a ramene le tresor !", deux.getID());
 				gagnant = 2;
 			}
 
 			if (gagnant == 1) {
-				// p.getPlateau().println("L'equipe " + un.getNom() + " remporte
-				// la partie !");
+				p.getPlateau().println("L'equipe " + un.getNom() + " remporte la partie !", un.getID());
 			} else if (gagnant == 2) {
-				// p.getPlateau().println("L'equipe " + deux.getNom() + "
-				// remporte la partie !");
+				p.getPlateau().println("L'equipe " + deux.getNom() + " remporte la partie !", deux.getID());
 			} else {
-				// p.getPlateau().println("Erreur : mais que font les
-				// developpeurs ?");
+				p.getPlateau().println("Erreur : mais que font les developpeurs ?", un.getID());
 			}
 
 		}
@@ -232,13 +209,11 @@ public class Jeu {
 	 */
 	private void informations(Equipe e, SuperPlateau p) {
 
-		// p.getPlateau().println("Equipe: " + e.getNom());
+		p.getPlateau().println("Equipe: " + e.getNom(), e.getID());
 
 		for (int i = 0; i < e.getListePersos().size(); i++) {
-			// p.getPlateau().println(e.getListePersos().get(i).toString());
+			p.getPlateau().println(e.getListePersos().get(i).toString(), e.getID());
 		}
-
-		// p.getPlateau().println("-------------------------");
 
 	}
 
@@ -270,19 +245,13 @@ public class Jeu {
 	 * @param equipe
 	 */
 	private void modeCreatif(SuperPlateau p, Ile ile, Equipe equipe) {
-		// p.getPlateau().println("[Mode Creatif] C'est a l'equipe " +
-		// equipe.getNom() + " de placer ses personnages:");
+		p.getPlateau().println("[Mode Creatif] C'est a l'equipe " + equipe.getNom() + " de placer ses personnages:",
+				equipe.getID());
 		int cpt = 0;
 		while (cpt < equipe.getListePersos().size()) {
-			/*
-			 * String[] tabChoix = { "Explorateur", "Voleur" }; String choix =
-			 * (String) JOptionPane.showInputDialog(null,
-			 * "Choisir un perso a placer (equipe " + equipe.getID() + " )",
-			 * "Mode Creatif", JOptionPane.DEFAULT_OPTION, null, tabChoix,
-			 * tabChoix[0]);
-			 */
-			// p.getPlateau().println("[Mode Creatif] Clique ou tu veux placer:
-			// " + equipe.getListePersos().get(cpt));
+
+			p.getPlateau().println("[Mode Creatif] Clique ou tu veux placer: " + equipe.getListePersos().get(cpt),
+					equipe.getID());
 			p.getPlateau().waitEvent();
 			if (ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] instanceof Sable) {
 				ile.getGrille()[p.getPlateau().getPosY()][p.getPlateau().getPosX()] = equipe.getListePersos().get(cpt);
