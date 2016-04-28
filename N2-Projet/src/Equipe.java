@@ -9,9 +9,6 @@ public class Equipe {
 	private List<Personnage> listePersos = new ArrayList<>();
 	private int[][] vision;
 
-	// private boolean[][] vision = new
-	// boolean[Constantes.TAILLEX][Constantes.TAILLEY];
-
 	/**
 	 * Constructeur: Cree une equipe avec un nom et un ID (1 ou 2)
 	 * 
@@ -23,7 +20,7 @@ public class Equipe {
 			this.nom = nom;
 			this.ID = ID;
 			this.navire = new Navire();
-			this.navire.setEquipe(this);
+			this.navire.setEquipe(this);			
 
 		} else {
 			this.nom = null;

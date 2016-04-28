@@ -11,8 +11,7 @@ public class Navire extends Parcelle {
 	 * Constructeur: cree un navire
 	 */
 	public Navire() {
-		super.traversable = false;
-		super.id = 2;
+		super.traversable = false;		
 	}
 	
 	/**Cree un navire a des coordonnees precises
@@ -130,6 +129,13 @@ public class Navire extends Parcelle {
 	 */
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
+		
+		if (equipe.getID() == 1) {
+			super.id = 2;
+		} else if (equipe.getID() == 2) {
+			super.id = 15;
+		}
+		
 	}
 
 	/**Retourne l'appartenance du navire

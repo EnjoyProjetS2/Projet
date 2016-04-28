@@ -4,10 +4,10 @@ public class SuperPlateau {
 	private Plateau p;
 	private int taille = Jeu.tailleX;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] { "images/Rocher.png", "images/Navire.png", "images/Sable.png",
+	private String[] gifs = new String[] { "images/Rocher.png", "images/NavireBleu.png", "images/Sable.png",
 			"images/Eau.png", "images/ExplorateurBleu.png", "images/VoleurBleu.png", "images/SableOff.png",
 			"images/GuerrierBleu.png", "images/PiegeurBleu.png", "images/EauOff.png", "images/ExplorateurRouge.png",
-			"images/VoleurRouge.png", "images/GuerrierRouge.png", "images/PiegeurRouge.png" };
+			"images/VoleurRouge.png", "images/GuerrierRouge.png", "images/PiegeurRouge.png", "images/NavireRouge.png" };
 
 	/**
 	 * Constructeur de base: cree un super plateau a partir de plateau
