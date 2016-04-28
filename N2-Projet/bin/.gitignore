@@ -1,16 +1,24 @@
 /ConsolePane.class
+/Constantes.class
 /Diagramme des classes.jpg
 /Diagramme des classes.ucls
+/Eau.class
 /Equipe.class
+/Explorateur.class
 /GraphicPane.class
 /Guerrier.class
-/Jeu$1.class
+/Ile.class
 /Jeu.class
+/Navire.class
+/ParametreGraph$1.class
+/ParametreGraph.class
+/Parcelle.class
+/Personnage.class
 /Piegeur.class
 /Plateau$Key.class
 /Plateau$Mouse.class
 /Plateau.class
+/Rocher.class
+/Sable.class
+/SuperPlateau.class
 /Voleur.class
-/modeIA.class
-/ParametreGraph.class
-/ParametreGraph$1.class
