@@ -60,6 +60,8 @@ public class Equipe {
 						}
 					}
 					
+				} else if (ile.getGrille()[i][j] instanceof Eau) {
+					grille[i][j] = 10;
 				} else {
 					grille[i][j] = 7;
 				}

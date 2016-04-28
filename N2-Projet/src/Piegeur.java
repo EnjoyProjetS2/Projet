@@ -13,7 +13,11 @@ public class Piegeur extends Personnage {
 	public Piegeur(String nom, Equipe e, int x, int y) {
 		super(nom, e, x, y);
 		super.energie = 100;
-		super.id = 9;
+		if (e.getID() == 1) {
+			super.id = 9;
+		} else if (e.getID() == 2) {
+			super.id = 14;
+		}
 	}
 
 	/**

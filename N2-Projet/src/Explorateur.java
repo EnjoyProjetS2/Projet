@@ -13,7 +13,12 @@ public class Explorateur extends Personnage {
 	public Explorateur(String nom, Equipe e, int x, int y) {
 		super(nom, e, x, y);
 		super.energie = 100;
-		super.id = 5;
+		
+		if (e.getID() == 1) {
+			super.id = 5;
+		} else if (e.getID() == 2) {
+			super.id = 11;
+		}
 	}
 
 	/**

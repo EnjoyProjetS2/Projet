@@ -4,8 +4,10 @@ public class SuperPlateau {
 	private Plateau p;
 	private int taille = Jeu.tailleX;
 	private int[][] jeu = new int[taille][taille];
-	private String[] gifs = new String[] { "images/stone.png", "images/boat.png", "images/sable.png", "images/eau.png",
-			"images/Explo.png", "images/Voleur.png", "images/vision.png", "images/Guerrier.png", "images/Piegeur.png" };
+	private String[] gifs = new String[] { "images/Rocher.png", "images/Navire.png", "images/Sable.png",
+			"images/Eau.png", "images/ExplorateurBleu.png", "images/VoleurBleu.png", "images/SableOff.png",
+			"images/GuerrierBleu.png", "images/PiegeurBleu.png", "images/EauOff.png", "images/ExplorateurRouge.png",
+			"images/VoleurRouge.png", "images/GuerrierRouge.png", "images/PiegeurRouge.png" };
 
 	/**
 	 * Constructeur de base: cree un super plateau a partir de plateau
@@ -16,6 +18,7 @@ public class SuperPlateau {
 
 	/**
 	 * Constructeur : cree un super plateau a partir de plateau
+	 * 
 	 * @param ile
 	 */
 	public SuperPlateau(Ile ile) {
@@ -24,6 +27,7 @@ public class SuperPlateau {
 
 	/**
 	 * retourne le plateau
+	 * 
 	 * @return Plateau : plateau
 	 */
 	public Plateau getPlateau() {
@@ -32,6 +36,7 @@ public class SuperPlateau {
 
 	/**
 	 * retourne la taille
+	 * 
 	 * @return int : taille
 	 */
 	public int getTaille() {
@@ -40,6 +45,7 @@ public class SuperPlateau {
 
 	/**
 	 * retourne le jeu en tableau
+	 * 
 	 * @return int[][] jeu
 	 */
 	public int[][] getJeu() {
@@ -48,6 +54,7 @@ public class SuperPlateau {
 
 	/**
 	 * Modifie le tableau de jeu avec des parcelles
+	 * 
 	 * @param tablo
 	 */
 	public void setJeu(Parcelle[][] tablo) {
@@ -60,9 +67,10 @@ public class SuperPlateau {
 		}
 		p.setJeu(this.jeu);
 	}
-	
+
 	/**
 	 * Modifie le tableau de jeu avec des chiffres
+	 * 
 	 * @param tablo
 	 */
 	public void setJeu(int[][] tablo) {

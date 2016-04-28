@@ -148,7 +148,7 @@ public class Plateau {
 		// cf Javadoc setDefaultCloseOperation
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Ajout des deux composants à la fenetre
-		graphic.setBounds(600, 50, taille*48, taille*48);
+		graphic.setBounds(600, 50, taille*37, taille*37);
 		window.getContentPane().add(graphic);
 		if (withTextArea) {
 			consoleEquipe1 = new ConsolePane();
@@ -156,9 +156,9 @@ public class Plateau {
 			consoleEquipe1.setBounds(50, 50, 500, taille*48/3);
 			consoleEquipe1.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
 			consoleEquipe2.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-			consoleEquipe2.setBounds(50, 50+taille*48-taille*48/3, 500, taille*48/3);
+			consoleEquipe2.setBounds(50, 50+taille*37-taille*37/3, 500, taille*37/3);
 			JLabel labelImg = new JLabel(new ImageIcon("./images/carte_tresor.png"));
-			labelImg.setBounds(50, 70+taille*48/3, 500,taille*48/3-40 );
+			labelImg.setBounds(50, 70+taille*37/3, 500,taille*37/3-40 );
 			labelImg.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 			window.getContentPane().add(labelImg);
 			window.getContentPane().add(consoleEquipe1);
