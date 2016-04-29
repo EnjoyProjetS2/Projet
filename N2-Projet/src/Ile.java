@@ -125,7 +125,7 @@ public class Ile {
 
 			if (sable.estPiegee()) {
 				e.setEnergie(e.getEnergie() - 50);
-				System.out.println("Parcelle piegee!");
+				JOptionPane.showMessageDialog(null, e.getNom()+" est tombe dans un piege. Il perd 50 d'energie.");
 			}
 			
 			e.setEnergie(e.getEnergie() - 1);
@@ -212,11 +212,20 @@ public class Ile {
 		}
 
 		if (grille[newPosX][newPosY].estTraversablePar(e)) {
+			
+			Sable sable = (Sable) grille[newPosX][newPosY];
 
 			grille[newPosX][newPosY] = e;
 			e.setX(newPosX);
 			e.setY(newPosY);
 			e.getEquipe().getNavire().getPersoDansNavire().remove(e);
+			
+			if (sable.estPiegee()) {
+				e.setEnergie(e.getEnergie() - 50);
+				JOptionPane.showMessageDialog(null, e.getNom()+" est tombe dans un piege. Il perd 50 d'energie.");
+			}
+			
+			
 			return true;
 
 		}
