@@ -457,7 +457,7 @@ public class Jeu {
 	 */
 	private String direction(Personnage p) {
 
-		String avis;
+		String avis = "";
 
 		if (p instanceof Guerrier || p instanceof Piegeur) {
 			String[] direction = { "Ouest", "Est", "Nord", "Sud", "Nord-Ouest", "Nord-Est", "Sud-Ouest", "Sud-Est" };

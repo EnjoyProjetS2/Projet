@@ -114,13 +114,20 @@ public class Ile {
 		}
 
 		if (grille[newPosX][newPosY].estTraversablePar(e)) {
+			
+			Sable sable = (Sable) grille[newPosX][newPosY];
 
 			grille[newPosX][newPosY] = grille[e.getX()][e.getY()];
-			grille[e.getX()][e.getY()] = tmp;
+			grille[e.getX()][e.getY()] = tmp;	
 
 			e.setX(newPosX);
 			e.setY(newPosY);
 
+			if (sable.estPiegee()) {
+				e.setEnergie(e.getEnergie() - 50);
+				System.out.println("Parcelle piegee!");
+			}
+			
 			e.setEnergie(e.getEnergie() - 1);
 
 			return true;

@@ -30,6 +30,7 @@ public class Piegeur extends Personnage {
 		if (p instanceof Sable) {
 
 			((Sable) p).setPiege();
+			JOptionPane.showMessageDialog(null, "Une parcelle a ete piegee !");
 			return true;
 
 		} else {
