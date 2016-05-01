@@ -1,4 +1,5 @@
 package projet.graphique;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
@@ -9,7 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import projet.plateau.*;
+
 public class ParametreGraph {
 	static boolean validerParametre = false;
 
@@ -28,12 +33,25 @@ public class ParametreGraph {
 		// ajout panhaut
 		panhaut.add(labhaut);
 		// pangauche
-		JLabel labgauche = new JLabel("Taille");
 		JSlider slidergauche = new JSlider(JSlider.VERTICAL, 5, 15, 10);
+		JLabel labgauche = new JLabel("Taille: " + slidergauche.getValue() + "X" + slidergauche.getValue());
 		slidergauche.setMajorTickSpacing(10);
 		slidergauche.setMinorTickSpacing(1);
 		slidergauche.setPaintTicks(true);
 		slidergauche.setPaintLabels(true);
+		slidergauche.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				if (slidergauche.getValue() >= 10) {
+					labgauche.setText("Taille: " + slidergauche.getValue() + "X" + slidergauche.getValue());
+				} else {
+					labgauche.setText("Taille: 0" + slidergauche.getValue() + "X0" + slidergauche.getValue());
+				}
+
+			}
+		});
 
 		// ajout a pangauche
 		pangauche.setLayout(new BorderLayout());
@@ -41,20 +59,41 @@ public class ParametreGraph {
 		pangauche.add(labgauche, BorderLayout.NORTH);
 
 		// panCentre
-		JLabel labCentre = new JLabel("Nombre de personnages");
 		JSlider sliderCentre = new JSlider(JSlider.VERTICAL, 1, 5, 1);
+		JLabel labCentre = new JLabel("Nombre de personnages: " + sliderCentre.getValue());
 		sliderCentre.setMajorTickSpacing(4);
 		sliderCentre.setMinorTickSpacing(1);
 		sliderCentre.setPaintTicks(true);
 		sliderCentre.setPaintLabels(true);
 		labCentre.setHorizontalAlignment(JLabel.CENTER);
+		sliderCentre.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				labCentre.setText("Nombre de personnages: " + sliderCentre.getValue());
+			}
+		});
 		// ajout a panCentre
 		panCentre.setLayout(new BorderLayout());
 		panCentre.add(labCentre, BorderLayout.NORTH);
 		panCentre.add(sliderCentre, BorderLayout.CENTER);
 		// panDroit
-		JLabel labDroit = new JLabel("Pourcentage de rocher");
-		JSlider sliderdroite = new JSlider(JSlider.VERTICAL, 0, 40, 10);
+		JSlider sliderdroite = new JSlider(JSlider.VERTICAL, 2, 40, 10);
+		JLabel labDroit = new JLabel("Pourcentage de rocher :" + sliderdroite.getValue() + " %");
+		sliderdroite.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				if (sliderdroite.getValue() >= 10) {
+					labDroit.setText("Pourcentage de rocher :" + sliderdroite.getValue() + " %");
+				} else {
+					labDroit.setText("Pourcentage de rocher :0" + sliderdroite.getValue() + " %");
+				}
+
+			}
+		});
 		sliderdroite.setMajorTickSpacing(40);
 		sliderdroite.setMinorTickSpacing(0);
 		sliderdroite.setPaintTicks(true);

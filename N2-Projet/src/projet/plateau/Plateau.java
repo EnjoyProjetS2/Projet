@@ -13,7 +13,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import projet.graphique.*;;
+import javax.swing.JTextArea;
+
+import projet.graphique.*;
 /**
  * La classe Plateau permet d'afficher un plateau de Jeu carré sur lequel sont
  * disposés des images représentant les éléments du jeu Les images sont
@@ -290,7 +292,19 @@ public class Plateau {
 			consoleEquipe2.println(message);
 		}
 	}
-
+	/**
+	 * retourne la console corespondant a une equipe passe en parammetre
+	 * @param equipe
+	 * @return
+	 */
+	public ConsolePane getConsoleEquipe(int equipe){
+		if (equipe == 1 ) {
+			return consoleEquipe1;
+		}else if(equipe == 2){
+			return consoleEquipe2;
+		}
+		return null;
+	}
 	/**
 	 * Provoque la destruction du plateau. L'arrêt du programme est
 	 * conditionné par la fermeture de tous les plateaux ouverts.

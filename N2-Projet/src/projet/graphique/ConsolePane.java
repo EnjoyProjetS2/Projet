@@ -30,9 +30,14 @@ public class ConsolePane extends JScrollPane {
 	 * @param message
 	 */
 	public void println(String message) {
+		//Pour effacer la JtextArea
+		if (message == "clear") {
+			textArea.setText("");;
+		}else{
 		textArea.append(message + '\n');
 		// Positionne la scrollPane à son extrémité inférieure.
 		JScrollBar vertical = this.getVerticalScrollBar();
 		vertical.setValue(vertical.getMaximum());
+		}
 	}
 }

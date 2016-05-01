@@ -13,13 +13,11 @@ public class Rocher extends Parcelle{
 			super.id = 1;
 			
 			if (Rocher.poseClef == false) {
-				System.out.println("poseclef");
 				this.clef = true;
 				Rocher.poseClef = true;
 			}
 
 			if (Rocher.poseCoffre == false && this.clef == false) {
-				System.out.println("posecoffre");
 				this.coffre = true;
 				Rocher.poseCoffre = true;
 			}		

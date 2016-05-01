@@ -1,4 +1,5 @@
 package projet.plateau;
+
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -15,14 +16,17 @@ import projet.parcelle.Sable;
 import projet.parcelle.Voleur;
 import projet.*;
 import projet.graphique.ParametreGraph;
+
 public class Jeu {
 
 	public static int nbPerso = 1; // nombre de personnages par equipes
-	public static int pourcentageRocher = 10; // pourcentage de rochers sur la carte
+	public static int pourcentageRocher = 10; // pourcentage de rochers sur la
+												// carte
 	public static int tailleX = 10; // longueur
 	public static int tailleY = 10; // largeur
 	public static int maxVie = 100; // vie des personnages
-	public static int regenParTour = 10; // vie regeneree par tour dans les navires
+	public static int regenParTour = 10; // vie regeneree par tour dans les
+											// navires
 	public static Equipe un;
 	public static Equipe deux;
 	boolean modeCreatif = false;
@@ -45,7 +49,7 @@ public class Jeu {
 			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
 			saisieEquipe(un);
-			saisieEquipe(deux);		
+			saisieEquipe(deux);
 
 			// System.out.println(ile.toString()); // Affichage texte
 			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
@@ -69,13 +73,13 @@ public class Jeu {
 
 			informations(un, p);
 			informations(deux, p);
-
-			p.getPlateau().println("Début de la partie ! (equipe " + un.getID() + ")", un.getID());
-			p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
+			p.getPlateau().println("clear", equipe);
 			if (un.getID() == equipe) {
 				p.setJeu(un.setVision(ile));
+				p.getPlateau().println("Début de la partie ! (equipe " + un.getID() + ")", un.getID());
 			} else if (deux.getID() == equipe) {
 				p.setJeu(deux.setVision(ile));
+				p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
 			}
 			p.affichage();
 
@@ -86,6 +90,11 @@ public class Jeu {
 
 				soigner(un);
 				soigner(deux);
+				if (equipe == 1) {
+					informations(un, p);
+				} else if (equipe == 2) {
+					informations(deux, p);
+				}
 				p.getPlateau().println("- Cliquez sur un de vos navires ou personnages:", equipe);
 
 				boolean joue = false;
@@ -166,9 +175,14 @@ public class Jeu {
 					} // fin du tour
 				}
 				if (equipe == 1) {
+					p.getPlateau().println("clear", equipe);
 					equipe = 2;
+					p.getPlateau().println("clear", equipe);
 				} else if (equipe == 2) {
+					p.getPlateau().println("clear", equipe);
 					equipe = 1;
+					p.getPlateau().println("clear", equipe);
+
 				}
 
 				if (un.getID() == equipe) {
