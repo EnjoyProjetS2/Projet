@@ -1,3 +1,4 @@
+package projet.parcelle;
 
 public class Rocher extends Parcelle{
 		

@@ -1,19 +1,32 @@
+package projet.plateau;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import projet.parcelle.Equipe;
+import projet.parcelle.Explorateur;
+import projet.parcelle.Guerrier;
+import projet.parcelle.Navire;
+import projet.parcelle.Parcelle;
+import projet.parcelle.Personnage;
+import projet.parcelle.Piegeur;
+import projet.parcelle.Rocher;
+import projet.parcelle.Sable;
+import projet.parcelle.Voleur;
+import projet.*;
+import projet.graphique.ParametreGraph;
 public class Jeu {
 
-	static int nbPerso = 1; // nombre de personnages par equipes
-	static int pourcentageRocher = 10; // pourcentage de rochers sur la carte
-	static int tailleX = 10; // longueur
-	static int tailleY = 10; // largeur
-	static int maxVie = 100; // vie des personnages
-	static int regenParTour = 10; // vie regeneree par tour dans les navires
-	static Equipe un;
-	static Equipe deux;
+	public static int nbPerso = 1; // nombre de personnages par equipes
+	public static int pourcentageRocher = 10; // pourcentage de rochers sur la carte
+	public static int tailleX = 10; // longueur
+	public static int tailleY = 10; // largeur
+	public static int maxVie = 100; // vie des personnages
+	public static int regenParTour = 10; // vie regeneree par tour dans les navires
+	public static Equipe un;
+	public static Equipe deux;
 	boolean modeCreatif = false;
-	static boolean solo = false;
+	public static boolean solo = false;
 
 	/**
 	 * Constructeur: cree la partie, la parametre, cree les equipes, leurs

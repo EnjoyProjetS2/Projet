@@ -1,6 +1,14 @@
+package projet.plateau;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+
+import projet.parcelle.Eau;
+import projet.parcelle.Navire;
+import projet.parcelle.Parcelle;
+import projet.parcelle.Personnage;
+import projet.parcelle.Rocher;
+import projet.parcelle.Sable;
 
 public class Ile {
 
@@ -388,7 +396,7 @@ public class Ile {
 		}
 
 		if (nbZero == 0) {
-			grille[1][1].setTraversable(false);
+			grille[1][1].setTraversable(true);
 			return true;
 		}
 		return false;
