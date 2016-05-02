@@ -6,11 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import projet.parcelle.Guerrier;
 import projet.parcelle.Personnage;
+import projet.parcelle.Piegeur;
 
 public class Direction implements ActionListener {
 
-	int nombre = 4;
 	String choix = "";
 
 	JButton gauche;
@@ -18,6 +19,16 @@ public class Direction implements ActionListener {
 	JButton haut;
 	JButton bas;
 
+	JButton hautgauche;
+	JButton hautdroite;
+	JButton basgauche;
+	JButton basdroite;
+
+	/**
+	 * Constructeur: cree les boutons de deplacement
+	 * 
+	 * @param plateau
+	 */
 	public Direction(Plateau plateau) {
 
 		gauche = new JButton(new ImageIcon("images/boutons/gauche.png"));
@@ -32,9 +43,21 @@ public class Direction implements ActionListener {
 		bas = new JButton(new ImageIcon("images/boutons/bas.png"));
 		bas.setSize(37, 37);
 
+		hautgauche = new JButton(new ImageIcon("images/boutons/hautgauche.png"));
+		hautgauche.setSize(37, 37);
+
+		hautdroite = new JButton(new ImageIcon("images/boutons/hautdroite.png"));
+		hautdroite.setSize(37, 37);
+
+		basgauche = new JButton(new ImageIcon("images/boutons/basgauche.png"));
+		basgauche.setSize(37, 37);
+
+		basdroite = new JButton(new ImageIcon("images/boutons/basdroite.png"));
+		basdroite.setSize(37, 37);
+
 	}
 
-	public Plateau afficher(Plateau plateau) {
+	private Plateau afficher(Plateau plateau, Personnage perso) {
 
 		Plateau p = plateau;
 		gauche.setLocation(plateau.getTaille() * 37 + 620, 100);
@@ -49,11 +72,27 @@ public class Direction implements ActionListener {
 		bas.setLocation(plateau.getTaille() * 37 + 620 + 37, 100 + 36);
 		p.getWindow().getContentPane().add(bas);
 
+		if (perso instanceof Guerrier || perso instanceof Piegeur) {
+
+			hautgauche.setLocation(plateau.getTaille() * 37 + 620, 100 - 36);
+			p.getWindow().getContentPane().add(hautgauche);
+
+			hautdroite.setLocation(plateau.getTaille() * 37 + 620 + 2 * 37, 100 - 36);
+			p.getWindow().getContentPane().add(hautdroite);
+
+			basgauche.setLocation(plateau.getTaille() * 37 + 620, 100 + 36);
+			p.getWindow().getContentPane().add(basgauche);
+
+			basdroite.setLocation(plateau.getTaille() * 37 + 620 + 2 * 37, 100 + 36);
+			p.getWindow().getContentPane().add(basdroite);
+
+		}
+
 		return p;
 
 	}
 
-	public Plateau effacer(Plateau plateau) {
+	private Plateau effacer(Plateau plateau, Personnage perso) {
 
 		Plateau p = plateau;
 		p.getWindow().remove(gauche);
@@ -61,61 +100,64 @@ public class Direction implements ActionListener {
 		p.getWindow().remove(haut);
 		p.getWindow().remove(bas);
 
+		if (perso instanceof Guerrier || perso instanceof Piegeur) {
+			p.getWindow().remove(hautgauche);
+			p.getWindow().remove(hautdroite);
+			p.getWindow().remove(basgauche);
+			p.getWindow().remove(basdroite);
+		}
+
 		return p;
 
 	}
 
 	/**
-	 * Choix de la direction demandee a l'utilisateur
+	 * Demande a l'uilisateur via les boutons de selectionner la direction du
+	 * personnage p selectionne au prealable.
 	 * 
-	 * @return String : direction
+	 * @param p
+	 * @param plateau
+	 * @return
 	 */
-	public String choix(Personnage p, Plateau plateau) {		
-		
-		plateau = afficher(plateau);
+	public String choix(Personnage p, Plateau plateau) {
+
+		plateau = afficher(plateau, p);
 		plateau.affichage();
 
-		plateau.println("Cliquez sur le bouton de votre choix:", p.getEquipe().getID());
+		plateau.println("Cliquez sur la direction de votre choix:", p.getEquipe().getID());
 
 		this.choix = "";
-		
+
 		while (choix.equals("")) {
-			
+
 			gauche.addActionListener(this);
 			droite.addActionListener(this);
 			bas.addActionListener(this);
 			haut.addActionListener(this);
 			
-			if (choix.equals("erreur")) {		
-				
-				
-				plateau = effacer(plateau);
-				plateau.println("Erreur: la parcelle n'est pas traversable", p.getEquipe().getID());
-				
-				choix(p, plateau);
+			if (p instanceof Guerrier || p instanceof Piegeur) {
+				hautgauche.addActionListener(this);
+				hautdroite.addActionListener(this);
+				basgauche.addActionListener(this);
+				basdroite.addActionListener(this);
+
 			}
 			
+			if (choix.equals("erreur")) {
+
+				plateau = effacer(plateau, p);
+				plateau.println("Erreur: la parcelle n'est pas traversable", p.getEquipe().getID());
+
+				choix(p, plateau);
+			}
+
 		}
-		
-		plateau = effacer(plateau);
+
+		plateau = effacer(plateau, p);
 
 		return choix;
 
 		/*
-		 * 
-		 * if (p instanceof Guerrier || p instanceof Piegeur) { String[]
-		 * direction = { "Ouest", "Est", "Nord", "Sud", "Nord-Ouest",
-		 * "Nord-Est", "Sud-Ouest", "Sud-Est" }; avis = (String)
-		 * JOptionPane.showInputDialog(null, "Que faire:",
-		 * "Déplacement du personnage", JOptionPane.DEFAULT_OPTION, null,
-		 * direction, direction[0]); } else { String[] direction = { "Ouest",
-		 * "Est", "Nord", "Sud" }; avis = (String)
-		 * JOptionPane.showInputDialog(null, "Que faire:",
-		 * "Déplacement du personnage", JOptionPane.DEFAULT_OPTION, null,
-		 * direction, direction[0]); }
-		 * 
-		 * plateau = effacer(plateau); plateau.affichage();
-		 * 
 		 * if (avis.equals("Nord")) { return "gauche"; } else if
 		 * (avis.equals("Sud")) { return "droite"; } else if
 		 * (avis.equals("Ouest")) { return "haut"; } else if
@@ -142,6 +184,14 @@ public class Direction implements ActionListener {
 			this.choix = "gauche";
 		} else if (bouton == bas) {
 			this.choix = "droite";
+		} else if (bouton == hautgauche) {
+			this.choix = "hautgauche";
+		} else if (bouton == hautdroite) {
+			this.choix = "basgauche";
+		} else if (bouton == basgauche) {
+			this.choix = "hautdroite";
+		} else if (bouton == basdroite) {
+			this.choix = "basdroite";
 		} else {
 			this.choix = "erreur";
 			try {

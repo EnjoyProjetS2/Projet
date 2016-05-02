@@ -103,6 +103,8 @@ public class Jeu {
 
 				while (!joue) {
 					
+					Action action = new Action(p.getPlateau());
+					
 					if (this.solo && equipe == 2) {
 						modeIA(p, ile, deux);
 						joue = true;
@@ -114,16 +116,16 @@ public class Jeu {
 						if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
 
 							Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-							// p.getPlateau().println(perso.toString());
 							if (perso.getEquipe().getID() == equipe) {
 
-								if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
+								if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe).equals("Deplacement")) {
+									
 									while (!ile.deplacement(perso, direction.choix(perso, p.getPlateau()))) {
 
 										
 									}
 									joue = true;
-								} else {
+								} else if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe).equals("Action")) {
 									action(perso, ile);
 									joue = true;
 								}
@@ -142,7 +144,7 @@ public class Jeu {
 
 								if (!nav.estVide()) {
 
-									choisir(ile.getGrille()[clicY][clicX]);
+									action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe);
 
 									Personnage[] choix = new Personnage[nav.getPersoDansNavire().size()];
 									for (int i = 0; i < choix.length; i++) {
@@ -244,27 +246,7 @@ public class Jeu {
 			p.getPlateau().println(e.getListePersos().get(i).toString(), e.getID());
 		}
 
-	}
-
-	/**
-	 * Fenetre qui demande a l'utilisateur de choisir l'action qu'il veut
-	 * effectuer
-	 * 
-	 * @param parcelle
-	 * @return choix
-	 */
-	private String choisir(Parcelle parcelle) {
-		if (parcelle instanceof Personnage) {
-			String[] choix = { "Deplacement", "Action" };
-			return (String) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.DEFAULT_OPTION,
-					null, choix, choix[0]);
-		} else if (parcelle instanceof Navire) {
-			String[] choix = { "Debarquer un personnage" };
-			return (String) JOptionPane.showInputDialog(null, "Que faire:", "Que faire ?", JOptionPane.DEFAULT_OPTION,
-					null, choix, choix[0]);
-		}
-		return null;
-	}
+	}	
 
 	/**
 	 * Mise en place du mode creatif pour placer ses personnages
