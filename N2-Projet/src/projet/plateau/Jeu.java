@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import projet.graphique.Action;
+import projet.graphique.Direction;
 import projet.graphique.ParametreGraph;
 import projet.parcelle.Equipe;
 import projet.parcelle.Explorateur;

@@ -1,4 +1,4 @@
-package projet.plateau;
+package projet.graphique;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import projet.parcelle.Guerrier;
 import projet.parcelle.Personnage;
 import projet.parcelle.Piegeur;
+import projet.plateau.Plateau;
 
 public class Direction implements ActionListener {
 

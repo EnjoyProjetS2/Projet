@@ -1,4 +1,4 @@
-package projet.plateau;
+package projet.graphique;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import projet.parcelle.Navire;
 import projet.parcelle.Parcelle;
 import projet.parcelle.Personnage;
+import projet.plateau.Plateau;
 
 public class Action implements ActionListener {
 
