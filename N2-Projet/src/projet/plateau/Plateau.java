@@ -11,11 +11,13 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 import projet.graphique.*;
+
 /**
  * La classe Plateau permet d'afficher un plateau de Jeu carré sur lequel sont
  * disposés des images représentant les éléments du jeu Les images sont
@@ -27,12 +29,14 @@ import projet.graphique.*;
  */
 public class Plateau {
 	private static final long serialVersionUID = 1L;
-	private JFrame window;
 	private GraphicPane graphic;
 	private ConsolePane consoleEquipe1;
 	private ConsolePane consoleEquipe2;
+	private JFrame window;
 	private int posX;
 	private int posY;
+	private int taille;
+	
 	/**
 	 * Attribut ou est enregistré un événement observé. Cet attribut est
 	 * initialisé à null au début de la scrutation et rempli par
@@ -135,10 +139,13 @@ public class Plateau {
 	 *            Indique si une zone de texte doit être affichée.
 	 */
 	public Plateau(String[] gif, int taille, boolean withTextArea) {
+		
+		this.taille = taille;
+		
 		// Instancie la fenetre principale et et les deux composants.
 		window = new JFrame();
 		graphic = new GraphicPane(gif, taille);
-		window.setPreferredSize(new Dimension(700 + taille * 37, 165 + taille * 37));
+		window.setPreferredSize(new Dimension(700 + taille * 37 + 150, 165 + taille * 37));
 		consoleEquipe1 = null;
 		consoleEquipe2 = null;
 
@@ -168,6 +175,7 @@ public class Plateau {
 		}
 		resizeFromGraphic();
 
+		
 		// Affichage effectif
 		window.setVisible(true);
 		// Ajout des listeners.
@@ -292,19 +300,22 @@ public class Plateau {
 			consoleEquipe2.println(message);
 		}
 	}
+
 	/**
 	 * retourne la console corespondant a une equipe passe en parammetre
+	 * 
 	 * @param equipe
 	 * @return
 	 */
-	public ConsolePane getConsoleEquipe(int equipe){
-		if (equipe == 1 ) {
+	public ConsolePane getConsoleEquipe(int equipe) {
+		if (equipe == 1) {
 			return consoleEquipe1;
-		}else if(equipe == 2){
+		} else if (equipe == 2) {
 			return consoleEquipe2;
 		}
 		return null;
 	}
+
 	/**
 	 * Provoque la destruction du plateau. L'arrêt du programme est
 	 * conditionné par la fermeture de tous les plateaux ouverts.
@@ -380,4 +391,13 @@ public class Plateau {
 		window.getContentPane().setPreferredSize(dim);
 		window.pack();
 	}
+
+	public JFrame getWindow() {
+		return window;
+	}
+
+	public int getTaille() {
+		return taille;
+	}
+
 }

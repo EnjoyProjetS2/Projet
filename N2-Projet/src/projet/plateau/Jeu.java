@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import projet.graphique.ParametreGraph;
 import projet.parcelle.Equipe;
 import projet.parcelle.Explorateur;
 import projet.parcelle.Guerrier;
@@ -14,8 +15,6 @@ import projet.parcelle.Piegeur;
 import projet.parcelle.Rocher;
 import projet.parcelle.Sable;
 import projet.parcelle.Voleur;
-import projet.*;
-import projet.graphique.ParametreGraph;
 
 public class Jeu {
 
@@ -82,6 +81,7 @@ public class Jeu {
 				p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
 			}
 			p.affichage();
+			
 
 			boolean coffreAuBateau = false;
 			boolean equipeMorte = false;
@@ -98,8 +98,11 @@ public class Jeu {
 				p.getPlateau().println("- Cliquez sur un de vos navires ou personnages:", equipe);
 
 				boolean joue = false;
+				
+				Direction direction = new Direction(p.getPlateau());
 
 				while (!joue) {
+					
 					if (this.solo && equipe == 2) {
 						modeIA(p, ile, deux);
 						joue = true;
@@ -115,9 +118,9 @@ public class Jeu {
 							if (perso.getEquipe().getID() == equipe) {
 
 								if (choisir(ile.getGrille()[clicY][clicX]).equals("Deplacement")) {
-									while (!ile.deplacement(perso, direction(perso))) {
+									while (!ile.deplacement(perso, direction.choix(perso, p.getPlateau()))) {
 
-										p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
+										
 									}
 									joue = true;
 								} else {
@@ -149,7 +152,7 @@ public class Jeu {
 									Personnage perso = (Personnage) JOptionPane.showInputDialog(null, "Que faire:",
 											"Que faire ?", JOptionPane.DEFAULT_OPTION, null, choix, choix[0]);
 
-									while (!ile.debarquement(perso, direction(perso))) {
+									while (!ile.debarquement(perso, direction.choix(perso, p.getPlateau()))) {
 										p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
 									}
 									joue = true;
@@ -474,46 +477,6 @@ public class Jeu {
 
 		}
 		return true;
-	}
-
-	/**
-	 * Choix de la direction demandee a l'utilisateur
-	 * 
-	 * @return String : direction
-	 */
-	private String direction(Personnage p) {
-
-		String avis = "";
-
-		if (p instanceof Guerrier || p instanceof Piegeur) {
-			String[] direction = { "Ouest", "Est", "Nord", "Sud", "Nord-Ouest", "Nord-Est", "Sud-Ouest", "Sud-Est" };
-			avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
-					JOptionPane.DEFAULT_OPTION, null, direction, direction[0]);
-		} else {
-			String[] direction = { "Ouest", "Est", "Nord", "Sud" };
-			avis = (String) JOptionPane.showInputDialog(null, "Que faire:", "Déplacement du personnage",
-					JOptionPane.DEFAULT_OPTION, null, direction, direction[0]);
-		}
-
-		if (avis.equals("Nord")) {
-			return "gauche";
-		} else if (avis.equals("Sud")) {
-			return "droite";
-		} else if (avis.equals("Ouest")) {
-			return "haut";
-		} else if (avis.equals("Est")) {
-			return "bas";
-		} else if (avis.equals("Nord-Ouest")) {
-			return "hautgauche";
-		} else if (avis.equals("Nord-Est")) {
-			return "basgauche";
-		} else if (avis.equals("Sud-Ouest")) {
-			return "hautdroite";
-		} else if (avis.equals("Sud-Est")) {
-			return "basdroite";
-		}
-
-		return "faux";
 	}
 
 	/**
