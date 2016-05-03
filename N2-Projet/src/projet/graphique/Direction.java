@@ -6,14 +6,20 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import projet.parcelle.Explorateur;
 import projet.parcelle.Guerrier;
 import projet.parcelle.Personnage;
 import projet.parcelle.Piegeur;
+import projet.parcelle.Rocher;
+import projet.parcelle.Sable;
+import projet.parcelle.Voleur;
+import projet.plateau.Ile;
 import projet.plateau.Plateau;
 
 public class Direction implements ActionListener {
 
 	String choix = "";
+	int nbChoix = 0;
 
 	JButton gauche;
 	JButton droite;
@@ -30,7 +36,7 @@ public class Direction implements ActionListener {
 	 * 
 	 * @param plateau
 	 */
-	public Direction(Plateau plateau) {
+	public Direction() {
 
 		gauche = new JButton(new ImageIcon("images/boutons/gauche.png"));
 		gauche.setSize(37, 37);
@@ -61,6 +67,7 @@ public class Direction implements ActionListener {
 	private Plateau afficher(Plateau plateau, Personnage perso) {
 
 		Plateau p = plateau;
+
 		gauche.setLocation(plateau.getTaille() * 37 + 620, 100);
 		p.getWindow().getContentPane().add(gauche);
 
@@ -72,6 +79,8 @@ public class Direction implements ActionListener {
 
 		bas.setLocation(plateau.getTaille() * 37 + 620 + 37, 100 + 36);
 		p.getWindow().getContentPane().add(bas);
+
+		nbChoix += 4;
 
 		if (perso instanceof Guerrier || perso instanceof Piegeur) {
 
@@ -87,6 +96,190 @@ public class Direction implements ActionListener {
 			basdroite.setLocation(plateau.getTaille() * 37 + 620 + 2 * 37, 100 + 36);
 			p.getWindow().getContentPane().add(basdroite);
 
+			nbChoix += 4;
+
+		}
+
+		return p;
+
+	}
+
+	private Plateau filtrerAccessibles(Plateau plateau, Ile ile, Personnage perso) {
+
+		Plateau p = plateau;
+
+		int posX = perso.getX();
+		int posY = perso.getY();
+
+		if (!ile.getGrille()[posX - 1][posY].estTraversablePar(perso)) {
+			p.getWindow().remove(gauche);
+			nbChoix--;
+		}
+		if (!ile.getGrille()[posX + 1][posY].estTraversablePar(perso)) {
+			p.getWindow().remove(droite);
+			nbChoix--;
+		}
+		if (!ile.getGrille()[posX][posY - 1].estTraversablePar(perso)) {
+			p.getWindow().remove(haut);
+			nbChoix--;
+		}
+		if (!ile.getGrille()[posX][posY + 1].estTraversablePar(perso)) {
+			p.getWindow().remove(bas);
+			nbChoix--;
+		}
+
+		if (perso instanceof Guerrier || perso instanceof Piegeur) {
+
+			if (!ile.getGrille()[posX - 1][posY - 1].estTraversablePar(perso)) {
+				p.getWindow().remove(hautgauche);
+				nbChoix--;
+			}
+			if (!ile.getGrille()[posX + 1][posY - 1].estTraversablePar(perso)) {
+				p.getWindow().remove(hautdroite);
+				nbChoix--;
+			}
+			if (!ile.getGrille()[posX - 1][posY + 1].estTraversablePar(perso)) {
+				p.getWindow().remove(basgauche);
+				nbChoix--;
+			}
+			if (!ile.getGrille()[posX + 1][posY + 1].estTraversablePar(perso)) {
+				p.getWindow().remove(basdroite);
+				nbChoix--;
+			}
+
+		}
+
+		return p;
+	}
+
+	private Plateau filtrerRocher(Plateau plateau, Ile ile, Personnage perso) {
+
+		Plateau p = plateau;
+
+		int posX = perso.getX();
+		int posY = perso.getY();
+
+		if (!(ile.getGrille()[posX - 1][posY] instanceof Rocher)) {
+			p.getWindow().remove(gauche);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX + 1][posY] instanceof Rocher)) {
+			p.getWindow().remove(droite);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY - 1] instanceof Rocher)) {
+			p.getWindow().remove(haut);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY + 1] instanceof Rocher)) {
+			p.getWindow().remove(bas);
+			nbChoix--;
+		}
+
+		return p;
+
+	}
+
+	private Plateau filtrerExplorateur(Plateau plateau, Ile ile, Personnage perso) {
+
+		Plateau p = plateau;
+
+		int posX = perso.getX();
+		int posY = perso.getY();
+
+		if (!(ile.getGrille()[posX - 1][posY] instanceof Explorateur)) {
+			p.getWindow().remove(gauche);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX + 1][posY] instanceof Explorateur)) {
+			p.getWindow().remove(droite);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY - 1] instanceof Explorateur)) {
+			p.getWindow().remove(haut);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY + 1] instanceof Explorateur)) {
+			p.getWindow().remove(bas);
+			nbChoix--;
+		}
+
+		return p;
+
+	}
+
+	private Plateau filtrerPersonnage(Plateau plateau, Ile ile, Personnage perso) {
+
+		Plateau p = plateau;
+
+		int posX = perso.getX();
+		int posY = perso.getY();
+
+		if (!(ile.getGrille()[posX - 1][posY] instanceof Personnage)) {
+			p.getWindow().remove(gauche);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX + 1][posY] instanceof Personnage)) {
+			p.getWindow().remove(droite);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY - 1] instanceof Personnage)) {
+			p.getWindow().remove(haut);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY + 1] instanceof Personnage)) {
+			p.getWindow().remove(bas);
+			nbChoix--;
+		}
+
+		if (perso instanceof Guerrier || perso instanceof Piegeur) {
+
+			p.getWindow().remove(hautgauche);
+			p.getWindow().remove(hautdroite);
+			p.getWindow().remove(basgauche);
+			p.getWindow().remove(basdroite);
+			
+			nbChoix -= 4;
+
+		}
+
+		return p;
+
+	}
+
+	private Plateau filtrerSable(Plateau plateau, Ile ile, Personnage perso) {
+
+		Plateau p = plateau;
+
+		int posX = perso.getX();
+		int posY = perso.getY();
+
+		if (!(ile.getGrille()[posX - 1][posY] instanceof Sable)) {
+			p.getWindow().remove(gauche);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX + 1][posY] instanceof Sable)) {
+			p.getWindow().remove(droite);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY - 1] instanceof Sable)) {
+			p.getWindow().remove(haut);
+			nbChoix--;
+		}
+		if (!(ile.getGrille()[posX][posY + 1] instanceof Sable)) {
+			p.getWindow().remove(bas);
+			nbChoix--;
+		}
+		
+		if (perso instanceof Guerrier || perso instanceof Piegeur) {
+
+			p.getWindow().remove(hautgauche);
+			p.getWindow().remove(hautdroite);
+			p.getWindow().remove(basgauche);
+			p.getWindow().remove(basdroite);
+			
+			nbChoix -= 4;
+
 		}
 
 		return p;
@@ -101,11 +294,16 @@ public class Direction implements ActionListener {
 		p.getWindow().remove(haut);
 		p.getWindow().remove(bas);
 
+		nbChoix -= 4;
+
 		if (perso instanceof Guerrier || perso instanceof Piegeur) {
 			p.getWindow().remove(hautgauche);
 			p.getWindow().remove(hautdroite);
 			p.getWindow().remove(basgauche);
 			p.getWindow().remove(basdroite);
+
+			nbChoix -= 4;
+
 		}
 
 		return p;
@@ -120,10 +318,15 @@ public class Direction implements ActionListener {
 	 * @param plateau
 	 * @return
 	 */
-	public String choix(Personnage p, Plateau plateau) {
+	public String choixDeplacement(Personnage p, Ile ile, Plateau plateau) {
 
 		plateau = afficher(plateau, p);
+		plateau = filtrerAccessibles(plateau, ile, p);
 		plateau.affichage();
+
+		if (nbChoix <= 0) {
+			return choix;
+		}
 
 		plateau.println("Cliquez sur la direction de votre choix:", p.getEquipe().getID());
 
@@ -135,21 +338,18 @@ public class Direction implements ActionListener {
 			droite.addActionListener(this);
 			bas.addActionListener(this);
 			haut.addActionListener(this);
-			
-			if (p instanceof Guerrier || p instanceof Piegeur) {
-				hautgauche.addActionListener(this);
-				hautdroite.addActionListener(this);
-				basgauche.addActionListener(this);
-				basdroite.addActionListener(this);
 
-			}
-			
+			hautgauche.addActionListener(this);
+			hautdroite.addActionListener(this);
+			basgauche.addActionListener(this);
+			basdroite.addActionListener(this);
+
 			if (choix.equals("erreur")) {
 
 				plateau = effacer(plateau, p);
 				plateau.println("Erreur: la parcelle n'est pas traversable", p.getEquipe().getID());
 
-				choix(p, plateau);
+				choixDeplacement(p, ile, plateau);
 			}
 
 		}
@@ -157,19 +357,48 @@ public class Direction implements ActionListener {
 		plateau = effacer(plateau, p);
 
 		return choix;
+	}
 
-		/*
-		 * if (avis.equals("Nord")) { return "gauche"; } else if
-		 * (avis.equals("Sud")) { return "droite"; } else if
-		 * (avis.equals("Ouest")) { return "haut"; } else if
-		 * (avis.equals("Est")) { return "bas"; } else if
-		 * (avis.equals("Nord-Ouest")) { return "hautgauche"; } else if
-		 * (avis.equals("Nord-Est")) { return "basgauche"; } else if
-		 * (avis.equals("Sud-Ouest")) { return "hautdroite"; } else if
-		 * (avis.equals("Sud-Est")) { return "basdroite"; }
-		 * 
-		 * return "faux";
-		 */
+	public String choixAction(Personnage p, Ile ile, Plateau plateau) {
+
+		plateau = afficher(plateau, p);
+
+		if (p instanceof Explorateur) {
+			plateau = filtrerRocher(plateau, ile, p);
+		} else if (p instanceof Voleur) {
+			plateau = filtrerExplorateur(plateau, ile, p);
+		} else if (p instanceof Guerrier) {
+			plateau = filtrerPersonnage(plateau, ile, p);
+		} else if (p instanceof Piegeur) {
+			plateau = filtrerSable(plateau, ile, p);
+		}
+
+		plateau.affichage();
+
+		if (nbChoix <= 0) {
+			return choix;
+		}
+
+		while (choix.equals("")) {
+
+			gauche.addActionListener(this);
+			droite.addActionListener(this);
+			bas.addActionListener(this);
+			haut.addActionListener(this);
+
+			if (choix.equals("erreur")) {
+
+				plateau = effacer(plateau, p);
+				plateau.println("Erreur", p.getEquipe().getID());
+
+				choixDeplacement(p, ile, plateau);
+			}
+
+		}
+
+		plateau = effacer(plateau, p);
+
+		return choix;
 	}
 
 	@Override

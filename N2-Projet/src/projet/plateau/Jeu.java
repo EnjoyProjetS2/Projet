@@ -101,7 +101,7 @@ public class Jeu {
 
 				boolean joue = false;
 				
-				Direction direction = new Direction(p.getPlateau());
+				Direction direction = new Direction();
 
 				while (!joue) {
 					
@@ -122,13 +122,14 @@ public class Jeu {
 
 								if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe).equals("Deplacement")) {
 									
-									while (!ile.deplacement(perso, direction.choix(perso, p.getPlateau()))) {
-
-										
+									Deplacement deplacement = new Deplacement(ile, perso);
+									
+									while (!deplacement.deplacement(direction.choixDeplacement(perso, ile, p.getPlateau()))) {										
 									}
+									
 									joue = true;
 								} else if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe).equals("Action")) {
-									action(perso, ile);
+									action(perso, ile, p);
 									joue = true;
 								}
 
@@ -145,6 +146,8 @@ public class Jeu {
 							if (nav.getEquipe().getID() == equipe) {
 
 								if (!nav.estVide()) {
+									
+									Deplacement deplacement = new Deplacement(ile);
 
 									action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe);
 
@@ -156,7 +159,9 @@ public class Jeu {
 									Personnage perso = (Personnage) JOptionPane.showInputDialog(null, "Que faire:",
 											"Que faire ?", JOptionPane.DEFAULT_OPTION, null, choix, choix[0]);
 
-									while (!ile.debarquement(perso, direction.choix(perso, p.getPlateau()))) {
+									deplacement.setPersonnage(perso);
+									
+									while (!deplacement.debarquement(direction.choixDeplacement(perso, ile, p.getPlateau()))) {
 										p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
 									}
 									joue = true;
@@ -318,16 +323,22 @@ public class Jeu {
 		Personnage perso;
 
 		// si le navire est plein, on doit debarquer un perso
-		if (equipe.getNavire().getPersoDansNavire().size() == equipe.getListePersos().size()) {
+		if (equipe.getNavire().getPersoDansNavire().size() == equipe.getListePersos().size()) {			
+			
 			perso = equipe.getNavire().getPersoDansNavire().get(choixPerso);
-			ile.debarquement(perso, mouvementIA(perso, ile, choixMouvement));
+			
+			Deplacement deplacement = new Deplacement(ile, perso);
+
+			deplacement.debarquement(mouvementIA(perso, ile, choixMouvement));
 		} else { // sinon, on fait n'importe quelle autre action
 			// 3 chances sur 5 de se deplacer
 			perso = equipe.getListePersos().get(choixPerso);
+			
+			Deplacement deplacement = new Deplacement(ile, perso);
 
 			if (choixAction == 0 || choixAction == 1 || choixAction == 2) {
 				// deplacer un perso PRESENT SUR LA MAP
-				ile.deplacement(perso, mouvementIA(perso, ile, choixMouvement));
+				deplacement.deplacement(mouvementIA(perso, ile, choixMouvement));
 			} else if (choixAction == 3) {
 
 				// selection d'un perso qui est sur l'ile
@@ -456,7 +467,8 @@ public class Jeu {
 			} else {
 				// debarquer un personnage
 				perso = equipe.getNavire().getPersoDansNavire().get(choixPerso);
-				ile.debarquement(perso, mouvementIA(perso, ile, choixMouvement));
+				Deplacement dep = new Deplacement(ile, perso);
+				dep.debarquement(mouvementIA(perso, ile, choixMouvement));
 			}
 
 		}
@@ -549,14 +561,25 @@ public class Jeu {
 		new ParametreGraph();
 
 	}
+	
+	private boolean action(Personnage perso, Ile ile, SuperPlateau plato) {
+		
+		if (perso instanceof Explorateur) {			
+			return ((Explorateur) perso).choixRocher(ile, new Direction().choixAction(perso, ile, plato.getPlateau()));
+		} else if (perso instanceof Voleur) {
+			return ((Voleur) perso).choixVoler(ile, new Direction().choixAction(perso, ile, plato.getPlateau()));
+		} else if (perso instanceof Guerrier) {
+			return ((Guerrier) perso).choixAttaquer(ile, new Direction().choixAction(perso, ile, plato.getPlateau()));
+		} else if (perso instanceof Piegeur) {	
+			return ((Piegeur) perso).choixPieger(ile, new Direction().choixAction(perso, ile, plato.getPlateau()));
+		}
+		
+		return false;
+				
+	}
 
-	/**
-	 * Retourne vrai si l'action est realisee Action du personnage selectionne
-	 * 
-	 * @param perso
-	 * @param ile
-	 * @return boolean
-	 */
+	/*
+	
 	private boolean action(Personnage perso, Ile ile) {
 		Rocher haut = null, bas = null, gauche = null, droite = null;
 		Sable shaut = null, sbas = null, sgauche = null, sdroite = null;
@@ -727,7 +750,7 @@ public class Jeu {
 
 		return false;
 
-	}
+	}*/
 
 	/**
 	 * Menu de dialogue avec l'utilisateur pour selectionner son equipe

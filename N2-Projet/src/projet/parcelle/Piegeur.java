@@ -1,6 +1,7 @@
 package projet.parcelle;
 import javax.swing.JOptionPane;
 
+import projet.plateau.Ile;
 import projet.plateau.Jeu;
 
 public class Piegeur extends Personnage {
@@ -42,6 +43,20 @@ public class Piegeur extends Personnage {
 
 		return false;
 
+	}
+	
+	public boolean choixPieger(Ile ile, String direction) {
+		if (direction == "haut") {
+			return this.pieger((Sable) ile.getGrille()[getX()-1][getY()]);
+		} else if (direction == "bas") {
+			return this.pieger((Sable) ile.getGrille()[getX()+1][getY()]);
+		} else if (direction == "droite") {
+			return this.pieger((Sable) ile.getGrille()[getX()][getY()+1]);
+		} else if (direction == "gauche") {
+			return this.pieger((Sable) ile.getGrille()[getX()][getY()-1]);
+		}
+		
+		return false;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package projet.parcelle;
 import javax.swing.JOptionPane;
 
+import projet.plateau.Ile;
 import projet.plateau.Jeu;
 
 public class Explorateur extends Personnage {
@@ -47,6 +48,21 @@ public class Explorateur extends Personnage {
 			
 			return true;
 		}
+		return false;
+	}
+	
+	public boolean choixRocher(Ile ile, String direction) {
+		
+		if (direction == "haut") {
+			return this.souleverRocher((Rocher) ile.getGrille()[getX()-1][getY()]);
+		} else if (direction == "bas") {
+			return this.souleverRocher((Rocher) ile.getGrille()[getX()+1][getY()]);
+		} else if (direction == "droite") {
+			return this.souleverRocher((Rocher) ile.getGrille()[getX()][getY()+1]);
+		} else if (direction == "gauche") {
+			return this.souleverRocher((Rocher) ile.getGrille()[getX()][getY()-1]);
+		}
+		
 		return false;
 	}
 	

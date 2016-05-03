@@ -3,6 +3,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import projet.plateau.Ile;
 import projet.plateau.Jeu;
 
 public class Guerrier extends Personnage {
@@ -56,6 +57,20 @@ public class Guerrier extends Personnage {
 
 		return false;
 
+	}
+	
+	public boolean choixAttaquer(Ile ile, String direction) {
+		if (direction == "haut") {
+			return this.attaquer((Personnage) ile.getGrille()[getX()-1][getY()]);
+		} else if (direction == "bas") {
+			return this.attaquer((Personnage) ile.getGrille()[getX()+1][getY()]);
+		} else if (direction == "droite") {
+			return this.attaquer((Personnage) ile.getGrille()[getX()][getY()+1]);
+		} else if (direction == "gauche") {
+			return this.attaquer((Personnage) ile.getGrille()[getX()][getY()-1]);
+		}
+		
+		return false;
 	}
 
 	/**

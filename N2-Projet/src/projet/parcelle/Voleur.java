@@ -3,6 +3,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import projet.plateau.Ile;
 import projet.plateau.Jeu;
 
 public class Voleur extends Personnage {
@@ -52,6 +53,20 @@ public class Voleur extends Personnage {
         }
         return false;
     }
+	
+	public boolean choixVoler(Ile ile, String direction) {
+		if (direction == "haut") {
+			return this.voler((Explorateur) ile.getGrille()[getX()-1][getY()]);
+		} else if (direction == "bas") {
+			return this.voler((Explorateur) ile.getGrille()[getX()+1][getY()]);
+		} else if (direction == "droite") {
+			return this.voler((Explorateur) ile.getGrille()[getX()][getY()+1]);
+		} else if (direction == "gauche") {
+			return this.voler((Explorateur) ile.getGrille()[getX()][getY()-1]);
+		}
+		
+		return false;
+	}
 
 
 	/**
