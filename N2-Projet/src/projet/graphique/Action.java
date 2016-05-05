@@ -18,6 +18,7 @@ public class Action implements ActionListener {
 	JButton deplacement;
 	JButton action;
 	JButton debarquer;
+	JButton passer;
 
 	public Action(Plateau plateau) {
 
@@ -29,6 +30,8 @@ public class Action implements ActionListener {
 
 		debarquer = new JButton(new ImageIcon("images/boutons/debarquer.png"));
 		debarquer.setSize(150, 50);
+		
+		
 
 	}
 
@@ -50,6 +53,8 @@ public class Action implements ActionListener {
 			p.getWindow().getContentPane().add(debarquer);
 
 		}
+		
+		
 
 		return p;
 
@@ -69,6 +74,8 @@ public class Action implements ActionListener {
 			p.getWindow().remove(debarquer);
 
 		}
+		
+		//p.getWindow().remove(passer);
 
 		return p;
 
@@ -129,6 +136,8 @@ public class Action implements ActionListener {
 			choix = "Action";
 		} else if (bouton == debarquer) {
 			choix = "Debarquer un personnage";
+		} else if (bouton == passer) {
+			choix = "passer";
 		} else {
 			choix = "erreur";
 			try {

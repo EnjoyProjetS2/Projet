@@ -14,9 +14,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 
-import projet.graphique.*;
+import projet.graphique.ConsolePane;
+import projet.graphique.GraphicPane;
 
 /**
  * La classe Plateau permet d'afficher un plateau de Jeu carré sur lequel sont
@@ -174,6 +174,11 @@ public class Plateau {
 			window.getContentPane().add(consoleEquipe2);
 		}
 		resizeFromGraphic();
+		
+		/*JButton passer = new JButton(new ImageIcon("images/boutons/passer.png"));
+		passer.setSize(150, 50);
+		passer.setLocation(taille * 37 + 620, 300);
+		window.getContentPane().add(passer);*/
 
 		
 		// Affichage effectif

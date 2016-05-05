@@ -45,9 +45,9 @@ public class Explorateur extends Personnage {
 				this.possessionCoffre = true;
 				JOptionPane.showMessageDialog(null, "L'equipe "+super.equipe.getNom() +" vient de prendre le tresor !");
 			}
-			
 			return true;
 		}
+		JOptionPane.showMessageDialog(null, super.equipe.getNom()+": malheureusement il n'y a rien sous ce rocher.");
 		return false;
 	}
 	

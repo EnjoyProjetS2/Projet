@@ -143,6 +143,13 @@ public class Ile {
 
 				if (nbroc < getNbRocher() && grille[i][j] instanceof Sable) {
 					grille[i][j] = new Rocher();
+					
+					if (nbroc == 0) {
+						((Rocher) grille[i][j]).setClef(true);
+					} else if (nbroc == 1) {
+						((Rocher) grille[i][j]).setCoffre(true);
+					}
+					
 					nbroc++;
 
 				}

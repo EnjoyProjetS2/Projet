@@ -12,7 +12,7 @@ public class Rocher extends Parcelle{
 			super.traversable = false;
 			super.id = 1;
 			
-			if (Rocher.poseClef == false) {
+			/*if (Rocher.poseClef == false) {
 				this.clef = true;
 				Rocher.poseClef = true;
 			}
@@ -20,8 +20,17 @@ public class Rocher extends Parcelle{
 			if (Rocher.poseCoffre == false && this.clef == false) {
 				this.coffre = true;
 				Rocher.poseCoffre = true;
-			}		
-		}	
+			}	*/	
+		}
+		
+		public void setClef(boolean b) {
+			this.clef = b;
+		}
+		
+		public void setCoffre(boolean b) {
+			this.coffre = b;
+
+		}
 		
 		/**Retourne R
 		 * 

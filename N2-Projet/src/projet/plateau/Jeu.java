@@ -131,9 +131,11 @@ public class Jeu {
 								} else if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe).equals("Action")) {
 									action(perso, ile, p);
 									joue = true;
+								} else if ((action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe).equals("passer"))) {
+									joue = true;
 								}
 
-							} else {
+							} else { 
 
 								p.getPlateau().println("Erreur: ce personnag appartient a l'autre equipe", equipe);
 							}

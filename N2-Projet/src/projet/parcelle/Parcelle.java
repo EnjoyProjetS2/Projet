@@ -4,8 +4,8 @@ public abstract class Parcelle {
 	protected boolean traversable = true;
 	private boolean visitee = false;
 	
-	public static boolean poseCoffre = false;
-	public static boolean poseClef = false;
+	//public static boolean poseCoffre = false;
+	//public static boolean poseClef = false;
 		
 		
 	/**Retourne vrai si la parcelle est traversable
