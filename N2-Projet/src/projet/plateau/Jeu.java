@@ -5,8 +5,10 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import projet.graphique.Action;
+import projet.graphique.ChoixModeDeJeu;
 import projet.graphique.ChoixPersonnage;
 import projet.graphique.Direction;
+import projet.graphique.MenuDemarre;
 import projet.graphique.ParametreGraph;
 import projet.parcelle.Equipe;
 import projet.parcelle.Explorateur;
@@ -31,7 +33,7 @@ public class Jeu {
 											// navires
 	public static Equipe un;
 	public static Equipe deux;
-	boolean modeCreatif = false;
+	public static boolean modeCreatif = false;
 	public static boolean solo = false;
 
 	/**
@@ -41,209 +43,208 @@ public class Jeu {
 	 */
 	public Jeu() {
 
-		if (accueil()) {
+		// if (accueil()) {
+		new MenuDemarre();
+		parametres();
 
-			parametres();
+		this.un = new Equipe(null, 1);
+		this.deux = new Equipe(null, 2);
 
-			this.un = new Equipe(null, 1);
-			this.deux = new Equipe(null, 2);
+		Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
 
-			Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
+		saisieEquipe(un);
+		saisieEquipe(deux);
 
-			saisieEquipe(un);
-			saisieEquipe(deux);
+		// System.out.println(ile.toString()); // Affichage texte
+		SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 
-			// System.out.println(ile.toString()); // Affichage texte
-			SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
+		if (this.modeCreatif) {
 
-			if (this.modeCreatif) {
+			p.setJeu(ile.getGrille());
+			p.affichage();
 
-				p.setJeu(ile.getGrille());
-				p.affichage();
+			modeCreatif(p, ile, un);
+			modeCreatif(p, ile, deux);
+		} else {
+			// Les membres des équipes se dirigent dans leurs bateaux
+			// respectifs
+			un.getNavire().embarquement();
+			deux.getNavire().embarquement();
+		}
 
-				modeCreatif(p, ile, un);
-				modeCreatif(p, ile, deux);
-			} else {
-				// Les membres des équipes se dirigent dans leurs bateaux
-				// respectifs
-				un.getNavire().embarquement();
-				deux.getNavire().embarquement();
+		Random alea = new Random();
+		int equipe = alea.nextInt(2) + 1;
+
+		informations(un, p);
+		informations(deux, p);
+		p.getPlateau().println("clear", equipe);
+		if (un.getID() == equipe) {
+			p.setJeu(un.setVision(ile));
+			p.getPlateau().println("Début de la partie ! (equipe " + un.getID() + ")", un.getID());
+		} else if (deux.getID() == equipe) {
+			p.setJeu(deux.setVision(ile));
+			p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
+		}
+		p.affichage();
+
+		boolean coffreAuBateau = false;
+		boolean equipeMorte = false;
+
+		while (!coffreAuBateau && !equipeMorte) {
+
+			if (equipe == 1) {
+				informations(un, p);
+				soigner(un);
+			} else if (equipe == 2) {
+				informations(deux, p);
+				soigner(deux);
+			}
+			p.getPlateau().println("Cliquez sur un de vos navires ou personnages:", equipe);
+
+			boolean joue = false;
+
+			Direction direction = new Direction();
+			while (!joue) {
+
+				Action action = new Action(p.getPlateau());
+
+				if (this.solo && equipe == 2) {
+					modeIA(p, ile, deux);
+					joue = true;
+
+				} else {
+					p.getPlateau().waitEvent();
+					int clicX = p.getPlateau().getPosX();
+					int clicY = p.getPlateau().getPosY();
+
+					if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
+
+						Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
+						if (perso.getEquipe().getID() == equipe) {
+
+							if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
+									.equals("Deplacement")) {
+
+								Deplacement deplacement = new Deplacement(ile, perso);
+
+								while (!deplacement
+										.deplacement(direction.choixDeplacement(perso, ile, p.getPlateau()))) {
+								}
+
+								joue = true;
+							} else if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
+									.equals("Action")) {
+								action(perso, ile, p);
+								joue = true;
+							} else if ((action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
+									.equals("passer"))) {
+								try {
+									Thread.sleep(250);
+								} catch (InterruptedException ex) {
+									// TODO Auto-generated catch block
+									ex.printStackTrace();
+								}
+								joue = true;
+							}
+
+						} else {
+
+							p.getPlateau().println("Erreur: ce personnag appartient a l'autre equipe", equipe);
+						}
+
+					} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
+
+						Navire nav = (Navire) ile.getGrille()[clicY][clicX];
+						p.getPlateau().println(nav.toString(), equipe);
+
+						if (nav.getEquipe().getID() == equipe) {
+
+							if (!nav.estVide()) {
+
+								Deplacement deplacement = new Deplacement(ile);
+
+								action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe);
+
+								Personnage perso = new ChoixPersonnage(equipe).choix(p.getPlateau());
+
+								deplacement.setPersonnage(perso);
+
+								while (!deplacement
+										.debarquement(direction.choixDeplacement(perso, ile, p.getPlateau()))) {
+									p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
+								}
+								joue = true;
+							} else {
+								p.getPlateau().println("Erreur: le navire est vide", equipe);
+							}
+
+						} else {
+							p.getPlateau().println("Erreur: ce navire appartient a l'autre equipe", equipe);
+						}
+
+					}
+
+					if (!un.survie() || !deux.survie()) {
+						equipeMorte = true;
+					} else if (un.getNavire().presenceDuCoffre() || deux.getNavire().presenceDuCoffre()) {
+						coffreAuBateau = true;
+					} else {
+						tuer(un, ile);
+						tuer(deux, ile);
+					}
+
+				} // fin du tour
+			}
+			if (equipe == 1) {
+				p.getPlateau().println("clear", equipe);
+				equipe = 2;
+				p.getPlateau().println("clear", equipe);
+			} else if (equipe == 2) {
+				p.getPlateau().println("clear", equipe);
+				equipe = 1;
+				p.getPlateau().println("clear", equipe);
+
 			}
 
-			Random alea = new Random();
-			int equipe = alea.nextInt(2) + 1;
-
-			informations(un, p);
-			informations(deux, p);
-			p.getPlateau().println("clear", equipe);
 			if (un.getID() == equipe) {
 				p.setJeu(un.setVision(ile));
-				p.getPlateau().println("Début de la partie ! (equipe " + un.getID() + ")", un.getID());
 			} else if (deux.getID() == equipe) {
 				p.setJeu(deux.setVision(ile));
-				p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
 			}
 			p.affichage();
 
-			boolean coffreAuBateau = false;
-			boolean equipeMorte = false;
+		} // fin du jeu
 
-			while (!coffreAuBateau && !equipeMorte) {
+		int gagnant = 0;
 
-				if (equipe == 1) {
-					informations(un, p);
-					soigner(un);
-				} else if (equipe == 2) {
-					informations(deux, p);
-					soigner(deux);
-				}
-				p.getPlateau().println("Cliquez sur un de vos navires ou personnages:", equipe);
-
-				boolean joue = false;
-
-				Direction direction = new Direction();
-				while (!joue) {
-
-					Action action = new Action(p.getPlateau());
-
-					if (this.solo && equipe == 2) {
-						modeIA(p, ile, deux);
-						joue = true;
-					
-					} else {
-						p.getPlateau().waitEvent();
-						int clicX = p.getPlateau().getPosX();
-						int clicY = p.getPlateau().getPosY();
-
-						if (ile.getGrille()[clicY][clicX] instanceof Personnage) {
-
-							Personnage perso = (Personnage) ile.getGrille()[clicY][clicX];
-							if (perso.getEquipe().getID() == equipe) {
-
-								if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
-										.equals("Deplacement")) {
-
-									Deplacement deplacement = new Deplacement(ile, perso);
-
-									while (!deplacement
-											.deplacement(direction.choixDeplacement(perso, ile, p.getPlateau()))) {
-									}
-
-									joue = true;
-								} else if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
-										.equals("Action")) {
-									action(perso, ile, p);
-									joue = true;
-								} else if ((action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
-										.equals("passer"))) {
-									try {
-										Thread.sleep(250);
-									} catch (InterruptedException ex) {
-										// TODO Auto-generated catch block
-										ex.printStackTrace();
-									}
-									joue = true;
-								}
-
-							} else {
-
-								p.getPlateau().println("Erreur: ce personnag appartient a l'autre equipe", equipe);
-							}
-
-						} else if (ile.getGrille()[clicY][clicX] instanceof Navire) {
-
-							Navire nav = (Navire) ile.getGrille()[clicY][clicX];
-							p.getPlateau().println(nav.toString(), equipe);
-
-							if (nav.getEquipe().getID() == equipe) {
-
-								if (!nav.estVide()) {
-
-									Deplacement deplacement = new Deplacement(ile);
-
-									action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe);																	
-									
-									Personnage perso = new ChoixPersonnage(equipe).choix(p.getPlateau());
-
-									deplacement.setPersonnage(perso);
-
-									while (!deplacement
-											.debarquement(direction.choixDeplacement(perso, ile, p.getPlateau()))) {
-										p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
-									}
-									joue = true;
-								} else {
-									p.getPlateau().println("Erreur: le navire est vide", equipe);
-								}
-
-							} else {
-								p.getPlateau().println("Erreur: ce navire appartient a l'autre equipe", equipe);
-							}
-
-						}
-
-						if (!un.survie() || !deux.survie()) {
-							equipeMorte = true;
-						} else if (un.getNavire().presenceDuCoffre() || deux.getNavire().presenceDuCoffre()) {
-							coffreAuBateau = true;
-						} else {
-							tuer(un, ile);
-							tuer(deux, ile);
-						}
-
-					} // fin du tour
-				}
-				if (equipe == 1) {
-					p.getPlateau().println("clear", equipe);
-					equipe = 2;
-					p.getPlateau().println("clear", equipe);
-				} else if (equipe == 2) {
-					p.getPlateau().println("clear", equipe);
-					equipe = 1;
-					p.getPlateau().println("clear", equipe);
-
-				}
-
-				if (un.getID() == equipe) {
-					p.setJeu(un.setVision(ile));
-				} else if (deux.getID() == equipe) {
-					p.setJeu(deux.setVision(ile));
-				}
-				p.affichage();
-
-			} // fin du jeu
-
-			int gagnant = 0;
-
-			// Victoire par mort de l'equipe adverse
-			if (!un.survie()) {
-				p.getPlateau().println("Tous les personnages de l'equipe " + un.getNom() + " sont morts.", un.getID());
-				gagnant = 2;
-			} else if (!deux.survie()) {
-				p.getPlateau().println("Tous les personnages de l'equipe " + deux.getNom() + " sont morts.",
-						deux.getID());
-				gagnant = 1;
-			}
-
-			// Victoire par depot du tresor
-			if (un.getNavire().presenceDuCoffre()) {
-				p.getPlateau().println("L'equipe " + un.getNom() + " a ramene le tresor !", un.getID());
-				gagnant = 1;
-			} else if (deux.getNavire().presenceDuCoffre()) {
-				p.getPlateau().println("L'equipe " + deux.getNom() + " a ramene le tresor !", deux.getID());
-				gagnant = 2;
-			}
-
-			if (gagnant == 1) {
-				p.getPlateau().println("L'equipe " + un.getNom() + " remporte la partie !", un.getID());
-			} else if (gagnant == 2) {
-				p.getPlateau().println("L'equipe " + deux.getNom() + " remporte la partie !", deux.getID());
-			} else {
-				p.getPlateau().println("Erreur : mais que font les developpeurs ?", un.getID());
-			}
-
+		// Victoire par mort de l'equipe adverse
+		if (!un.survie()) {
+			p.getPlateau().println("Tous les personnages de l'equipe " + un.getNom() + " sont morts.", un.getID());
+			gagnant = 2;
+		} else if (!deux.survie()) {
+			p.getPlateau().println("Tous les personnages de l'equipe " + deux.getNom() + " sont morts.", deux.getID());
+			gagnant = 1;
 		}
+
+		// Victoire par depot du tresor
+		if (un.getNavire().presenceDuCoffre()) {
+			p.getPlateau().println("L'equipe " + un.getNom() + " a ramene le tresor !", un.getID());
+			gagnant = 1;
+		} else if (deux.getNavire().presenceDuCoffre()) {
+			p.getPlateau().println("L'equipe " + deux.getNom() + " a ramene le tresor !", deux.getID());
+			gagnant = 2;
+		}
+
+		if (gagnant == 1) {
+			p.getPlateau().println("L'equipe " + un.getNom() + " remporte la partie !", un.getID());
+		} else if (gagnant == 2) {
+			p.getPlateau().println("L'equipe " + deux.getNom() + " remporte la partie !", deux.getID());
+		} else {
+			p.getPlateau().println("Erreur : mais que font les developpeurs ?", un.getID());
+		}
+
 	}
+	// }
 
 	/**
 	 * Affiche la liste des informations utiles en debut de jeu (nom des equipes
@@ -548,19 +549,8 @@ public class Jeu {
 	 * Initialisation des parametres par l'utilisateur
 	 */
 	private void parametres() {
-
-		String[] mode = { "1 contre 1", "1 contre 1 (Mode creatif)", "Mode solo" };
-
-		String choix = (String) JOptionPane.showInputDialog(null, "Choisissez un mode de jeu:", "Parametres",
-				JOptionPane.DEFAULT_OPTION, null, mode, mode[0]);
-		JOptionPane.showMessageDialog(null, "Bien enregistré !", "Information", JOptionPane.DEFAULT_OPTION);
-
-		if (choix.equals("1 contre 1 (Mode creatif)")) {
-			this.modeCreatif = true;
-		} else if (choix.equals("Mode solo")) {
-			this.solo = true;
-		}
-
+		//Comme son nom l'indique
+		new ChoixModeDeJeu();
 		// JSLIDE:
 		// ajouter taille de la carte
 		// ajouter nombre de joueur par equipe
