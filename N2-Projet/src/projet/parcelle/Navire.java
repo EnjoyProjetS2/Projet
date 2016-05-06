@@ -138,6 +138,11 @@ public class Navire extends Parcelle {
 		}
 		
 	}
+	
+	@Override
+	public boolean estTraversablePar(Personnage p) {		
+		return super.traversable;
+	}
 
 	/**Retourne l'appartenance du navire
 	 * @return nom de l'equipe

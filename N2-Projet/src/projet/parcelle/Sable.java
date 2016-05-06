@@ -12,6 +12,11 @@ public class Sable extends Parcelle {
 		super.id = 3;
 	}
 	
+	@Override
+	public boolean estTraversablePar(Personnage p) {
+		return super.traversable;
+	}
+	
 	/**
 	 * Retourne un espace sur la grille
 	 */

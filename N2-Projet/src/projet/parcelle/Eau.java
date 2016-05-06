@@ -10,6 +10,11 @@ public class Eau extends Parcelle {
 		super.id = 4;
 	}
 	
+	@Override
+	public boolean estTraversablePar(Personnage p) {
+		return super.traversable;
+	}
+	
 	/**Retour une vague pour les parcelles d'eau
 	 * @return String 
 	 */

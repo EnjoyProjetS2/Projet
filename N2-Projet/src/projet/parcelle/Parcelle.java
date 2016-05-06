@@ -19,9 +19,7 @@ public abstract class Parcelle {
 	 * @param p
 	 * @return
 	 */
-	public boolean estTraversablePar(Personnage p) {
-		return this.traversable;
-	}
+	public abstract boolean estTraversablePar(Personnage p);
 	
 	/**Definit la traversabilite de la parcelle
 	 * @param b

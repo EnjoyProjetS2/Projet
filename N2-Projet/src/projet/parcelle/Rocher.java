@@ -32,6 +32,11 @@ public class Rocher extends Parcelle{
 
 		}
 		
+		@Override
+		public boolean estTraversablePar(Personnage p) {
+			return super.traversable;
+		}
+		
 		/**Retourne R
 		 * 
 		 */

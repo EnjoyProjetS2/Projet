@@ -39,28 +39,28 @@ public class Direction implements ActionListener {
 	public Direction() {
 
 		gauche = new JButton(new ImageIcon("images/boutons/gauche.png"));
-		gauche.setSize(37, 37);
+		gauche.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		droite = new JButton(new ImageIcon("images/boutons/droite.png"));
-		droite.setSize(37, 37);
+		droite.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		haut = new JButton(new ImageIcon("images/boutons/haut.png"));
-		haut.setSize(37, 37);
+		haut.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		bas = new JButton(new ImageIcon("images/boutons/bas.png"));
-		bas.setSize(37, 37);
+		bas.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		hautgauche = new JButton(new ImageIcon("images/boutons/hautgauche.png"));
-		hautgauche.setSize(37, 37);
+		hautgauche.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		hautdroite = new JButton(new ImageIcon("images/boutons/hautdroite.png"));
-		hautdroite.setSize(37, 37);
+		hautdroite.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		basgauche = new JButton(new ImageIcon("images/boutons/basgauche.png"));
-		basgauche.setSize(37, 37);
+		basgauche.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 		basdroite = new JButton(new ImageIcon("images/boutons/basdroite.png"));
-		basdroite.setSize(37, 37);
+		basdroite.setSize(Tailles.BOUTONDIRx, Tailles.BOUTONDIRy);
 
 	}
 
@@ -321,7 +321,7 @@ public class Direction implements ActionListener {
 	public String choixDeplacement(Personnage p, Ile ile, Plateau plateau) {
 
 		plateau = afficher(plateau, p);
-		plateau = filtrerAccessibles(plateau, ile, p);
+		//plateau = filtrerAccessibles(plateau, ile, p);
 		plateau.affichage();
 
 		if (nbChoix <= 0) {

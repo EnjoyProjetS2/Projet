@@ -116,6 +116,11 @@ public class Personnage extends Parcelle {
 		this.y = y;
 	}
 
+	@Override
+	public boolean estTraversablePar(Personnage p) {
+		return super.traversable;
+	}
+
 
 
 	
