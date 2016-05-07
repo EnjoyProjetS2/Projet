@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 
 import projet.graphique.ConsolePane;
 import projet.graphique.GraphicPane;
+import projet.graphique.PanelFondPlateau;
 import projet.graphique.Tailles;
 
 /**
@@ -144,11 +145,11 @@ public class Plateau {
 		
 		// Instancie la fenetre principale et et les deux composants.
 		window = new JFrame();
+		window.setContentPane(new PanelFondPlateau());
 		graphic = new GraphicPane(gif, taille);
 		window.setPreferredSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
 		consoleEquipe1 = null;
 		consoleEquipe2 = null;
-
 		// Caracteristiques initiales pour la fenetre.
 		window.setTitle("Treasure Hunt");
 		window.setLocation(new Point(200, 50));
@@ -166,10 +167,6 @@ public class Plateau {
 			consoleEquipe1.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
 			consoleEquipe2.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 			consoleEquipe2.setBounds(50, 50 + Tailles.PLATEAU - Tailles.PLATEAU / 3, Tailles.CONSOLEx, Tailles.PLATEAU / 3);
-			JLabel labelImg = new JLabel(new ImageIcon("./images/carte_tresor.png"));
-			labelImg.setBounds(50, 70 + Tailles.PLATEAU / 3, Tailles.CONSOLEx, Tailles.PLATEAU / 3 - 40);
-			labelImg.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-			window.getContentPane().add(labelImg);
 			window.getContentPane().add(consoleEquipe1);
 			window.getContentPane().add(consoleEquipe2);
 		}

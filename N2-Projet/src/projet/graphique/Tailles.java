@@ -16,7 +16,7 @@ public final class Tailles {
 	public final static int PLATEAU = PARCELLE*Jeu.tailleX; //taille du plateau en fonction d'une parcelle
 	
 	public final static int FENETREx = 850+PLATEAU; //largeur de la fenetre
-	public final static int FENETREy = 155+PLATEAU; //hauteur de la fenetre
+	public final static int FENETREy = 300+PLATEAU; //hauteur de la fenetre
 	
 	public final static int CONSOLEx = 500;
 

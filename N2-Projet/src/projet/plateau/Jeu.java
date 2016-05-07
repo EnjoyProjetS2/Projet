@@ -10,6 +10,8 @@ import projet.graphique.ChoixPersonnage;
 import projet.graphique.Direction;
 import projet.graphique.MenuDemarre;
 import projet.graphique.ParametreGraph;
+import projet.graphique.SaisieEquipe;
+import projet.ia.TourOrdinateur;
 import projet.parcelle.Equipe;
 import projet.parcelle.Explorateur;
 import projet.parcelle.Guerrier;
@@ -54,7 +56,13 @@ public class Jeu {
 
 		saisieEquipe(un);
 		saisieEquipe(deux);
-
+		/*MODE GRAPHIQUE (ne fonctionne pas)
+		do {
+			new SaisieEquipe(un);
+			if (!SaisieEquipe.retry) {
+				new SaisieEquipe(deux);
+			}
+		} while (!SaisieEquipe.retry);*/
 		// System.out.println(ile.toString()); // Affichage texte
 		SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 

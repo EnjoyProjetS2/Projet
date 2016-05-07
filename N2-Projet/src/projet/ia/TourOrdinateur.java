@@ -1,4 +1,4 @@
-package projet.plateau;
+package projet.ia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,9 @@ import java.util.Random;
 
 import projet.parcelle.Equipe;
 import projet.parcelle.Personnage;
+import projet.plateau.Deplacement;
+import projet.plateau.Ile;
+import projet.plateau.Plateau;
 
 public class TourOrdinateur {
 

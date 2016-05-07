@@ -1,7 +1,9 @@
 package projet.graphique;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +27,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	public MenuDemarre() {
 		// TODO Auto-generated constructor stub
 		this.setPreferredSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
-		this.setLayout(null);
+		this.setLayout(new GridLayout(1,3));
 		jouer();
 		regles();
 		quitter();
@@ -51,43 +53,42 @@ public class MenuDemarre extends JFrame implements ActionListener {
 		popup.setSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
 		popup.setLocation(new Point(200, 50));
 		popup.setModal(false);
-		popup.setLayout(null);
 		lesRegles();
 		retour();
-		popup.getContentPane().add(lesRegles);
-		popup.getContentPane().add(retour);
+		popup.getContentPane().add(lesRegles, BorderLayout.CENTER);
+		popup.getContentPane().add(retour, BorderLayout.SOUTH);
 		return false;
 	}
 	private boolean jouer() {
 		jouer = new JButton("Jouer");
-		jouer.setBounds(Tailles.FENETREx / 2, 30, 100, 50);
+		//jouer.setBounds(Tailles.FENETREx / 2, 30, 100, 50);
 		jouer.addActionListener(this);
 		return false;
 	}
 
 	private boolean regles() {
 		regle = new JButton("regles");
-		regle.setBounds(Tailles.FENETREx / 2, 30 + 70, 100, 50);
+		//regle.setBounds(Tailles.FENETREx / 2, 30 + 70, 100, 50);
 		regle.addActionListener(this);
 		return false;
 	}
 
 	private boolean quitter() {
 		quitter = new JButton("Quitter");
-		quitter.setBounds(Tailles.FENETREx / 2, 30 + 140, 100, 50);
+		//quitter.setBounds(Tailles.FENETREx / 2, 30 + 140, 100, 50);
 		quitter.addActionListener(this);
 		return false;
 	}
 
 	private boolean retour() {
 		retour = new JButton("retour");
-		retour.setBounds(Tailles.FENETREx / 2, 30+200, 100, 50);
+		//retour.setBounds(Tailles.FENETREx / 2, 30+200, 100, 50);
 		retour.addActionListener(this);
 		return false;
 	}
 	private boolean lesRegles(){
 		lesRegles = new JTextArea();
-		lesRegles.setBounds(Tailles.FENETREx / 6, 30, Tailles.FENETREx-Tailles.FENETREx / 3, 200);
+		//lesRegles.setBounds(Tailles.FENETREx / 6, 30, Tailles.FENETREx-Tailles.FENETREx / 3, 200);
 		lesRegles.setText(
 				"Le but du jeu est de trouver la clé cachée sous un rocher et de \n"
 				+ "trouver le coffre puis ramener le trésor sur son navire. ");
