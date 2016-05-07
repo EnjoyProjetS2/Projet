@@ -109,7 +109,8 @@ public class Jeu {
 				Action action = new Action(p.getPlateau());
 
 				if (this.solo && equipe == 2) {
-					modeIA(p, ile, deux);
+					new TourOrdinateur(ile, p.getPlateau(), Jeu.deux);
+					//modeIA(p, ile, deux);
 					joue = true;
 
 				} else {
@@ -574,133 +575,6 @@ public class Jeu {
 		return false;
 
 	}
-
-	/*
-	 * 
-	 * private boolean action(Personnage perso, Ile ile) { Rocher haut = null,
-	 * bas = null, gauche = null, droite = null; Sable shaut = null, sbas =
-	 * null, sgauche = null, sdroite = null; Personnage phaut = null, pbas =
-	 * null, pgauche = null, pdroite = null;
-	 * 
-	 * // action de l'explorateur if (perso instanceof Explorateur) { String[]
-	 * roche = new String[4]; int nb = 0; if
-	 * (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Rocher) {
-	 * haut = (Rocher) ile.getGrille()[perso.getX()][perso.getY() - 1];
-	 * roche[nb] = "Nord"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Rocher) {
-	 * bas = (Rocher) ile.getGrille()[perso.getX()][perso.getY() + 1]; roche[nb]
-	 * = "Sud"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Rocher) {
-	 * gauche = (Rocher) ile.getGrille()[perso.getX() - 1][perso.getY()];
-	 * roche[nb] = "Ouest"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Rocher) {
-	 * droite = (Rocher) ile.getGrille()[perso.getX() + 1][perso.getY()];
-	 * roche[nb] = "Est"; }
-	 * 
-	 * String aSoulever = (String) JOptionPane.showInputDialog(null,
-	 * "Quel rocher soulever ?", "Rocher a  soulever",
-	 * JOptionPane.DEFAULT_OPTION, null, roche, roche[0]);
-	 * 
-	 * // faire l'action if (aSoulever == "Nord") { return ((Explorateur)
-	 * perso).souleverRocher(haut); } else if (aSoulever == "Sud") { return
-	 * ((Explorateur) perso).souleverRocher(bas); } else if (aSoulever ==
-	 * "Ouest") { return ((Explorateur) perso).souleverRocher(gauche); } else if
-	 * (aSoulever == "Est") { return ((Explorateur)
-	 * perso).souleverRocher(droite); }
-	 * 
-	 * // action du voleur } else if (perso instanceof Voleur) { String[]
-	 * adversaire = new String[4]; int nb = 0; if
-	 * (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Explorateur)
-	 * { phaut = (Personnage) ile.getGrille()[perso.getX()][perso.getY() - 1];
-	 * adversaire[nb] = "Nord"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof
-	 * Explorateur) { pbas = (Personnage)
-	 * ile.getGrille()[perso.getX()][perso.getY() + 1]; adversaire[nb] = "Sud";
-	 * nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof
-	 * Explorateur) { pgauche = (Personnage) ile.getGrille()[perso.getX() -
-	 * 1][perso.getY()]; adversaire[nb] = "Ouest"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof
-	 * Explorateur) { pdroite = (Personnage) ile.getGrille()[perso.getX() +
-	 * 1][perso.getY()]; adversaire[nb] = "Est"; }
-	 * 
-	 * String aVoler = (String) JOptionPane.showInputDialog(null, "Qui voler ?",
-	 * "Personnage a  voler : ", JOptionPane.DEFAULT_OPTION, null, adversaire,
-	 * adversaire[0]);
-	 * 
-	 * // faire l'action if (aVoler == "Nord") { return ((Voleur)
-	 * perso).voler(phaut); } else if (aVoler == "Sud") { return ((Voleur)
-	 * perso).voler(pbas); } else if (aVoler == "Ouest") { return ((Voleur)
-	 * perso).voler(pgauche); } else if (aVoler == "Est") { return ((Voleur)
-	 * perso).voler(pdroite); }
-	 * 
-	 * } else if (perso instanceof Guerrier) { String[] adversaire = new
-	 * String[4]; int nb = 0; if (ile.getGrille()[perso.getX()][perso.getY() -
-	 * 1] instanceof Personnage) { phaut = (Personnage)
-	 * ile.getGrille()[perso.getX()][perso.getY() - 1]; adversaire[nb] = "Nord";
-	 * nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof
-	 * Personnage) { pbas = (Personnage)
-	 * ile.getGrille()[perso.getX()][perso.getY() + 1]; adversaire[nb] = "Sud";
-	 * nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof
-	 * Personnage) { pgauche = (Personnage) ile.getGrille()[perso.getX() -
-	 * 1][perso.getY()]; adversaire[nb] = "Ouest"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof
-	 * Personnage) { pdroite = (Personnage) ile.getGrille()[perso.getX() +
-	 * 1][perso.getY()]; adversaire[nb] = "Est"; }
-	 * 
-	 * String aAttaquer = (String) JOptionPane.showInputDialog(null,
-	 * "Qui attaquer ?", "Personnage a attaquer : ", JOptionPane.DEFAULT_OPTION,
-	 * null, adversaire, adversaire[0]);
-	 * 
-	 * // faire l'action if (aAttaquer == "Nord") { return ((Guerrier)
-	 * perso).attaquer(phaut); } else if (aAttaquer == "Sud") { return
-	 * ((Guerrier) perso).attaquer(pbas); } else if (aAttaquer == "Ouest") {
-	 * return ((Guerrier) perso).attaquer(pgauche); } else if (aAttaquer ==
-	 * "Est") { return ((Guerrier) perso).attaquer(pdroite); }
-	 * 
-	 * } else if (perso instanceof Piegeur) { String[] adversaire = new
-	 * String[4]; int nb = 0; if (ile.getGrille()[perso.getX()][perso.getY() -
-	 * 1] instanceof Sable) { shaut = (Sable)
-	 * ile.getGrille()[perso.getX()][perso.getY() - 1]; adversaire[nb] = "Nord";
-	 * nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Sable) {
-	 * sbas = (Sable) ile.getGrille()[perso.getX()][perso.getY() + 1];
-	 * adversaire[nb] = "Sud"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Sable) {
-	 * sgauche = (Sable) ile.getGrille()[perso.getX() - 1][perso.getY()];
-	 * adversaire[nb] = "Ouest"; nb++; }
-	 * 
-	 * if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Sable) {
-	 * sdroite = (Sable) ile.getGrille()[perso.getX() + 1][perso.getY()];
-	 * adversaire[nb] = "Est"; }
-	 * 
-	 * String aPieger = (String) JOptionPane.showInputDialog(null,
-	 * "Quelle parcelle pieger ?", "Parcelle a pieger : ",
-	 * JOptionPane.DEFAULT_OPTION, null, adversaire, adversaire[0]);
-	 * 
-	 * // faire l'action if (aPieger == "Nord") { return ((Piegeur)
-	 * perso).pieger(shaut); } else if (aPieger == "Sud") { return ((Piegeur)
-	 * perso).pieger(sbas); } else if (aPieger == "Ouest") { return ((Piegeur)
-	 * perso).pieger(sgauche); } else if (aPieger == "Est") { return ((Piegeur)
-	 * perso).pieger(sdroite); } }
-	 * 
-	 * return false;
-	 * 
-	 * }
-	 */
 
 	/**
 	 * Menu de dialogue avec l'utilisateur pour selectionner son equipe

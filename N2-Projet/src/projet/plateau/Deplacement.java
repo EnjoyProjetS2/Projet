@@ -1,5 +1,7 @@
 package projet.plateau;
 
+import java.util.Random;
+
 import javax.swing.JOptionPane;
 
 import projet.parcelle.Navire;
@@ -122,6 +124,58 @@ public class Deplacement {
 		}
 
 		return false;
+	}
+	
+	public boolean deplacementAleatoire() {
+		
+		int choix = new Random().nextInt(4)+1;
+		
+		String retour = "";
+		
+		switch(choix) {
+		case 1:
+			retour = "gauche";
+			break;
+		case 2:
+			retour = "droite";
+			break;
+		case 3:
+			retour = "haut";
+			break;
+		case 4:
+			retour = "bas";
+		default:
+			break;
+		}
+		
+		return deplacement(retour);		
+		
+	}
+	
+public boolean debarquementAleatoire() {
+		
+		int choix = new Random().nextInt(4)+1;
+		
+		String retour = "";
+		
+		switch(choix) {
+		case 1:
+			retour = "gauche";
+			break;
+		case 2:
+			retour = "droite";
+			break;
+		case 3:
+			retour = "haut";
+			break;
+		case 4:
+			retour = "bas";
+		default:
+			break;
+		}
+		
+		return debarquement(retour);		
+		
 	}
 
 	/**

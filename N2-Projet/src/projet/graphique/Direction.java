@@ -433,5 +433,9 @@ public class Direction implements ActionListener {
 		}
 
 	}
+	
+	public int getNbChoix() {
+		return this.nbChoix;
+	}
 
 }
