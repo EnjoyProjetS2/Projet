@@ -284,7 +284,7 @@ public class Ile {
 	 * Affiche l'ile Chaque parcelle a son charactere particulier Les
 	 * majuscules/minuscules correspondent aux equipes 1 et 2
 	 * 
-	 * @param toString
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {

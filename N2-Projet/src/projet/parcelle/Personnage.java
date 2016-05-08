@@ -36,8 +36,8 @@ public class Personnage extends Parcelle {
 	}	
 	/**
 	 * Retourne le nom
-	 * @param getNom
-	 * @return nom
+	 * 
+	 * @return string
 	 */
 	public String getNom() {
 		return nom;
@@ -94,7 +94,7 @@ public class Personnage extends Parcelle {
 	/**
 	 * Modifie la valeur de x
 	 * 
-	 * @param setX
+	 * @param x
 	 */
 	public void setX(int x) {
 		this.x = x;

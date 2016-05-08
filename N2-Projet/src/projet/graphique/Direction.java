@@ -34,7 +34,7 @@ public class Direction implements ActionListener {
 	/**
 	 * Constructeur: cree les boutons de deplacement
 	 * 
-	 * @param plateau
+	 * @param Direction
 	 */
 	public Direction() {
 

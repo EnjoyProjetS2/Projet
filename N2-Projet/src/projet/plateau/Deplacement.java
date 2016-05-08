@@ -43,7 +43,7 @@ public class Deplacement {
 	/**
 	 * Retourne vrai si le deplacement est possible et deplace le personnage en parametre vers une direction precise
 	 * 
-	 * @param e
+	 * 
 	 * @param deplacement
 	 * @return boolean 
 	 */

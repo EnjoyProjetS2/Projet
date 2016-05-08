@@ -32,6 +32,7 @@ public class Voleur extends Personnage {
 	 * Action du voleur: il peut prendre la clef d'un autre participant
 	 * 
 	 * @param perso
+	 * @return boolean
 	 */
 	public boolean voler(Personnage perso) {
 		// si pas de la même équipe on vole
