@@ -140,6 +140,11 @@ public class Navire extends Parcelle {
 	}
 	
 	@Override
+	/**
+	 * Definit si la parcelle est traversable
+	 * @param p
+	 * @return boolean
+	 */
 	public boolean estTraversablePar(Personnage p) {		
 		return super.traversable;
 	}
@@ -151,8 +156,4 @@ public class Navire extends Parcelle {
 
 		return "Navire de l'equipe "+equipe.getNom();
 	}
-	
-	
-	
-	
 }

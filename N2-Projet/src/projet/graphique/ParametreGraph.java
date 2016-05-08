@@ -18,6 +18,10 @@ import projet.plateau.*;
 public class ParametreGraph {
 	static boolean validerParametre = false;
 
+	/**
+	 * Constructeur des parametres
+	 * Affiche la fenetre de choix des parametres de jeu
+	 */
 	public ParametreGraph() {
 		// TODO Auto-generated constructor stub
 		JFrame fen = new JFrame("Parametre");

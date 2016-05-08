@@ -22,6 +22,10 @@ public class Action implements ActionListener {
 	JButton passer;
 
 
+	/**Constructeur d'une action via des boutons
+	 * 
+	 * @param plateau
+	 */
 	public Action(Plateau plateau) {
 
 		deplacement = new JButton(new ImageIcon("images/boutons/deplacement.png"));
@@ -38,6 +42,12 @@ public class Action implements ActionListener {
 
 	}
 
+	/**
+	 * Affiche le bouton de l'action
+	 * @param plateau
+	 * @param parcelle
+	 * @return Plateau avec bouton action
+	 */
 	private Plateau afficher(Plateau plateau, Parcelle parcelle) {
 
 		Plateau p = plateau;
@@ -57,15 +67,17 @@ public class Action implements ActionListener {
 
 			debarquer.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 130, 100);
 			p.getWindow().getContentPane().add(debarquer);
-
 		}
-		
-
-
 		return p;
 
 	}
 
+	/**
+	 * Retire le bouton du plateau
+	 * @param plateau
+	 * @param parcelle
+	 * @return Plateau sans bouton
+	 */
 	private Plateau effacer(Plateau plateau, Parcelle parcelle) {
 
 		Plateau p = plateau;
@@ -79,10 +91,7 @@ public class Action implements ActionListener {
 		} else if (parcelle instanceof Navire) {
 
 			p.getWindow().remove(debarquer);
-
 		}
-		
-
 		return p;
 
 	}
@@ -94,7 +103,7 @@ public class Action implements ActionListener {
 	 * @param plateau
 	 * @param parcelle
 	 * @param equipe
-	 * @return
+	 * @return le choix d'action
 	 */
 	public String choix(Plateau plateau, Parcelle parcelle, int equipe) {
 
@@ -140,6 +149,9 @@ public class Action implements ActionListener {
 	}
 
 	@Override
+	/** Au clic de la souris, modifie la variable "choix" pour donner le choix au joueur de cliquer sur l'action qu'il veut 
+	 * @param e
+	 */
 	public void actionPerformed(ActionEvent e) {
 
 		Object bouton = e.getSource();

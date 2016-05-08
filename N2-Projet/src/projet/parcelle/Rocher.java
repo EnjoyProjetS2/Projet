@@ -23,22 +23,35 @@ public class Rocher extends Parcelle{
 			}	*/	
 		}
 		
+		/**
+		 * Modifie si la cle est presente sous le rocher
+		 * @param b
+		 */
 		public void setClef(boolean b) {
 			this.clef = b;
 		}
 		
+		/**
+		 * Modifie si le rocher contient le coffre
+		 * @param b
+		 */
 		public void setCoffre(boolean b) {
 			this.coffre = b;
 
 		}
 		
 		@Override
+		/**
+		 * Si la parcelle est traversable par un personnage
+		 * @param p
+		 * @return boolean
+		 */
 		public boolean estTraversablePar(Personnage p) {
 			return super.traversable;
 		}
 		
 		/**Retourne R
-		 * 
+		 * @return string
 		 */
 		public String toString() {
 			

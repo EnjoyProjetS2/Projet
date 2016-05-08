@@ -17,6 +17,12 @@ public class TourOrdinateur {
 	private static int nbDansNavire = 0;
 	private static List<Personnage> persoHorsNavire = new ArrayList<>();	
 
+	/**
+	 * Constructeur de l'IA
+	 * @param ile
+	 * @param p
+	 * @param e
+	 */
 	public TourOrdinateur(Ile ile, Plateau p, Equipe e) {			
 
 		this.equipe = e;
@@ -28,6 +34,13 @@ public class TourOrdinateur {
 
 	}
 
+	/**
+	 * Permet a l'IA de jouer
+	 * @param ile
+	 * @param p
+	 * @param e
+	 * @return boolean
+	 */
 	private boolean jouer(Ile ile, Plateau p, Equipe e) {
 
 		// Debarquement

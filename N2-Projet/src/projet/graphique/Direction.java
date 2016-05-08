@@ -64,6 +64,12 @@ public class Direction implements ActionListener {
 
 	}
 
+	/**
+	 * Affiche le plateau avec les fleches de direction
+	 * @param plateau
+	 * @param perso
+	 * @return le plateau
+	 */
 	private Plateau afficher(Plateau plateau, Personnage perso) {
 
 		Plateau p = plateau;
@@ -104,6 +110,15 @@ public class Direction implements ActionListener {
 
 	}
 
+	/**
+	 * Verifie quelles parcelles sont traversables par le personnage et permet de n'afficher que celles ci
+	 * De base, les quatre cases adjacentes
+	 * Si guerrier ou piegeur : il peut egalement aller en diagonale
+	 * @param plateau
+	 * @param ile
+	 * @param perso
+	 * @return le plateau 
+	 */
 	private Plateau filtrerAccessibles(Plateau plateau, Ile ile, Personnage perso) {
 
 		Plateau p = plateau;
@@ -152,6 +167,13 @@ public class Direction implements ActionListener {
 		return p;
 	}
 
+	/**
+	 * Permet de connaitre les positions des rochers autour d'un personnage cible
+	 * @param plateau
+	 * @param ile
+	 * @param perso
+	 * @return plateau
+	 */
 	private Plateau filtrerRocher(Plateau plateau, Ile ile, Personnage perso) {
 
 		Plateau p = plateau;
@@ -180,6 +202,13 @@ public class Direction implements ActionListener {
 
 	}
 
+	/**
+	 * Filtre la position de l'explorateur autour d'un personnage cible
+	 * @param plateau
+	 * @param ile
+	 * @param perso
+	 * @return plateau
+	 */
 	private Plateau filtrerExplorateur(Plateau plateau, Ile ile, Personnage perso) {
 
 		Plateau p = plateau;
@@ -208,6 +237,13 @@ public class Direction implements ActionListener {
 
 	}
 
+	/**
+	 * Filtre la position d'un personnage quelconque autour d'un personnage cible
+	 * @param plateau
+	 * @param ile
+	 * @param perso
+	 * @return plateau
+	 */
 	private Plateau filtrerPersonnage(Plateau plateau, Ile ile, Personnage perso) {
 
 		Plateau p = plateau;
@@ -247,6 +283,13 @@ public class Direction implements ActionListener {
 
 	}
 
+	/**
+	 * Filtre la position des parcelles de sable autour d'un personnage cible
+	 * @param plateau
+	 * @param ile
+	 * @param perso
+	 * @return
+	 */
 	private Plateau filtrerSable(Plateau plateau, Ile ile, Personnage perso) {
 
 		Plateau p = plateau;
@@ -286,6 +329,12 @@ public class Direction implements ActionListener {
 
 	}
 
+	/**
+	 * Retire la visibilite des donnees sur le plateau
+	 * @param plateau
+	 * @param perso
+	 * @return plateau
+	 */
 	private Plateau effacer(Plateau plateau, Personnage perso) {
 
 		Plateau p = plateau;
@@ -316,7 +365,7 @@ public class Direction implements ActionListener {
 	 * 
 	 * @param p
 	 * @param plateau
-	 * @return
+	 * @return string du choix fait
 	 */
 	public String choixDeplacement(Personnage p, Ile ile, Plateau plateau) {
 
@@ -359,6 +408,13 @@ public class Direction implements ActionListener {
 		return choix;
 	}
 
+	/**
+	 * Demande a l'utilisateur via bouton de selectionner l'endroit ou il veut agir suivant les positions possibles
+	 * @param p
+	 * @param ile
+	 * @param plateau
+	 * @return plateau
+	 */
 	public String choixAction(Personnage p, Ile ile, Plateau plateau) {
 
 		plateau = afficher(plateau, p);
@@ -402,6 +458,10 @@ public class Direction implements ActionListener {
 	}
 
 	@Override
+	/**
+	 * Attend un clic puis modifie la variable choix avec le choix effectue par bouton
+	 * @param e
+	 */
 	public void actionPerformed(ActionEvent e) {
 
 		Object bouton = e.getSource();
@@ -434,6 +494,10 @@ public class Direction implements ActionListener {
 
 	}
 	
+	/**
+	 * Donne le nombre de choix possibme
+	 * @return nbChoix
+	 */
 	public int getNbChoix() {
 		return this.nbChoix;
 	}

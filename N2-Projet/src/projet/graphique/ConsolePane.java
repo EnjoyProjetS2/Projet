@@ -25,7 +25,7 @@ public class ConsolePane extends JScrollPane {
 		this.setViewportView(textArea);
 	}
 	
-	/**Affiche les coordonnées
+	/**Affiche les coordonnees
 	 * 
 	 * @param message
 	 */

@@ -14,15 +14,28 @@ public class Deplacement {
 	Ile ile;
 	Personnage e;
 	
+	/**
+	 * Constructeur 
+	 * @param ile
+	 */
 	public Deplacement(Ile ile) {
 		this.ile = ile;
 	}
 	
+	/**
+	 * Constructeur
+	 * @param ile
+	 * @param e
+	 */
 	public Deplacement(Ile ile, Personnage e) {
 		this(ile);
 		this.e = e;
 	}
 	
+	/**
+	 * Modifie le personnage qui va effectue le deplacement
+	 * @param e
+	 */
 	public void setPersonnage(Personnage e) {
 		this.e = e;
 	}
@@ -126,6 +139,10 @@ public class Deplacement {
 		return false;
 	}
 	
+	/**
+	 * Deplacement aleatoire pour l'IA
+	 * @return boolean
+	 */
 	public boolean deplacementAleatoire() {
 		
 		int choix = new Random().nextInt(4)+1;
@@ -149,10 +166,13 @@ public class Deplacement {
 		}
 		
 		return deplacement(retour);		
-		
 	}
 	
-public boolean debarquementAleatoire() {
+	/**
+	 * Debarque un personnage dans une position aleatoire
+	 * @return
+	 */
+	public boolean debarquementAleatoire() {
 		
 		int choix = new Random().nextInt(4)+1;
 		
@@ -172,10 +192,8 @@ public boolean debarquementAleatoire() {
 			retour = "bas";
 		default:
 			break;
-		}
-		
+		}		
 		return debarquement(retour);		
-		
 	}
 
 	/**
@@ -252,9 +270,6 @@ public boolean debarquementAleatoire() {
 			return true;
 
 		}
-
 		return false;
-
 	}	
-
 }

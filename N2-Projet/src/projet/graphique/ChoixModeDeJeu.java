@@ -17,6 +17,10 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 	JButton modeCreatif;
 	JButton modeSolo;
 	boolean bahOuiOnMetUnBooleanPourGererTroisPossibiliter;
+	
+	/**
+	 * Constructeur
+	 */
 	public ChoixModeDeJeu() {
 		// TODO Auto-generated constructor stub
 		this.setPreferredSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
@@ -40,6 +44,11 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 			
 		}
 	}
+	
+	/**
+	 * Active le mode 1v1
+	 * @return boolean
+	 */
 	private boolean modeVersus() {
 		modeVersus = new JButton("mode Versus");
 		//modeVersus.setBounds(Tailles.FENETREx / 2, 30, 100, 50);
@@ -47,6 +56,10 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 		return false;
 	}
 
+	/**
+	 * Active le mode creatif
+	 * @return boolean
+	 */
 	private boolean modeCreatif() {
 		modeCreatif = new JButton("mode Creatif");
 		//modeCreatif.setBounds(Tailles.FENETREx / 2, 30 + 70, 100, 50);
@@ -54,18 +67,30 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 		return false;
 	}
 
+	/**
+	 * Active le mode solo contre l'IA
+	 * @return boolean
+	 */
 	private boolean modeSolo() {
 		modeSolo = new JButton("mode Solo");
 		//modeSolo.setBounds(Tailles.FENETREx / 2, 30 + 140, 100, 50);
 		modeSolo.addActionListener(this);
 		return false;
 	}
+	
+	/**
+	 * Met le mode selectionne en place
+	 */
 	private void ajoutJFrame() {
 		this.getContentPane().add(modeVersus);
 		this.getContentPane().add(modeCreatif);
 		this.getContentPane().add(modeSolo);
 	}
 	@Override
+	/**
+	 * Attend le clic de la souris
+	 * @param e le clic
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object bouton = e.getSource();

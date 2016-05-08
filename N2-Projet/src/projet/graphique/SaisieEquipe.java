@@ -27,6 +27,11 @@ public class SaisieEquipe extends JFrame implements ActionListener{
 	private Equipe e;
 	private boolean flagretry = false;
 	public static boolean retry = false;
+	
+	/**
+	 * Constructeur : affiche la fenetre pour le choix des personnages de l'equipe par le joueur
+	 * @param e
+	 */
 	public SaisieEquipe(Equipe e) {
 		this.e = e;
 		retry = false;
@@ -51,10 +56,19 @@ public class SaisieEquipe extends JFrame implements ActionListener{
 			}
 		}
 	}
+	
+	/**
+	 * Panneau gauche
+	 */
 	private void panelGauche() {
 		
 		
 	}
+	
+	/**
+	 * Panneau droit
+	 * @param e
+	 */
 	private void panelDroite(Equipe e){
 		panelDroite.setLayout(null);
 		JTextField nomEquipe = new JTextField();
@@ -86,23 +100,47 @@ public class SaisieEquipe extends JFrame implements ActionListener{
 		recommencer();
 		panelDroite.add(recommencer);
 	}
+	
+	/**
+	 * Recommence le processus
+	 * @return boolean
+	 */
 	private boolean recommencer(){
 		recommencer.setText("recommencer");
 		recommencer.setBounds(10, Tailles.FENETREy - 100, 150, 50);
 		recommencer.addActionListener(this);
 		return false;
 	}
+	
+	/**
+	 * Ajoute les panneaux de droite et de gauche a la fenetre
+	 */
 	private void ajoutJFrame(){
 		this.getContentPane().add(panelDroite);
 		this.getContentPane().add(panelGauche);
 	}
+	
+	/**
+	 * Definit la fenetre
+	 * @param panel
+	 * @param posX
+	 * @param posY
+	 * @param largeur
+	 * @param hauteur
+	 * @return boolean
+	 */
 	private boolean Jpanel(JPanel panel, int posX, int posY, int largeur, int hauteur){
 		panel.setSize(largeur, hauteur);
 		panel.setLocation(posX, posY);
 		return false;
 		
 	}
+	
 	@Override
+	/**
+	 * Attend le clic de la souris
+	 * @param e
+	 */
 	public void actionPerformed(ActionEvent event) {
 		// TODO Auto-generated method stub
 		Object bouton = event.getSource();

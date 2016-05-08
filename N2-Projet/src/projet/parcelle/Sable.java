@@ -13,6 +13,11 @@ public class Sable extends Parcelle {
 	}
 	
 	@Override
+	/**
+	 * Definit si la parcelle est traversable
+	 * @param p
+	 * @return boolean
+	 */
 	public boolean estTraversablePar(Personnage p) {
 		return super.traversable;
 	}

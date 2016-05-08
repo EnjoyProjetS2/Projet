@@ -568,6 +568,13 @@ public class Jeu {
 
 	}
 
+	/**
+	 * Effectue une action par un personnage
+	 * @param perso
+	 * @param ile
+	 * @param plato
+	 * @return boolean
+	 */
 	private boolean action(Personnage perso, Ile ile, SuperPlateau plato) {
 
 		if (perso instanceof Explorateur) {

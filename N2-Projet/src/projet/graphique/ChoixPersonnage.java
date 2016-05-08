@@ -25,6 +25,10 @@ public class ChoixPersonnage implements ActionListener {
 	JLabel[] vies;
 	JLabel[] noms;
 
+	/**
+	 * Constructeur du choix de l'equipe
+	 * @param equipe
+	 */
 	public ChoixPersonnage(int equipe) {
 
 		String couleur = "";
@@ -69,6 +73,11 @@ public class ChoixPersonnage implements ActionListener {
 		}
 	}
 
+	/**
+	 * Affiche le plateau avec les informations sur les equipes
+	 * @param plateau
+	 * @return le plateau
+	 */
 	public Plateau afficher(Plateau plateau) {
 
 		Plateau p = plateau;
@@ -90,14 +99,16 @@ public class ChoixPersonnage implements ActionListener {
 			p.getWindow().getContentPane().add(noms[i]);
 			
 			decallage += Tailles.PARCELLE + 6;
-
-
 		}
 
 		return p;
-
 	}
 
+	/**
+	 * Efface les informations des equipes du plateau
+	 * @param plateau
+	 * @return le plateau
+	 */
 	public Plateau effacer(Plateau plateau) {
 
 		Plateau p = plateau;
@@ -105,14 +116,16 @@ public class ChoixPersonnage implements ActionListener {
 		for (int i = 0; i < persos.length; i++) {
 			p.getWindow().remove(persos[i]);			
 			p.getWindow().remove(vies[i]);
-			p.getWindow().remove(noms[i]);
-			
+			p.getWindow().remove(noms[i]);		
 		}
-
 		return p;
-
 	}
 
+	/**
+	 * Demande au joueur de choisir son personnage
+	 * @param plateau
+	 * @return Personnage
+	 */
 	public Personnage choix(Plateau plateau) {
 
 		plateau = afficher(plateau);
@@ -121,32 +134,27 @@ public class ChoixPersonnage implements ActionListener {
 		plateau.println("Cliquez sur le personnage de votre choix:", equipe.getID());
 
 		while (choix == null) {
-
 			for (int i = 0; i < persos.length; i++) {
 				persos[i].addActionListener(this);
 			}
-
 		}
-
 		plateau = effacer(plateau);
-
 		return choix;
-
 	}
 
 	@Override
+	/**
+	 * Attend l'action au clic de la souris
+	 * @param e
+	 */
 	public void actionPerformed(ActionEvent e) {
 
 		Object bouton = e.getSource();
 
 		for (int i = 0; i < persos.length; i++) {
-
 			if (bouton == persos[i]) {
 				choix = equipe.getNavire().getPersoDansNavire().get(i);
 			}
-
 		}
-
 	}
-
 }

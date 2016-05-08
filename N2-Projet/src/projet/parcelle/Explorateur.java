@@ -51,6 +51,12 @@ public class Explorateur extends Personnage {
 		return false;
 	}
 	
+	/**
+	 * Choisit le rocher suivant ce qui a ete determine au prealable pour l'envoyer a souleverrocher
+	 * @param ile
+	 * @param direction
+	 * @return boolean
+	 */
 	public boolean choixRocher(Ile ile, String direction) {
 		
 		if (direction == "haut") {

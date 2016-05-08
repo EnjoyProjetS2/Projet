@@ -45,6 +45,12 @@ public class Piegeur extends Personnage {
 
 	}
 	
+	/**
+	 * Definit le choix de la parcelle a pieger comme definie prealablement et l'envoie a l'action de pieger
+	 * @param ile
+	 * @param direction
+	 * @return boolean
+	 */
 	public boolean choixPieger(Ile ile, String direction) {
 		if (direction == "haut") {
 			return this.pieger((Sable) ile.getGrille()[getX()-1][getY()]);
@@ -61,7 +67,7 @@ public class Piegeur extends Personnage {
 
 	/**
 	 * Retourne les informations du personnage
-	 * 
+	 * @return string
 	 */
 	public String toString() {
 		return "Piegeur " + this.nom + " (Equipe: " + super.getEquipe().getNom() + ") - Vie: " + super.energie + "/"

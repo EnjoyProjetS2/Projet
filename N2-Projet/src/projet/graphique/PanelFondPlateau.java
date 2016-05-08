@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 public class PanelFondPlateau extends JPanel {
 	private Image image;
 
+	/**
+	 * Constructeur : Met une image en fond
+	 */
 	public PanelFondPlateau() {
 		image = (new ImageIcon("images/fond.jpg")).getImage();
 	}

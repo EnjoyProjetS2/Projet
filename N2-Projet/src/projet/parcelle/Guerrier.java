@@ -59,6 +59,12 @@ public class Guerrier extends Personnage {
 
 	}
 	
+	/**
+	 * Choix de la position de l'attaque comme definit au prealable et renvoie le choix a l'action d'attaque
+	 * @param ile
+	 * @param direction
+	 * @return
+	 */
 	public boolean choixAttaquer(Ile ile, String direction) {
 		if (direction == "haut") {
 			return this.attaquer((Personnage) ile.getGrille()[getX()-1][getY()]);

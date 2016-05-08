@@ -24,6 +24,9 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	JDialog popup;
 	private boolean click = false;
 
+	/**
+	 * Constructeur du menu d'accueil
+	 */
 	public MenuDemarre() {
 		// TODO Auto-generated constructor stub
 		this.setPreferredSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
@@ -48,6 +51,11 @@ public class MenuDemarre extends JFrame implements ActionListener {
 			}
 		}
 	}
+	
+	/**
+	 * Affiche un pop up
+	 * @return boolean
+	 */
 	private boolean popup(){
 		popup = new JDialog(this, "Les regles !");
 		popup.setSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
@@ -59,6 +67,11 @@ public class MenuDemarre extends JFrame implements ActionListener {
 		popup.getContentPane().add(retour, BorderLayout.SOUTH);
 		return false;
 	}
+	
+	/**
+	 * Bouton pour jouer
+	 * @return boolean
+	 */
 	private boolean jouer() {
 		jouer = new JButton("Jouer");
 		//jouer.setBounds(Tailles.FENETREx / 2, 30, 100, 50);
@@ -66,6 +79,10 @@ public class MenuDemarre extends JFrame implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Bouton pour les regles
+	 * @return boolean
+	 */
 	private boolean regles() {
 		regle = new JButton("regles");
 		//regle.setBounds(Tailles.FENETREx / 2, 30 + 70, 100, 50);
@@ -73,6 +90,10 @@ public class MenuDemarre extends JFrame implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Bouton pour quitter
+	 * @return boolean
+	 */
 	private boolean quitter() {
 		quitter = new JButton("Quitter");
 		//quitter.setBounds(Tailles.FENETREx / 2, 30 + 140, 100, 50);
@@ -80,12 +101,21 @@ public class MenuDemarre extends JFrame implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Bouton de retour
+	 * @return boolean
+	 */
 	private boolean retour() {
 		retour = new JButton("retour");
 		//retour.setBounds(Tailles.FENETREx / 2, 30+200, 100, 50);
 		retour.addActionListener(this);
 		return false;
 	}
+	
+	/**
+	 * Fenetre qui affiche les regles
+	 * @return boolean
+	 */
 	private boolean lesRegles(){
 		lesRegles = new JTextArea();
 		//lesRegles.setBounds(Tailles.FENETREx / 6, 30, Tailles.FENETREx-Tailles.FENETREx / 3, 200);
@@ -98,6 +128,9 @@ public class MenuDemarre extends JFrame implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Ajoute les boutons dans une fenetre
+	 */
 	private void ajoutJFrame() {
 		this.getContentPane().add(jouer);
 		this.getContentPane().add(regle);
@@ -105,6 +138,10 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	}
 
 	@Override
+	/**
+	 * Attend le clic de la souris sur le bouton
+	 * @param e
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object bouton = e.getSource();

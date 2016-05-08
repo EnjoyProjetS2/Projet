@@ -11,11 +11,15 @@ public class Eau extends Parcelle {
 	}
 	
 	@Override
+	/**
+	 * Savoir si la parcelle est traversable par un personnage
+	 * @return boolean
+	 */
 	public boolean estTraversablePar(Personnage p) {
 		return super.traversable;
 	}
 	
-	/**Retour une vague pour les parcelles d'eau
+	/**Retourne une vague pour les parcelles d'eau
 	 * @return String 
 	 */
 	public String toString() {

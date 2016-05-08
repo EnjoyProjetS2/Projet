@@ -72,6 +72,12 @@ public class Voleur extends Personnage {
 		return false;
 	}
 
+	/**
+	 * Choix de la direction du vol comme definie au prealable et l'envoie sur la methode de voler
+	 * @param ile
+	 * @param direction
+	 * @return boolean
+	 */
 	public boolean choixVoler(Ile ile, String direction) {
 		if (direction == "haut") {
 			return this.voler((Explorateur) ile.getGrille()[getX() - 1][getY()]);
@@ -88,7 +94,7 @@ public class Voleur extends Personnage {
 
 	/**
 	 * Retourne les informations du personnage
-	 * 
+	 * @return string
 	 */
 	public String toString() {
 		return "Voleur " + this.nom + " (Equipe: " + super.getEquipe().getNom() + ") - Vie: " + super.energie + "/"
