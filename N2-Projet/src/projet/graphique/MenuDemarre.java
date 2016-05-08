@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -57,7 +58,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	 * @return boolean
 	 */
 	private boolean popup(){
-		popup = new JDialog(this, "Les regles !");
+		popup = new JDialog(this, "Regles");
 		popup.setSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
 		popup.setLocation(new Point(200, 50));
 		popup.setModal(false);
@@ -73,7 +74,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	 * @return boolean
 	 */
 	private boolean jouer() {
-		jouer = new JButton("Jouer");
+		jouer = new JButton(new ImageIcon("images/boutons/jouer.png"));
 		//jouer.setBounds(Tailles.FENETREx / 2, 30, 100, 50);
 		jouer.addActionListener(this);
 		return false;
@@ -84,7 +85,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	 * @return boolean
 	 */
 	private boolean regles() {
-		regle = new JButton("regles");
+		regle = new JButton(new ImageIcon("images/boutons/regles.png"));
 		//regle.setBounds(Tailles.FENETREx / 2, 30 + 70, 100, 50);
 		regle.addActionListener(this);
 		return false;
@@ -95,7 +96,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	 * @return boolean
 	 */
 	private boolean quitter() {
-		quitter = new JButton("Quitter");
+		quitter = new JButton(new ImageIcon("images/boutons/quitter.png"));
 		//quitter.setBounds(Tailles.FENETREx / 2, 30 + 140, 100, 50);
 		quitter.addActionListener(this);
 		return false;
@@ -106,7 +107,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	 * @return boolean
 	 */
 	private boolean retour() {
-		retour = new JButton("retour");
+		retour = new JButton("Retour");
 		//retour.setBounds(Tailles.FENETREx / 2, 30+200, 100, 50);
 		retour.addActionListener(this);
 		return false;

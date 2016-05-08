@@ -25,7 +25,7 @@ public class ParametreGraph {
 	public ParametreGraph() {
 		// TODO Auto-generated constructor stub
 		JFrame fen = new JFrame("Parametre");
-		fen.setPreferredSize(new Dimension(500, 500));
+		fen.setPreferredSize(new Dimension(700, 500));
 		fen.getContentPane().setLayout(new BorderLayout());
 		JPanel pangauche = new JPanel();
 		JPanel panCentre = new JPanel();
@@ -162,9 +162,7 @@ public class ParametreGraph {
 		// modification desparametres
 		Jeu.nbPerso = sliderCentre.getValue();
 		Jeu.pourcentageRocher = sliderdroite.getValue();
-		Jeu.tailleX = slidergauche.getValue();
-		Jeu.tailleY = Jeu.tailleX;
-		// System.out.println(nbPerso + " " + pourcentageRocher + " " +
-		// tailleX);
+		Tailles.TAILLE = slidergauche.getValue();
+		//Jeu.tailleY = Jeu.tailleX;
 	}
 }

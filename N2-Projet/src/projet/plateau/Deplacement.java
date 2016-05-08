@@ -10,20 +10,22 @@ import projet.parcelle.Personnage;
 import projet.parcelle.Sable;
 
 public class Deplacement {
-	
+
 	Ile ile;
 	Personnage e;
-	
+
 	/**
-	 * Constructeur 
+	 * Constructeur
+	 * 
 	 * @param ile
 	 */
 	public Deplacement(Ile ile) {
 		this.ile = ile;
 	}
-	
+
 	/**
 	 * Constructeur
+	 * 
 	 * @param ile
 	 * @param e
 	 */
@@ -31,21 +33,23 @@ public class Deplacement {
 		this(ile);
 		this.e = e;
 	}
-	
+
 	/**
 	 * Modifie le personnage qui va effectue le deplacement
+	 * 
 	 * @param e
 	 */
 	public void setPersonnage(Personnage e) {
 		this.e = e;
 	}
-	
+
 	/**
-	 * Retourne vrai si le deplacement est possible et deplace le personnage en parametre vers une direction precise
+	 * Retourne vrai si le deplacement est possible et deplace le personnage en
+	 * parametre vers une direction precise
 	 * 
 	 * 
 	 * @param deplacement
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public boolean deplacement(String deplacement) {
 
@@ -72,22 +76,22 @@ public class Deplacement {
 			newPosX = e.getX() + 1;
 			newPosY = e.getY();
 			break;
-			
+
 		case "hautgauche":
 			newPosX = e.getX() - 1;
 			newPosY = e.getY() - 1;
 			break;
-			
+
 		case "hautdroite":
 			newPosX = e.getX() - 1;
 			newPosY = e.getY() + 1;
 			break;
-			
+
 		case "basgauche":
 			newPosX = e.getX() + 1;
 			newPosY = e.getY() - 1;
 			break;
-			
+
 		case "basdroite":
 			newPosX = e.getX() + 1;
 			newPosY = e.getY() + 1;
@@ -98,20 +102,20 @@ public class Deplacement {
 		}
 
 		if (ile.getGrille()[newPosX][newPosY].estTraversablePar(e)) {
-			
+
 			Sable sable = (Sable) ile.getGrille()[newPosX][newPosY];
 
 			ile.getGrille()[newPosX][newPosY] = ile.getGrille()[e.getX()][e.getY()];
-			ile.getGrille()[e.getX()][e.getY()] = tmp;	
+			ile.getGrille()[e.getX()][e.getY()] = tmp;
 
 			e.setX(newPosX);
 			e.setY(newPosY);
 
 			if (sable.estPiegee()) {
 				e.setEnergie(e.getEnergie() - 50);
-				JOptionPane.showMessageDialog(null, e.getNom()+" est tombe dans un piege. Il perd 50 d'energie.");
+				JOptionPane.showMessageDialog(null, e.getNom() + " est tombe dans un piege. Il perd 50 d'energie.");
 			}
-			
+
 			e.setEnergie(e.getEnergie() - 1);
 
 			return true;
@@ -138,66 +142,74 @@ public class Deplacement {
 
 		return false;
 	}
-	
+
 	/**
 	 * Deplacement aleatoire pour l'IA
+	 * 
 	 * @return boolean
 	 */
-	public boolean deplacementAleatoire() {
-		
-		int choix = new Random().nextInt(4)+1;
-		
+	public void deplacementAleatoire() {
+
 		String retour = "";
-		
-		switch(choix) {
-		case 1:
-			retour = "gauche";
-			break;
-		case 2:
-			retour = "droite";
-			break;
-		case 3:
-			retour = "haut";
-			break;
-		case 4:
-			retour = "bas";
-		default:
-			break;
-		}
-		
-		return deplacement(retour);		
-	}
-	
-	/**
-	 * Debarque un personnage dans une position aleatoire
-	 * @return
-	 */
-	public boolean debarquementAleatoire() {
-		
-		int choix = new Random().nextInt(4)+1;
-		
-		String retour = "";
-		
-		switch(choix) {
-		case 1:
-			retour = "gauche";
-			break;
-		case 2:
-			retour = "droite";
-			break;
-		case 3:
-			retour = "haut";
-			break;
-		case 4:
-			retour = "bas";
-		default:
-			break;
-		}		
-		return debarquement(retour);		
+
+		do {
+
+			int choix = new Random().nextInt(4) + 1;
+
+			switch (choix) {
+			case 1:
+				retour = "gauche";
+				break;
+			case 2:
+				retour = "droite";
+				break;
+			case 3:
+				retour = "haut";
+				break;
+			case 4:
+				retour = "bas";
+			default:
+				break;
+			}
+
+		} while (!deplacement(retour));
+
 	}
 
 	/**
-	 * Retourne vrai si c'est possible et sort le personnage en parametre du navire en le placant autour
+	 * Debarque un personnage dans une position aleatoire
+	 * 
+	 * @return
+	 */
+	public void debarquementAleatoire() {
+
+		String retour = "";
+
+		do {
+			int choix = new Random().nextInt(4) + 1;
+
+			switch (choix) {
+			case 1:
+				retour = "gauche";
+				break;
+			case 2:
+				retour = "droite";
+				break;
+			case 3:
+				retour = "haut";
+				break;
+			case 4:
+				retour = "bas";
+			default:
+				break;
+			}
+			
+		} while (!debarquement(retour));
+	}
+
+	/**
+	 * Retourne vrai si c'est possible et sort le personnage en parametre du
+	 * navire en le placant autour
 	 * 
 	 * @param e
 	 * @param deplacement
@@ -227,22 +239,22 @@ public class Deplacement {
 			newPosX = e.getX() + 1;
 			newPosY = e.getY();
 			break;
-			
+
 		case "hautgauche":
 			newPosX = e.getX() - 1;
 			newPosY = e.getY() - 1;
 			break;
-			
+
 		case "hautdroite":
 			newPosX = e.getX() - 1;
 			newPosY = e.getY() + 1;
 			break;
-			
+
 		case "basgauche":
 			newPosX = e.getX() + 1;
 			newPosY = e.getY() - 1;
 			break;
-			
+
 		case "basdroite":
 			newPosX = e.getX() + 1;
 			newPosY = e.getY() + 1;
@@ -253,23 +265,22 @@ public class Deplacement {
 		}
 
 		if (ile.getGrille()[newPosX][newPosY].estTraversablePar(e)) {
-			
+
 			Sable sable = (Sable) ile.getGrille()[newPosX][newPosY];
 
 			ile.getGrille()[newPosX][newPosY] = e;
 			e.setX(newPosX);
 			e.setY(newPosY);
 			e.getEquipe().getNavire().getPersoDansNavire().remove(e);
-			
+
 			if (sable.estPiegee()) {
 				e.setEnergie(e.getEnergie() - 50);
-				JOptionPane.showMessageDialog(null, e.getNom()+" est tombe dans un piege. Il perd 50 d'energie.");
+				JOptionPane.showMessageDialog(null, e.getNom() + " est tombe dans un piege. Il perd 50 d'energie.");
 			}
-			
-			
+
 			return true;
 
 		}
 		return false;
-	}	
+	}
 }

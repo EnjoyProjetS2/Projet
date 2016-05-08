@@ -8,6 +8,7 @@ import projet.parcelle.Equipe;
 import projet.parcelle.Personnage;
 import projet.plateau.Deplacement;
 import projet.plateau.Ile;
+import projet.plateau.Jeu;
 import projet.plateau.Plateau;
 
 public class TourOrdinateur {
@@ -44,7 +45,7 @@ public class TourOrdinateur {
 	private boolean jouer(Ile ile, Plateau p, Equipe e) {
 
 		// Debarquement
-		if (nbSurSable == 0 && nbDansNavire > 0) {
+		if (nbSurSable == 0 && nbDansNavire > 0 || nbSurSable < nbDansNavire) {
 
 			Personnage perso = equipe.getNavire().getPersoDansNavire()
 					.get(new Random().nextInt(equipe.getNavire().getPersoDansNavire().size()));
@@ -68,8 +69,8 @@ public class TourOrdinateur {
 			
 			return true;
 
-		}
-
+		}			
+		
 		return false;
 	}
 

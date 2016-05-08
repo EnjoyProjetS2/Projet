@@ -1,11 +1,12 @@
 package projet.plateau;
 
+import projet.graphique.Tailles;
 import projet.parcelle.Parcelle;
 
 public class SuperPlateau {
 
 	private Plateau p;
-	private int taille = Jeu.tailleX;
+	private int taille = Tailles.TAILLE;
 	private int[][] jeu = new int[taille][taille];
 	private String[] gifs = new String[] { "images/Rocher.png", "images/NavireBleu.png", "images/Sable.png",
 			"images/Eau.png", "images/ExplorateurBleu.png", "images/VoleurBleu.png", "images/SableOff.png",

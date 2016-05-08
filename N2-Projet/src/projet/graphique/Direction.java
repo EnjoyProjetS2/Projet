@@ -74,32 +74,32 @@ public class Direction implements ActionListener {
 
 		Plateau p = plateau;
 
-		gauche.setLocation(plateau.getTaille() * 37 + 620, 100);
+		gauche.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14 - Tailles.PARCELLE, 100);
 		p.getWindow().getContentPane().add(gauche);
 
-		droite.setLocation(plateau.getTaille() * 37 + 620 + 2 * 37, 100);
+		droite.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14 + Tailles.PARCELLE, 100);
 		p.getWindow().getContentPane().add(droite);
 
-		haut.setLocation(plateau.getTaille() * 37 + 620 + 37, 100 - 36);
+		haut.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14, 100 - 36);
 		p.getWindow().getContentPane().add(haut);
 
-		bas.setLocation(plateau.getTaille() * 37 + 620 + 37, 100 + 36);
+		bas.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14, 100 + 36);
 		p.getWindow().getContentPane().add(bas);
 
 		nbChoix += 4;
 
 		if (perso instanceof Guerrier || perso instanceof Piegeur) {
 
-			hautgauche.setLocation(plateau.getTaille() * 37 + 620, 100 - 36);
+			hautgauche.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14 - Tailles.PARCELLE, 100 - Tailles.PARCELLE);
 			p.getWindow().getContentPane().add(hautgauche);
 
-			hautdroite.setLocation(plateau.getTaille() * 37 + 620 + 2 * 37, 100 - 36);
+			hautdroite.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14 + Tailles.PARCELLE, 100 - Tailles.PARCELLE);
 			p.getWindow().getContentPane().add(hautdroite);
 
-			basgauche.setLocation(plateau.getTaille() * 37 + 620, 100 + 36);
+			basgauche.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3+ Tailles.TAILLE*14 - Tailles.PARCELLE, 100 + Tailles.PARCELLE);
 			p.getWindow().getContentPane().add(basgauche);
 
-			basdroite.setLocation(plateau.getTaille() * 37 + 620 + 2 * 37, 100 + 36);
+			basdroite.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*3 + Tailles.TAILLE*14 + Tailles.PARCELLE, 100 + Tailles.PARCELLE);
 			p.getWindow().getContentPane().add(basdroite);
 
 			nbChoix += 4;

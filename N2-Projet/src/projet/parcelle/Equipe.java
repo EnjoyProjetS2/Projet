@@ -2,6 +2,7 @@ package projet.parcelle;
 import java.util.ArrayList;
 import java.util.List;
 import projet.*;
+import projet.graphique.Tailles;
 import projet.plateau.Ile;
 import projet.plateau.Jeu;
 public class Equipe {
@@ -39,7 +40,7 @@ public class Equipe {
 	 */
 	public int[][] setVision(Ile ile) {
 
-		int[][] grille = new int[Jeu.tailleX][Jeu.tailleY];
+		int[][] grille = new int[Tailles.TAILLE][Tailles.TAILLE];
 		// initialisation du brouillard
 		for (int i = 0; i < ile.getGrille().length; i++) {
 			for (int j = 0; j < ile.getGrille()[i].length; j++) {

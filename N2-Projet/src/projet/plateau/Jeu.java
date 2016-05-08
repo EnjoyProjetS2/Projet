@@ -11,6 +11,7 @@ import projet.graphique.Direction;
 import projet.graphique.MenuDemarre;
 import projet.graphique.ParametreGraph;
 import projet.graphique.SaisieEquipe;
+import projet.graphique.Tailles;
 import projet.ia.TourOrdinateur;
 import projet.parcelle.Equipe;
 import projet.parcelle.Explorateur;
@@ -28,8 +29,8 @@ public class Jeu {
 	public static int nbPerso = 1; // nombre de personnages par equipes
 	public static int pourcentageRocher = 10; // pourcentage de rochers sur la
 												// carte
-	public static int tailleX = 10; // longueur
-	public static int tailleY = 10; // largeur
+	public static int tailleX; // longueur
+	public static int tailleY; // largeur
 	public static int maxVie = 100; // vie des personnages
 	public static int regenParTour = 10; // vie regeneree par tour dans les
 											// navires
@@ -45,25 +46,17 @@ public class Jeu {
 	 */
 	public Jeu() {
 
-		// if (accueil()) {
 		new MenuDemarre();
 		parametres();
 
 		this.un = new Equipe(null, 1);
 		this.deux = new Equipe(null, 2);
 
-		Ile ile = new Ile(new Parcelle[tailleX][tailleY], pourcentageRocher);
+		Ile ile = new Ile(new Parcelle[Tailles.TAILLE][Tailles.TAILLE], pourcentageRocher);
 
 		saisieEquipe(un);
 		saisieEquipe(deux);
-		/*MODE GRAPHIQUE (ne fonctionne pas)
-		do {
-			new SaisieEquipe(un);
-			if (!SaisieEquipe.retry) {
-				new SaisieEquipe(deux);
-			}
-		} while (!SaisieEquipe.retry);*/
-		// System.out.println(ile.toString()); // Affichage texte
+
 		SuperPlateau p = new SuperPlateau(ile); // Affichage graphique
 
 		if (this.modeCreatif) {
@@ -86,6 +79,7 @@ public class Jeu {
 		informations(un, p);
 		informations(deux, p);
 		p.getPlateau().println("clear", equipe);
+		
 		if (un.getID() == equipe) {
 			p.setJeu(un.setVision(ile));
 			p.getPlateau().println("Début de la partie ! (equipe " + un.getID() + ")", un.getID());
@@ -93,6 +87,7 @@ public class Jeu {
 			p.setJeu(deux.setVision(ile));
 			p.getPlateau().println("Début de la partie ! (equipe " + deux.getID() + ")", deux.getID());
 		}
+		
 		p.affichage();
 
 		boolean coffreAuBateau = false;
@@ -107,21 +102,24 @@ public class Jeu {
 				informations(deux, p);
 				soigner(deux);
 			}
+			
 			p.getPlateau().println("Cliquez sur un de vos navires ou personnages:", equipe);
 
 			boolean joue = false;
-
 			Direction direction = new Direction();
+			
 			while (!joue) {
 
 				Action action = new Action(p.getPlateau());
 
 				if (this.solo && equipe == 2) {
+					
 					new TourOrdinateur(ile, p.getPlateau(), Jeu.deux);
-					//modeIA(p, ile, deux);
+					// modeIA(p, ile, deux);
 					joue = true;
 
 				} else {
+					
 					p.getPlateau().waitEvent();
 					int clicX = p.getPlateau().getPosX();
 					int clicY = p.getPlateau().getPosY();
@@ -141,6 +139,7 @@ public class Jeu {
 								}
 
 								joue = true;
+								
 							} else if (action.choix(p.getPlateau(), ile.getGrille()[clicY][clicX], equipe)
 									.equals("Action")) {
 								action(perso, ile, p);
@@ -183,21 +182,29 @@ public class Jeu {
 									p.getPlateau().println("Erreur: la parcelle n'est pas traversable", equipe);
 								}
 								joue = true;
+								
 							} else {
+								
 								p.getPlateau().println("Erreur: le navire est vide", equipe);
 							}
 
 						} else {
+							
 							p.getPlateau().println("Erreur: ce navire appartient a l'autre equipe", equipe);
 						}
 
 					}
 
 					if (!un.survie() || !deux.survie()) {
+						
 						equipeMorte = true;
+						
 					} else if (un.getNavire().presenceDuCoffre() || deux.getNavire().presenceDuCoffre()) {
+						
 						coffreAuBateau = true;
+						
 					} else {
+						
 						tuer(un, ile);
 						tuer(deux, ile);
 					}
@@ -301,198 +308,6 @@ public class Jeu {
 	}
 
 	/**
-	 * Choix de la direction de l'intelligence artificielle
-	 * 
-	 * @param perso
-	 * @param ile
-	 * @param choixMouvement
-	 * @return direction
-	 */
-	private String mouvementIA(Personnage perso, Ile ile, int choixMouvement) {
-		if (choixMouvement == 1) {
-			return "haut";
-		} else if (choixMouvement == 2) {
-			return "bas";
-		} else if (choixMouvement == 3) {
-			return "gauche";
-		} else if (choixMouvement == 4) {
-			return "droite";
-		}
-
-		return "Impossible";
-	}
-
-	/**
-	 * Mise en place de l'intelligence artificielle
-	 * 
-	 * @param p
-	 * @param ile
-	 * @param equipe
-	 * @return
-	 */
-	private boolean modeIA(SuperPlateau p, Ile ile, Equipe equipe) {
-		Random rand = new Random();
-
-		int choixPerso = rand.nextInt(equipe.getListePersos().size());
-		int choixAction = rand.nextInt(5);
-		int choixMouvement = rand.nextInt(4) + 1;
-		int nombre;
-		Personnage perso;
-
-		// si le navire est plein, on doit debarquer un perso
-		if (equipe.getNavire().getPersoDansNavire().size() == equipe.getListePersos().size()) {
-
-			perso = equipe.getNavire().getPersoDansNavire().get(choixPerso);
-
-			Deplacement deplacement = new Deplacement(ile, perso);
-
-			deplacement.debarquement(mouvementIA(perso, ile, choixMouvement));
-		} else { // sinon, on fait n'importe quelle autre action
-			// 3 chances sur 5 de se deplacer
-			perso = equipe.getListePersos().get(choixPerso);
-
-			Deplacement deplacement = new Deplacement(ile, perso);
-
-			if (choixAction == 0 || choixAction == 1 || choixAction == 2) {
-				// deplacer un perso PRESENT SUR LA MAP
-				deplacement.deplacement(mouvementIA(perso, ile, choixMouvement));
-			} else if (choixAction == 3) {
-
-				// selection d'un perso qui est sur l'ile
-				for (Personnage personnage : equipe.getListePersos()) {
-					for (Personnage personnageDans : equipe.getNavire().getPersoDansNavire()) {
-						if (personnage == personnageDans) {
-							perso = personnage;
-						}
-					}
-				}
-
-				if (perso instanceof Explorateur) {
-					Rocher[] roche = new Rocher[4];
-					int nb = 0;
-					if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Rocher) {
-						roche[nb] = (Rocher) ile.getGrille()[perso.getX()][perso.getY() - 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Rocher) {
-						roche[nb] = (Rocher) ile.getGrille()[perso.getX()][perso.getY() + 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Rocher) {
-						roche[nb] = (Rocher) ile.getGrille()[perso.getX() - 1][perso.getY()];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Rocher) {
-						roche[nb] = (Rocher) ile.getGrille()[perso.getX() + 1][perso.getY()];
-					}
-					nombre = rand.nextInt(roche.length);
-					if (nombre == 0) {
-						return ((Explorateur) perso).souleverRocher(roche[0]);
-					} else if (nombre == 1) {
-						return ((Explorateur) perso).souleverRocher(roche[1]);
-					} else if (nombre == 2) {
-						return ((Explorateur) perso).souleverRocher(roche[2]);
-					} else if (nombre == 3) {
-						return ((Explorateur) perso).souleverRocher(roche[3]);
-					}
-
-				} else if (perso instanceof Voleur) {
-					Explorateur[] explo = new Explorateur[4];
-					int nb = 0;
-					if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Explorateur) {
-						explo[nb] = (Explorateur) ile.getGrille()[perso.getX()][perso.getY() - 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Explorateur) {
-						explo[nb] = (Explorateur) ile.getGrille()[perso.getX()][perso.getY() + 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Explorateur) {
-						explo[nb] = (Explorateur) ile.getGrille()[perso.getX() - 1][perso.getY()];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Explorateur) {
-						explo[nb] = (Explorateur) ile.getGrille()[perso.getX() + 1][perso.getY()];
-					}
-					nombre = rand.nextInt(explo.length);
-					if (nombre == 0) {
-						return ((Voleur) perso).voler(explo[0]);
-					} else if (nombre == 1) {
-						return ((Voleur) perso).voler(explo[1]);
-					} else if (nombre == 2) {
-						return ((Voleur) perso).voler(explo[2]);
-					} else if (nombre == 3) {
-						return ((Voleur) perso).voler(explo[3]);
-					}
-				} else if (perso instanceof Guerrier) {
-					Personnage[] personnage = new Personnage[4];
-					int nb = 0;
-					if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Personnage) {
-						personnage[nb] = (Personnage) ile.getGrille()[perso.getX()][perso.getY() - 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Personnage) {
-						personnage[nb] = (Personnage) ile.getGrille()[perso.getX()][perso.getY() + 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Personnage) {
-						personnage[nb] = (Personnage) ile.getGrille()[perso.getX() - 1][perso.getY()];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Personnage) {
-						personnage[nb] = (Personnage) ile.getGrille()[perso.getX() + 1][perso.getY()];
-					}
-					nombre = rand.nextInt(personnage.length);
-					if (nombre == 0) {
-						return ((Guerrier) perso).attaquer(personnage[0]);
-					} else if (nombre == 1) {
-						return ((Guerrier) perso).attaquer(personnage[1]);
-					} else if (nombre == 2) {
-						return ((Guerrier) perso).attaquer(personnage[2]);
-					} else if (nombre == 3) {
-						return ((Guerrier) perso).attaquer(personnage[3]);
-					}
-				} else if (perso instanceof Piegeur) {
-					Sable[] sable = new Sable[4];
-					int nb = 0;
-					if (ile.getGrille()[perso.getX()][perso.getY() - 1] instanceof Sable) {
-						sable[nb] = (Sable) ile.getGrille()[perso.getX()][perso.getY() - 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX()][perso.getY() + 1] instanceof Sable) {
-						sable[nb] = (Sable) ile.getGrille()[perso.getX()][perso.getY() + 1];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() - 1][perso.getY()] instanceof Sable) {
-						sable[nb] = (Sable) ile.getGrille()[perso.getX() - 1][perso.getY()];
-						nb++;
-					}
-					if (ile.getGrille()[perso.getX() + 1][perso.getY()] instanceof Sable) {
-						sable[nb] = (Sable) ile.getGrille()[perso.getX() + 1][perso.getY()];
-					}
-					nombre = rand.nextInt(sable.length);
-					if (nombre == 0) {
-						return ((Piegeur) perso).pieger(sable[0]);
-					} else if (nombre == 1) {
-						return ((Piegeur) perso).pieger(sable[1]);
-					} else if (nombre == 2) {
-						return ((Piegeur) perso).pieger(sable[2]);
-					} else if (nombre == 3) {
-						return ((Piegeur) perso).pieger(sable[3]);
-					}
-				}
-			} else {
-				// debarquer un personnage
-				perso = equipe.getNavire().getPersoDansNavire().get(choixPerso);
-				Deplacement dep = new Deplacement(ile, perso);
-				dep.debarquement(mouvementIA(perso, ile, choixMouvement));
-			}
-
-		}
-		return true;
-	}
-
-	/**
 	 * Soigne les personnages dans le navire
 	 * 
 	 * @param e
@@ -558,7 +373,7 @@ public class Jeu {
 	 * Initialisation des parametres par l'utilisateur
 	 */
 	private void parametres() {
-		//Comme son nom l'indique
+		// Comme son nom l'indique
 		new ChoixModeDeJeu();
 		// JSLIDE:
 		// ajouter taille de la carte
@@ -570,12 +385,13 @@ public class Jeu {
 
 	/**
 	 * Effectue une action par un personnage
+	 * 
 	 * @param perso
 	 * @param ile
 	 * @param plato
 	 * @return boolean
 	 */
-	private boolean action(Personnage perso, Ile ile, SuperPlateau plato) {
+	public static boolean action(Personnage perso, Ile ile, SuperPlateau plato) {
 
 		if (perso instanceof Explorateur) {
 			return ((Explorateur) perso).choixRocher(ile, new Direction().choixAction(perso, ile, plato.getPlateau()));

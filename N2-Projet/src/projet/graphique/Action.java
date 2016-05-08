@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import projet.parcelle.Navire;
 import projet.parcelle.Parcelle;
 import projet.parcelle.Personnage;
+import projet.plateau.Jeu;
 import projet.plateau.Plateau;
 
 public class Action implements ActionListener {
@@ -54,18 +55,18 @@ public class Action implements ActionListener {
 
 		if (parcelle instanceof Personnage) {
 
-			deplacement.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 130, 100);
+			deplacement.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14, 100);
 			p.getWindow().getContentPane().add(deplacement);
 
-			action.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 130, 200);
+			action.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14, 200);
 			p.getWindow().getContentPane().add(action);
 			
-			passer.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 130, 300);
+			passer.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14, 300);
 			p.getWindow().getContentPane().add(passer);
 
 		} else if (parcelle instanceof Navire) {
 
-			debarquer.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 130, 100);
+			debarquer.setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14, 100);
 			p.getWindow().getContentPane().add(debarquer);
 		}
 		return p;

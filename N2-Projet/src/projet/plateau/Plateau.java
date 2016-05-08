@@ -119,7 +119,7 @@ public class Plateau {
 	 *            dimension (en nombre de cellules) d'un côté du plateau.
 	 */
 	public Plateau(String[] gif, int taille) {
-		this(gif, taille, false);
+		this(gif, Tailles.TAILLE, false);
 	}
 
 	/**
@@ -141,12 +141,12 @@ public class Plateau {
 	 */
 	public Plateau(String[] gif, int taille, boolean withTextArea) {
 		
-		this.taille = taille;
+		this.taille = Tailles.TAILLE;
 		
 		// Instancie la fenetre principale et et les deux composants.
 		window = new JFrame();
 		window.setContentPane(new PanelFondPlateau());
-		graphic = new GraphicPane(gif, taille);
+		graphic = new GraphicPane(gif, Tailles.TAILLE);
 		window.setPreferredSize(new Dimension(Tailles.FENETREx, Tailles.FENETREy));
 		consoleEquipe1 = null;
 		consoleEquipe2 = null;
@@ -158,15 +158,15 @@ public class Plateau {
 		// cf Javadoc setDefaultCloseOperation
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Ajout des deux composants à la fenetre
-		graphic.setBounds(600, 50, taille * 37, taille * 37);
+		graphic.setBounds(600, 50, Tailles.TAILLE * Tailles.PARCELLE, Tailles.TAILLE * Tailles.PARCELLE);
 		window.getContentPane().add(graphic);
 		if (withTextArea) {
 			consoleEquipe1 = new ConsolePane();
 			consoleEquipe2 = new ConsolePane();
-			consoleEquipe1.setBounds(50, 50, Tailles.CONSOLEx, Tailles.PLATEAU / 3);
+			consoleEquipe1.setBounds(Tailles.BORDURE, Tailles.BORDURE, Tailles.CONSOLEx, Tailles.CONSOLEy);
 			consoleEquipe1.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
 			consoleEquipe2.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-			consoleEquipe2.setBounds(50, 50 + Tailles.PLATEAU - Tailles.PLATEAU / 3, Tailles.CONSOLEx, Tailles.PLATEAU / 3);
+			consoleEquipe2.setBounds(Tailles.BORDURE, Tailles.BORDURE+taille * Tailles.PARCELLE  - Tailles.CONSOLEy, Tailles.CONSOLEx, Tailles.CONSOLEy);
 			window.getContentPane().add(consoleEquipe1);
 			window.getContentPane().add(consoleEquipe2);
 		}

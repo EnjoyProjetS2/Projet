@@ -85,17 +85,17 @@ public class ChoixPersonnage implements ActionListener {
 		int decallage = 0;
 
 		for (int i = 0; i < persos.length; i++) {
-			persos[i].setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 115 + decallage, 100);
+			persos[i].setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14 + decallage, 100);
 			p.getWindow().getContentPane().add(persos[i]);
 
 			vies[i] = new JLabel("" + equipe.getNavire().getPersoDansNavire().get(i).getEnergie() + "HP");
 			vies[i].setSize(37, 37);
-			vies[i].setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 115 + decallage, 100+50);
+			vies[i].setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14 + decallage, 100+50);
 			p.getWindow().getContentPane().add(vies[i]);
 			
 			noms[i] = new JLabel("" + equipe.getNavire().getPersoDansNavire().get(i).getNom());
 			noms[i].setSize(37, 37);
-			noms[i].setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + 115 + decallage, 100+30);
+			noms[i].setLocation(Tailles.PLATEAU + Tailles.CONSOLEx + Tailles.BORDURE*2 + Tailles.TAILLE*14 + decallage, 100+30);
 			p.getWindow().getContentPane().add(noms[i]);
 			
 			decallage += Tailles.PARCELLE + 6;

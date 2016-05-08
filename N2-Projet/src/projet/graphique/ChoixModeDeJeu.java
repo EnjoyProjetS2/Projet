@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -50,7 +51,7 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 	 * @return boolean
 	 */
 	private boolean modeVersus() {
-		modeVersus = new JButton("mode Versus");
+		modeVersus = new JButton(new ImageIcon("images/boutons/versus.png"));
 		//modeVersus.setBounds(Tailles.FENETREx / 2, 30, 100, 50);
 		modeVersus.addActionListener(this);
 		return false;
@@ -61,7 +62,7 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 	 * @return boolean
 	 */
 	private boolean modeCreatif() {
-		modeCreatif = new JButton("mode Creatif");
+		modeCreatif = new JButton(new ImageIcon("images/boutons/creatif.png"));
 		//modeCreatif.setBounds(Tailles.FENETREx / 2, 30 + 70, 100, 50);
 		modeCreatif.addActionListener(this);
 		return false;
@@ -72,7 +73,7 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 	 * @return boolean
 	 */
 	private boolean modeSolo() {
-		modeSolo = new JButton("mode Solo");
+		modeSolo = new JButton(new ImageIcon("images/boutons/solo.png"));
 		//modeSolo.setBounds(Tailles.FENETREx / 2, 30 + 140, 100, 50);
 		modeSolo.addActionListener(this);
 		return false;
