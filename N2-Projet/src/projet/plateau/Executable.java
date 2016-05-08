@@ -10,7 +10,6 @@ import projet.graphique.ChoixPersonnage;
 import projet.graphique.Direction;
 import projet.graphique.MenuDemarre;
 import projet.graphique.ParametreGraph;
-import projet.graphique.SaisieEquipe;
 import projet.graphique.Tailles;
 import projet.ia.TourOrdinateur;
 import projet.parcelle.Equipe;
@@ -20,11 +19,10 @@ import projet.parcelle.Navire;
 import projet.parcelle.Parcelle;
 import projet.parcelle.Personnage;
 import projet.parcelle.Piegeur;
-import projet.parcelle.Rocher;
 import projet.parcelle.Sable;
 import projet.parcelle.Voleur;
 
-public class Jeu {
+public class Executable {
 
 	public static int nbPerso = 1; // nombre de personnages par equipes
 	public static int pourcentageRocher = 10; // pourcentage de rochers sur la
@@ -44,7 +42,7 @@ public class Jeu {
 	 * joueurs et s'occupe du deroulement du jeu
 	 * 
 	 */
-	public Jeu() {
+	public Executable() {
 
 		new MenuDemarre();
 		parametres();
@@ -114,7 +112,7 @@ public class Jeu {
 
 				if (this.solo && equipe == 2) {
 					
-					new TourOrdinateur(ile, p.getPlateau(), Jeu.deux);
+					new TourOrdinateur(ile, p.getPlateau(), Executable.deux);
 					// modeIA(p, ile, deux);
 					joue = true;
 
@@ -451,7 +449,7 @@ public class Jeu {
 
 	public static void main(String[] args) {
 
-		new Jeu();
+		new Executable();
 
 	}
 

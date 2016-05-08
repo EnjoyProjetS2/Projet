@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 
 @SuppressWarnings("serial")
 public class ChoixModeDeJeu extends JFrame implements ActionListener{
@@ -20,7 +20,7 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 	boolean bahOuiOnMetUnBooleanPourGererTroisPossibiliter;
 	
 	/**
-	 * Constructeur
+	 * Constructeur qui affiche la fenetre du choix du mode
 	 */
 	public ChoixModeDeJeu() {
 		// TODO Auto-generated constructor stub
@@ -35,7 +35,7 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 		this.setResizable(false);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		while (!Jeu.solo && !Jeu.modeCreatif && !bahOuiOnMetUnBooleanPourGererTroisPossibiliter) {
+		while (!Executable.solo && !Executable.modeCreatif && !bahOuiOnMetUnBooleanPourGererTroisPossibiliter) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -99,10 +99,10 @@ public class ChoixModeDeJeu extends JFrame implements ActionListener{
 			bahOuiOnMetUnBooleanPourGererTroisPossibiliter = true;
 			this.setVisible(false);
 		}else if(bouton == modeSolo){
-			Jeu.solo = true;
+			Executable.solo = true;
 			this.setVisible(false);
 		}else if(bouton == modeCreatif){
-			Jeu.modeCreatif = true;
+			Executable.modeCreatif = true;
 			this.setVisible(false);
 		}
 	}

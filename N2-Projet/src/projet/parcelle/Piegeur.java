@@ -2,7 +2,7 @@ package projet.parcelle;
 import javax.swing.JOptionPane;
 
 import projet.plateau.Ile;
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 
 public class Piegeur extends Personnage {
 
@@ -71,7 +71,7 @@ public class Piegeur extends Personnage {
 	 */
 	public String toString() {
 		return "Piegeur " + this.nom + " (Equipe: " + super.getEquipe().getNom() + ") - Vie: " + super.energie + "/"
-				+ Jeu.maxVie;
+				+ Executable.maxVie;
 	}
 
 }

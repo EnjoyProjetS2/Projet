@@ -8,7 +8,6 @@ import projet.parcelle.Equipe;
 import projet.parcelle.Personnage;
 import projet.plateau.Deplacement;
 import projet.plateau.Ile;
-import projet.plateau.Jeu;
 import projet.plateau.Plateau;
 
 public class TourOrdinateur {

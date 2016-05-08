@@ -1,10 +1,9 @@
 package projet.parcelle;
 import java.util.ArrayList;
 import java.util.List;
-import projet.*;
+
 import projet.graphique.Tailles;
 import projet.plateau.Ile;
-import projet.plateau.Jeu;
 public class Equipe {
 
 	private String nom;

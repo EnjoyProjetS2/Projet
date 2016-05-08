@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import projet.parcelle.Navire;
 import projet.parcelle.Parcelle;
 import projet.parcelle.Personnage;
-import projet.plateau.Jeu;
 import projet.plateau.Plateau;
 
 public class Action implements ActionListener {
@@ -28,7 +27,7 @@ public class Action implements ActionListener {
 	 * @param plateau
 	 */
 	public Action(Plateau plateau) {
-
+		
 		deplacement = new JButton(new ImageIcon("images/boutons/deplacement.png"));
 		deplacement.setSize(Tailles.BOUTONLARGEx, Tailles.BOUTONLARGEy);
 

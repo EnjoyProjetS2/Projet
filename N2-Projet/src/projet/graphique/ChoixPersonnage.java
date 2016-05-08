@@ -13,7 +13,7 @@ import projet.parcelle.Guerrier;
 import projet.parcelle.Personnage;
 import projet.parcelle.Piegeur;
 import projet.parcelle.Voleur;
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 import projet.plateau.Plateau;
 
 public class ChoixPersonnage implements ActionListener {
@@ -38,12 +38,12 @@ public class ChoixPersonnage implements ActionListener {
 
 			if (equipe == 1) {
 
-				this.equipe = Jeu.un;
+				this.equipe = Executable.un;
 				couleur = "Bleu";
 
 			} else if (equipe == 2) {
 
-				this.equipe = Jeu.deux;
+				this.equipe = Executable.deux;
 				couleur = "Rouge";
 			}
 

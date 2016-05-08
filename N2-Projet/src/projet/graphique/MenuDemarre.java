@@ -73,6 +73,7 @@ public class MenuDemarre extends JFrame implements ActionListener {
 	 * Bouton pour jouer
 	 * @return boolean
 	 */
+	//"images/boutons/jouer.png"
 	private boolean jouer() {
 		jouer = new JButton(new ImageIcon("images/boutons/jouer.png"));
 		//jouer.setBounds(Tailles.FENETREx / 2, 30, 100, 50);

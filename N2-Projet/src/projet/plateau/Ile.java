@@ -1,12 +1,9 @@
 package projet.plateau;
 import java.util.Random;
 
-import javax.swing.JOptionPane;
-
 import projet.parcelle.Eau;
 import projet.parcelle.Navire;
 import projet.parcelle.Parcelle;
-import projet.parcelle.Personnage;
 import projet.parcelle.Rocher;
 import projet.parcelle.Sable;
 
@@ -73,11 +70,11 @@ public class Ile {
 		this.posNav1 = alea.nextInt(grille.length - 4) + 2;
 		this.posNav2 = alea.nextInt(grille[0].length - 4) + 2;
 
-		Jeu.un.setNavire(new Navire(posNav1, 1));
-		Jeu.deux.setNavire(new Navire(posNav2, grille.length - 2));
+		Executable.un.setNavire(new Navire(posNav1, 1));
+		Executable.deux.setNavire(new Navire(posNav2, grille.length - 2));
 
-		grille[posNav1][1] = Jeu.un.getNavire();
-		grille[posNav2][grille.length - 2] = Jeu.deux.getNavire();
+		grille[posNav1][1] = Executable.un.getNavire();
+		grille[posNav2][grille.length - 2] = Executable.deux.getNavire();
 
 	}
 

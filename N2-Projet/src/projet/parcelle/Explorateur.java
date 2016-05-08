@@ -2,7 +2,7 @@ package projet.parcelle;
 import javax.swing.JOptionPane;
 
 import projet.plateau.Ile;
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 
 public class Explorateur extends Personnage {
 
@@ -78,6 +78,6 @@ public class Explorateur extends Personnage {
 	 * @return String
 	 */
 	public String toString() {		
-		return "Explorateur "+this.nom+" (Equipe: "+super.getEquipe().getNom()+") - Vie: "+super.energie+"/"+Jeu.maxVie;
+		return "Explorateur "+this.nom+" (Equipe: "+super.getEquipe().getNom()+") - Vie: "+super.energie+"/"+Executable.maxVie;
 	}
 }

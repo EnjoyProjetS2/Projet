@@ -1,6 +1,5 @@
 package projet.graphique;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import projet.parcelle.Equipe;
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 
 @SuppressWarnings("serial")
 //PAS FINI
@@ -47,7 +46,7 @@ public class SaisieEquipe extends JFrame implements ActionListener{
 		this.setResizable(false);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		while(Jeu.nbPerso > cptPerso && !retry){
+		while(Executable.nbPerso > cptPerso && !retry){
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e1) {

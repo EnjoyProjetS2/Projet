@@ -4,7 +4,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import projet.plateau.Ile;
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 
 public class Guerrier extends Personnage {
 
@@ -85,7 +85,7 @@ public class Guerrier extends Personnage {
 	 */
 	public String toString() {
 		return "Guerrier " + this.nom + " (Equipe: " + super.getEquipe().getNom() + ") - Vie: " + super.energie + "/"
-				+ Jeu.maxVie;
+				+ Executable.maxVie;
 	}
 
 }

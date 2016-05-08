@@ -13,7 +13,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import projet.plateau.*;
+import projet.plateau.Executable;
 
 public class ParametreGraph {
 	static boolean validerParametre = false;
@@ -160,8 +160,8 @@ public class ParametreGraph {
 			}
 		} while (!validerParametre);
 		// modification desparametres
-		Jeu.nbPerso = sliderCentre.getValue();
-		Jeu.pourcentageRocher = sliderdroite.getValue();
+		Executable.nbPerso = sliderCentre.getValue();
+		Executable.pourcentageRocher = sliderdroite.getValue();
 		Tailles.TAILLE = slidergauche.getValue();
 		//Jeu.tailleY = Jeu.tailleX;
 	}

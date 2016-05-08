@@ -1,10 +1,7 @@
 package projet.graphique;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.BorderFactory;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;

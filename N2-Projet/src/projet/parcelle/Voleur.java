@@ -1,11 +1,9 @@
 package projet.parcelle;
 
-import java.util.Random;
-
 import javax.swing.JOptionPane;
 
 import projet.plateau.Ile;
-import projet.plateau.Jeu;
+import projet.plateau.Executable;
 
 public class Voleur extends Personnage {
 
@@ -99,6 +97,6 @@ public class Voleur extends Personnage {
 	 */
 	public String toString() {
 		return "Voleur " + this.nom + " (Equipe: " + super.getEquipe().getNom() + ") - Vie: " + super.energie + "/"
-				+ Jeu.maxVie;
+				+ Executable.maxVie;
 	}
 }
